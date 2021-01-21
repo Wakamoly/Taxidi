@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "47337080648",
+    "project_id": "taxidi-cd243",
+    "storage_bucket": "taxidi-cd243.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47337080648:android:2af9aa296c4a868207957d",
+        "android_client_info": {
+          "package_name": "com.lucidsoftworksllc.taxidi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47337080648-c1lppoi4ppk3obn66uroh48d44200ujs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lucidsoftworksllc.taxidi",
+            "certificate_hash": "c9ce459dd5f6bbf1d602d46fcf767030341cccea"
+          }
+        },
+        {
+          "client_id": "47337080648-3odqdr737v026ch356ag7uv1ncd46g2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxVNSY6NWxe49qAyQDWi7OU6kncBr-ENg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47337080648-3odqdr737v026ch356ag7uv1ncd46g2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
