@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!-- PLACEHOLDER fragment layout, needs to have animated background,
+     sign in as business or driver, then to login/sign-up fragment-->
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/auth_welcome_motion_layout"
+        android:padding="@dimen/padding_large"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:showIn="@layout/activity_auth"
+        tools:showPaths="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layoutDescription="@xml/activity_auth_scene"
+        tools:context=".authentication.AuthenticationActivity">
+
+        <!-- PLACEHOLDER LOGO -->
+        <ImageView
+            android:id="@+id/logo_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_local_shipping_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/app_logo" />
+
+        <TextView
+            android:id="@+id/middle_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_large"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/large_button_height"
+            android:textSize="@dimen/text_medium_size"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:text="@string/login"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</layout>
