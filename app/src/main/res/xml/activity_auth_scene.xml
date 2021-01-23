@@ -8,30 +8,6 @@
         app:autoTransition="animateToEnd"
         app:duration="1000"/>
 
-    <!--<Transition
-        android:id="@+id/login_as_driver_transition"
-        app:constraintSetStart="@+id/click_to_login_start"
-        app:constraintSetEnd="@+id/click_to_login_end"
-        app:duration="1000">
-
-        <OnClick
-            app:targetId="@id/login_as_driver"
-            app:clickAction="transitionToEnd"/>
-
-    </Transition>
-
-    <Transition
-        android:id="@+id/login_as_company_transition"
-        app:constraintSetStart="@+id/click_to_login_start"
-        app:constraintSetEnd="@+id/click_to_login_end"
-        app:duration="1000">
-
-        <OnClick
-            app:targetId="@id/login_as_company"
-            app:clickAction="transitionToEnd"/>
-
-    </Transition>-->
-
     <ConstraintSet android:id="@+id/init_start">
 
         <Constraint
@@ -78,48 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
-
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/click_to_login_start">
-
-        <Constraint
-            android:id="@+id/auth_cardview_linearlayout"
-            style="@style/CardView.Dark"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/primaryLightColor"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_medium"
-            android:visibility="visible"/>
-
-        <Constraint
-            android:id="@+id/auth_welcome_progressbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
-
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/click_to_login_end">
-
-        <Constraint
-            android:id="@+id/auth_cardview_linearlayout"
-            style="@style/CardView.Dark"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/primaryLightColor"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_medium"
-            android:visibility="gone"/>
-
-        <Constraint
-            android:id="@+id/auth_welcome_progressbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="visible"/>
 
     </ConstraintSet>
 

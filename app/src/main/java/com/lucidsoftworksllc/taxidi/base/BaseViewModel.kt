@@ -1,10 +1,12 @@
-package com.udacity.project4.base
+package com.lucidsoftworksllc.taxidi.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lucidsoftworksllc.taxidi.utils.SingleLiveEvent
 
 /**
  * Base class for View Models to declare the common LiveData objects in one place
+ */
 abstract class BaseViewModel : ViewModel() {
 
     val navigationCommand: SingleLiveEvent<NavigationCommand> = SingleLiveEvent()
@@ -16,4 +18,3 @@ abstract class BaseViewModel : ViewModel() {
     val showNoData: MutableLiveData<Boolean> = MutableLiveData()
 
 }
- */

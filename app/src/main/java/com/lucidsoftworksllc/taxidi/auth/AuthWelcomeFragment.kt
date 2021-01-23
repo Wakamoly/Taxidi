@@ -20,6 +20,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.navigation.findNavController
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.databinding.FragmentAuthWelcomeBinding
 
@@ -43,12 +44,10 @@ class AuthWelcomeFragment : Fragment() {
 
     private fun setupOnClicks() {
         binding.loginAsCompany.setOnClickListener {
-            motionLayout.setTransition(R.id.click_to_login_start, R.id.click_to_login_end)
-            motionLayout.transitionToEnd()
+            requireView().findNavController().navigate(AuthWelcomeFragmentDirections.actionAuthWelcomeFragmentToAuthSignInFragment("company"))
         }
         binding.loginAsDriver.setOnClickListener {
-            motionLayout.setTransition(R.id.click_to_login_start, R.id.click_to_login_end)
-            motionLayout.transitionToEnd()
+            requireView().findNavController().navigate(AuthWelcomeFragmentDirections.actionAuthWelcomeFragmentToAuthSignInFragment("driver"))
         }
     }
 
@@ -70,6 +69,10 @@ class AuthWelcomeFragment : Fragment() {
             newTruck.layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT)
+
+            // Position the view at a random place between the left and right edges of the container
+            newTruck.translationX = Math.random().toFloat() * containerW - truckW
+            newTruck.translationY = Math.random().toFloat() * containerH - truckH
             viewGroup.addView(newTruck)
 
             // TODO: 1/22/2021 Fix animation imageview start!
@@ -79,10 +82,6 @@ class AuthWelcomeFragment : Fragment() {
             newTruck.scaleY = newTruck.scaleX
             truckW *= newTruck.scaleX
             truckH *= newTruck.scaleY
-
-            // Position the view at a random place between the left and right edges of the container
-            newTruck.translationX = Math.random().toFloat() * containerW - truckW
-            newTruck.translationY = Math.random().toFloat() * containerH - truckH
             newTruck.rotation = 45f
 
             // Create an animator that moves the view from a starting position right about the container

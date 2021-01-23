@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/auth_welcome_motion_layout"
+        android:id="@+id/auth_signin_motion_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primaryDarkColor"
-        tools:showIn="@layout/activity_auth"
         tools:showPaths="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layoutDescription="@xml/activity_auth_scene"
-        tools:context=".authentication.AuthenticationActivity">
+        app:layoutDescription="@xml/activity_auth_scene">
 
         <FrameLayout
             android:id="@+id/auth_welcome_frame_layout"
@@ -37,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ProgressBar
-                android:id="@+id/auth_welcome_progressbar"
+                android:id="@+id/auth_signin_progressbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -53,7 +51,7 @@
                 android:padding="@dimen/padding_medium">
 
                 <TextView
-                    android:id="@+id/auth_welcome_text"
+                    android:id="@+id/auth_signin_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -65,7 +63,7 @@
                     android:textStyle="italic|bold" />
 
                 <TextView
-                    android:id="@+id/auth_welcome_disclaimer_text"
+                    android:id="@+id/auth_signin_disclaimer_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/padding_medium"

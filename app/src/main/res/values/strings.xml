@@ -9,4 +9,5 @@
     <string name="button_login_as_company">Login as company</string>
     <string name="just_a_truck">Just a truck</string>
     <string name="welcome_disclaimer">Test purposes only, while registering is real, any portrayals of real names, businesses, or otherwise are purely coincidental and hold no ties with any real entity.</string>
+    <string name="geofence_entered">Geofence entered!</string>
 </resources>

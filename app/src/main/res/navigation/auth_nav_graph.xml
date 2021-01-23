@@ -9,7 +9,21 @@
         android:id="@+id/authWelcomeFragment"
         android:name="com.lucidsoftworksllc.taxidi.auth.AuthWelcomeFragment"
         android:label="AuthWelcomeFragment"
-        tools:layout="@layout/fragment_auth_welcome"/>
+        tools:layout="@layout/fragment_auth_welcome">
+        <action
+            android:id="@+id/action_authWelcomeFragment_to_authSignInFragment"
+            app:destination="@id/authSignInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authSignInFragment"
+        android:name="com.lucidsoftworksllc.taxidi.auth.AuthSignInFragment"
+        android:label="AuthSignInFragment"
+        tools:layout="@layout/auth_sign_in_fragment">
+        <argument
+            android:name="signInAs"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

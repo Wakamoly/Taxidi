@@ -1,11 +1,12 @@
-package com.udacity.project4.base
+package com.lucidsoftworksllc.taxidi.base
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import com.lucidsoftworksllc.taxidi.utils.Result as Result
 
-/*abstract class BaseRepository(
+abstract class BaseRepository(
     private val dispatcher: CoroutineDispatcher
-) : ReminderDataSource {
+)  {
 
     suspend fun <T : Any> safeApiCall(
             apiCall: suspend () -> T
@@ -19,4 +20,4 @@ import kotlinx.coroutines.withContext
         }
     }
 
-}*/
+}

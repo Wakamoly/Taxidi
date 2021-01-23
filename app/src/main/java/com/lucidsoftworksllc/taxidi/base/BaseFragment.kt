@@ -1,4 +1,4 @@
-package com.udacity.project4.base
+package com.lucidsoftworksllc.taxidi.base
 
 import android.content.Context
 import android.content.Intent
@@ -11,23 +11,26 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
+import com.lucidsoftworksllc.taxidi.auth.AuthActivity
+import com.lucidsoftworksllc.taxidi.db.TaxidiDatabase
+import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
+import com.lucidsoftworksllc.taxidi.utils.ViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
  * Base Fragment to observe on the common LiveData objects
+ */
 abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository> : Fragment() {
 
     protected lateinit var userPreferences: UserPreferences
     protected lateinit var binding : B
     protected lateinit var viewModel : VM
     protected lateinit var mCtx: Context
-    //protected val remoteDataSource = RemoteDataSource()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,9 +48,9 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     fun logout() = lifecycleScope.launch {
         withContext(Dispatchers.IO) {
             userPreferences.clear()
-            LocalDB.clearAlltables(mCtx)
+            TaxidiDatabase(mCtx).clearAllTables()
         }
-        val intent = Intent(mCtx, AuthenticationActivity::class.java)
+        val intent = Intent(mCtx, AuthActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         activity?.finish()
         startActivity(intent)
@@ -61,20 +64,20 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
 
     override fun onStart() {
         super.onStart()
-        viewModel.showErrorMessage.observe(this, Observer {
+        viewModel.showErrorMessage.observe(this, {
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
         })
-        viewModel.showToast.observe(this, Observer {
+        viewModel.showToast.observe(this, {
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
         })
-        viewModel.showSnackBar.observe(this, Observer {
+        viewModel.showSnackBar.observe(this, {
             Snackbar.make(this.requireView(), it, Snackbar.LENGTH_LONG).show()
         })
-        viewModel.showSnackBarInt.observe(this, Observer {
+        viewModel.showSnackBarInt.observe(this, {
             Snackbar.make(this.requireView(), getString(it), Snackbar.LENGTH_LONG).show()
         })
 
-        viewModel.navigationCommand.observe(this, Observer { command ->
+        viewModel.navigationCommand.observe(this, { command ->
             when (command) {
                 is NavigationCommand.To -> findNavController().navigate(command.directions)
                 is NavigationCommand.Back -> findNavController().popBackStack()
@@ -87,5 +90,3 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     }
 
 }
-
- */
