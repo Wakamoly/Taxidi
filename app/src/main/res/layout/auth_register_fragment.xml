@@ -37,13 +37,13 @@
                 android:padding="@dimen/padding_medium">
 
                 <TextView
-                    android:id="@+id/auth_register_text"
+                    android:id="@+id/auth_signin_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="@dimen/padding_medium"
                     android:gravity="center"
-                    android:text="@string/register_new_account"
+                    android:text="@string/login_to_existing"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="@dimen/text_size_large"
                     android:textStyle="italic|bold" />
@@ -72,21 +72,13 @@
                     android:textSize="@dimen/text_medium_size"/>
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sign_in_password"
+                    android:id="@+id/register_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Design.TextInputLayout"
                     android:text="@={viewModel.password}"
                     android:textColor="@color/white"
                     android:hint="@string/example_password"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signin_frag_login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/purple_500"
-                    android:text="@string/login"
-                    android:textAllCaps="false" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/signin_frag_register_button"

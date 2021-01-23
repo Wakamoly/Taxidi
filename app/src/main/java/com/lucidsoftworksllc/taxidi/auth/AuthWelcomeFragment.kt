@@ -17,6 +17,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.PathInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -26,7 +27,7 @@ import com.lucidsoftworksllc.taxidi.databinding.FragmentAuthWelcomeBinding
 
 class AuthWelcomeFragment : Fragment() {
 
-    private lateinit var viewGroup: ViewGroup
+    private lateinit var viewGroup: RelativeLayout
     private lateinit var binding: FragmentAuthWelcomeBinding
     private lateinit var motionLayout: MotionLayout
 
@@ -35,7 +36,7 @@ class AuthWelcomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.hide()
         // Inflate view and obtain an instance of the binding class.
         binding = FragmentAuthWelcomeBinding.inflate(inflater,container,false)
-        viewGroup = binding.authWelcomeFrameLayout
+        viewGroup = binding.authWelcomeRelativeLayout
         motionLayout = binding.authWelcomeMotionLayout
         startTrucks(20)
         setupOnClicks()
@@ -66,14 +67,15 @@ class AuthWelcomeFragment : Fragment() {
             // Create the new truck (an ImageView holding our drawable) and add it to the container
             val newTruck = AppCompatImageView(requireContext())
             newTruck.setImageResource(R.drawable.ic_baseline_local_shipping_64)
-            newTruck.layoutParams = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT)
+            newTruck.layoutParams = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT)
+
+            viewGroup.addView(newTruck)
 
             // Position the view at a random place between the left and right edges of the container
             newTruck.translationX = Math.random().toFloat() * containerW - truckW
             newTruck.translationY = Math.random().toFloat() * containerH - truckH
-            viewGroup.addView(newTruck)
 
             // TODO: 1/22/2021 Fix animation imageview start!
 

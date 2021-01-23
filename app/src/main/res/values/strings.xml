@@ -10,4 +10,11 @@
     <string name="just_a_truck">Just a truck</string>
     <string name="welcome_disclaimer">Test purposes only, while registering is real, any portrayals of real names, businesses, or otherwise are purely coincidental and hold no ties with any real entity.</string>
     <string name="geofence_entered">Geofence entered!</string>
+    <string name="register_text">Register</string>
+    <string name="login_to_existing">Login to existing account</string>
+    <string name="example_email">truckdrivingman@yeehaw.com</string>
+    <string name="email_address_text">Email Address</string>
+    <string name="password_text">Password</string>
+    <string name="example_password">********</string>
+    <string name="register_new_account">Register a new account</string>
 </resources>

@@ -9,12 +9,22 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Colors generated from Material Design: https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6A1B9A&secondary.color=616161 -->
-    <color name="primaryColor">#6a1b9a</color>
+    <color name="primaryColor">#7B1FA2</color>
     <color name="primaryLightColor">#9c4dcc</color>
-    <color name="primaryDarkColor">#38006b</color>
+    <color name="primaryDarkColor">#57006B</color>
     <color name="secondaryColor">#616161</color>
     <color name="secondaryLightColor">#8e8e8e</color>
     <color name="secondaryDarkColor">#373737</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
+
+    <!--More colors to try?-->
+    <!--<color name="primaryColor">#8e24aa</color>
+    <color name="primaryLightColor">#c158dc</color>
+    <color name="primaryDarkColor">#5c007a</color>
+    <color name="secondaryColor">#616161</color>
+    <color name="secondaryLightColor">#8e8e8e</color>
+    <color name="secondaryDarkColor">#373737</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>-->
 </resources>

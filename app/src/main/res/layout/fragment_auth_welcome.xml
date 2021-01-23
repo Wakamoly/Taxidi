@@ -7,15 +7,15 @@
         android:id="@+id/auth_welcome_motion_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryDarkColor"
+        android:background="@color/secondaryDarkColor"
         tools:showIn="@layout/activity_auth"
         tools:showPaths="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutDescription="@xml/activity_auth_scene"
         tools:context=".authentication.AuthenticationActivity">
 
-        <FrameLayout
-            android:id="@+id/auth_welcome_frame_layout"
+        <RelativeLayout
+            android:id="@+id/auth_welcome_relative_layout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +48,7 @@
                 style="@style/CardView.Dark"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/primaryLightColor"
+                android:background="@color/primaryColor"
                 android:orientation="vertical"
                 android:padding="@dimen/padding_medium">
 

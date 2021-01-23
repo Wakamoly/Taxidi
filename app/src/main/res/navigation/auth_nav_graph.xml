@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_auth_welcome">
         <action
             android:id="@+id/action_authWelcomeFragment_to_authSignInFragment"
-            app:destination="@id/authSignInFragment" />
+            app:destination="@id/authSignInFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -23,6 +27,24 @@
         <argument
             android:name="signInAs"
             app:argType="string" />
+        <action
+            android:id="@+id/action_authSignInFragment_to_authRegisterFragment"
+            app:destination="@id/authRegisterFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authRegisterFragment"
+        android:name="com.lucidsoftworksllc.taxidi.auth.AuthRegisterFragment"
+        android:label="AuthRegisterFragment"
+        tools:layout="@layout/auth_register_fragment">
+        <!-- TODO finish action to return to sign-in with data class for email and pass -->
+        <action
+            android:id="@+id/action_authRegisterFragment_to_authSignInFragment"
+            app:destination="@id/authSignInFragment" />
     </fragment>
 
 
