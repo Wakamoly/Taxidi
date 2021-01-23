@@ -15,18 +15,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
-import com.udacity.project4.authentication.AuthenticationActivity
-import com.udacity.project4.authentication.datastore.UserPreferences
-import com.udacity.project4.locationreminders.data.local.LocalDB
-import com.udacity.project4.locationreminders.data.local.RemindersDatabase
-import com.udacity.project4.utils.ViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
  * Base Fragment to observe on the common LiveData objects
- */
 abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository> : Fragment() {
 
     protected lateinit var userPreferences: UserPreferences
@@ -93,3 +87,5 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     }
 
 }
+
+ */

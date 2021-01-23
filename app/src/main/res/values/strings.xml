@@ -4,4 +4,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_logo">Taxidi logo</string>
     <string name="login">Login</string>
+    <string name="welcome_to_taxidi">Welcome to Taxidi!</string>
+    <string name="button_login_as_driver">Login as driver</string>
+    <string name="button_login_as_company">Login as company</string>
+    <string name="just_a_truck">Just a truck</string>
+    <string name="welcome_disclaimer">Test purposes only, while registering is real, any portrayals of real names, businesses, or otherwise are purely coincidental and hold no ties with any real entity.</string>
 </resources>

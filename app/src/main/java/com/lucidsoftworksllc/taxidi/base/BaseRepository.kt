@@ -1,11 +1,9 @@
 package com.udacity.project4.base
 
-import com.udacity.project4.locationreminders.data.ReminderDataSource
-import com.udacity.project4.locationreminders.data.dto.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-abstract class BaseRepository(
+/*abstract class BaseRepository(
     private val dispatcher: CoroutineDispatcher
 ) : ReminderDataSource {
 
@@ -21,4 +19,4 @@ abstract class BaseRepository(
         }
     }
 
-}
+}*/

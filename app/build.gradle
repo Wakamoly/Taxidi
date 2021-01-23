@@ -15,11 +15,13 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.lucidsoftworksllc.taxidi"
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        // API 21 required for usage of ObjectAnimator.ofArgb()
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         debug {
@@ -146,9 +148,9 @@ dependencies {
     androidTestImplementation('org.koin:koin-test:2.1.6') { exclude group: 'org.mockito' }
 
     //Firebase
-    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    /*implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.firebaseui:firebase-ui-auth:6.2.1'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'*/
 
     //Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'

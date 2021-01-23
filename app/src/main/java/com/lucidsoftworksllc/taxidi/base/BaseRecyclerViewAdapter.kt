@@ -8,14 +8,17 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 
+/*
 abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Unit)? = null) :
     RecyclerView.Adapter<DataBindingViewHolder<T>>() {
 
     private var _items: MutableList<T> = mutableListOf()
 
-    /**
+    */
+/**
      * Returns the _items data
-     */
+     *//*
+
     private val items: List<T>?
         get() = this._items
 
@@ -42,19 +45,23 @@ abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Un
 
     fun getItem(position: Int) = _items[position]
 
-    /**
+    */
+/**
      * Adds data to the actual Dataset
      *
      * @param items to be merged
-     */
+     *//*
+
     fun addData(items: List<T>) {
         _items.addAll(items)
         notifyDataSetChanged()
     }
 
-    /**
+    */
+/**
      * Clears the _items data
-     */
+     *//*
+
     fun clear() {
         _items.clear()
         notifyDataSetChanged()
@@ -68,3 +75,4 @@ abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Un
     }
 }
 
+*/

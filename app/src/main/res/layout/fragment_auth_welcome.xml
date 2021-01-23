@@ -3,56 +3,105 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <!-- PLACEHOLDER fragment layout, needs to have animated background,
-     sign in as business or driver, then to login/sign-up fragment-->
-
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/auth_welcome_motion_layout"
-        android:padding="@dimen/padding_large"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primaryDarkColor"
         tools:showIn="@layout/activity_auth"
         tools:showPaths="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutDescription="@xml/activity_auth_scene"
         tools:context=".authentication.AuthenticationActivity">
 
-        <!-- PLACEHOLDER LOGO -->
-        <ImageView
-            android:id="@+id/logo_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_local_shipping_200"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        <FrameLayout
+            android:id="@+id/auth_welcome_frame_layout"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/app_logo" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-        <TextView
-            android:id="@+id/middle_text_view"
-            android:layout_width="wrap_content"
+        <!--<androidx.constraintlayout.motion.widget.MotionLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>-->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/auth_welcome_cardview"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_large"
-            android:gravity="center"
+            android:layout_marginStart="@dimen/padding_large"
+            android:layout_marginEnd="@dimen/padding_large"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/login_button"
-            android:gravity="center"
-            android:background="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/large_button_height"
-            android:textSize="@dimen/text_medium_size"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:text="@string/login"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            <ProgressBar
+                android:id="@+id/auth_welcome_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/auth_cardview_linearlayout"
+                style="@style/CardView.Dark"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/primaryLightColor"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_medium">
+
+                <TextView
+                    android:id="@+id/auth_welcome_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/padding_medium"
+                    android:gravity="center"
+                    android:text="@string/welcome_to_taxidi"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="italic|bold" />
+
+                <TextView
+                    android:id="@+id/auth_welcome_disclaimer_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_medium"
+                    android:gravity="center"
+                    android:text="@string/welcome_disclaimer"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/login_as_driver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/purple_700"
+                    android:text="@string/button_login_as_driver"
+                    android:textAllCaps="false" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/login_as_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/purple_500"
+                    android:text="@string/button_login_as_company"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
