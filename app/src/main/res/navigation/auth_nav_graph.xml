@@ -41,11 +41,20 @@
         android:name="com.lucidsoftworksllc.taxidi.auth.AuthRegisterFragment"
         android:label="AuthRegisterFragment"
         tools:layout="@layout/auth_register_fragment">
-        <!-- TODO finish action to return to sign-in with data class for email and pass -->
         <action
-            android:id="@+id/action_authRegisterFragment_to_authSignInFragment"
-            app:destination="@id/authSignInFragment" />
+            android:id="@+id/action_authRegisterFragment_to_authRegisterNextStepFragment"
+            app:destination="@id/authRegisterNextStepFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/authRegisterNextStepFragment"
+        android:name="com.lucidsoftworksllc.taxidi.auth.AuthRegisterNextStepFragment"
+        android:label="AuthRegisterNextStepFragment"
+        tools:layout="@layout/fragment_auth_register_next_step"/>
 
 
 </navigation>

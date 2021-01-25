@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Taxidi</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="app_logo">Taxidi logo</string>
     <string name="login">Login</string>
     <string name="welcome_to_taxidi">Welcome to Taxidi!</string>
@@ -13,8 +12,13 @@
     <string name="register_text">Register</string>
     <string name="login_to_existing">Login to existing account</string>
     <string name="example_email">truckdrivingman@yeehaw.com</string>
-    <string name="email_address_text">Email Address</string>
-    <string name="password_text">Password</string>
+    <string name="email_address_text">Email Address:</string>
+    <string name="password_text">Password:</string>
     <string name="example_password">********</string>
     <string name="register_new_account">Register a new account</string>
+    <string name="password_text2">Password (Again):</string>
+    <string name="register_text_next_step">Register, take me to the next step!</string>
+    <string name="register_new_account_step_2">Register (Step 2)</string>
+    <string name="register_step2_test_notification">Note: This is only a test app, your information you put here WILL be saved but is not important that it is real.</string>
+    <string name="register_authority_type">Authority Type:</string>
 </resources>

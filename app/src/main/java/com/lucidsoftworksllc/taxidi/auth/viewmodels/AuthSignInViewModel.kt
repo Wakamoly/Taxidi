@@ -13,7 +13,10 @@ class AuthSignInViewModel(
     val password = MutableLiveData<String>()
 
     // Register credentials
+    val password2 = MutableLiveData<String>()
 
+    // Register Step 2 credentials
+    val authorityType = MutableLiveData<String>()
 
     fun clearLoading(){
         showLoading.value = false
