@@ -2,13 +2,19 @@
     <string name="app_name">Taxidi</string>
 
     <string name="app_logo">Taxidi logo</string>
+    <string name="just_a_truck">Just a truck</string>
+
+
     <string name="login">Login</string>
     <string name="welcome_to_taxidi">Welcome to Taxidi!</string>
     <string name="button_login_as_driver">Login as driver</string>
     <string name="button_login_as_company">Login as company</string>
-    <string name="just_a_truck">Just a truck</string>
+
+
     <string name="welcome_disclaimer">Test purposes only, while registering is real, any portrayals of real names, businesses, or otherwise are purely coincidental and hold no ties with any real entity.</string>
     <string name="geofence_entered">Geofence entered!</string>
+
+
     <string name="register_text">Register</string>
     <string name="login_to_existing">Login to existing account</string>
     <string name="example_email">truckdrivingman@yeehaw.com</string>
@@ -18,6 +24,8 @@
     <string name="register_new_account">Register a new account</string>
     <string name="password_text2">Password (Again):</string>
     <string name="register_text_next_step">Register, take me to the next step!</string>
+
+
     <string name="register_new_account_step_2">Register (Step 2)</string>
     <string name="register_step2_test_notification">Note: This is only a test app, your information you put here WILL be saved but is not important that it is real.</string>
     <string name="register_authority_type">Authority Type:</string>
@@ -25,13 +33,23 @@
     <string name="register_authority_type_2">My MC</string>
     <string name="register_authority_type_3">No DOT or MC</string>
     <string name="register_driver_type">Type:</string>
-
-
     <string name="register_driver_type_1">Intrastate</string>
     <string name="register_driver_type_2">Carrier dispatch</string>
     <string name="register_driver_type_3">Leased on</string>
     <string name="register_driver_type_4">Exempt</string>
     <string name="register_driver_type_5">Canadian</string>
+    <string name="register_company_info_header">Company Information:</string>
+    <string name="company_name_hint">Company Name*</string>
+    <string name="street_address_hint">Street Address*</string>
+    <string name="city_hint">City*</string>
+    <string name="state_hint">State*</string>
+    <string name="zip_code_hint">Zip Code*</string>
+    <string name="company_phone_hint">Company Phone*</string>
+    <string name="country_hint">Country*</string>
+    <string name="register_personal_info_header">Personal Information:</string>
+    <string name="personal_firstname_hint">First Name*</string>
+    <string name="personal_lastname_hint">Last name*</string>
+    <string name="personal_phone_hint">Personal Phone*</string>
 
 
 </resources>
