@@ -21,4 +21,17 @@
     <string name="register_new_account_step_2">Register (Step 2)</string>
     <string name="register_step2_test_notification">Note: This is only a test app, your information you put here WILL be saved but is not important that it is real.</string>
     <string name="register_authority_type">Authority Type:</string>
+    <string name="register_authority_type_1">My DOT</string>
+    <string name="register_authority_type_2">My MC</string>
+    <string name="register_authority_type_3">No DOT or MC</string>
+    <string name="register_driver_type">Type:</string>
+
+
+    <string name="register_driver_type_1">Intrastate</string>
+    <string name="register_driver_type_2">Carrier dispatch</string>
+    <string name="register_driver_type_3">Leased on</string>
+    <string name="register_driver_type_4">Exempt</string>
+    <string name="register_driver_type_5">Canadian</string>
+
+
 </resources>

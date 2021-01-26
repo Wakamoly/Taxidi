@@ -13,7 +13,7 @@
         android:id="@+id/auth_register_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/secondaryDarkColor">
+        android:background="@color/primaryDarkColor">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/auth_welcome_cardview"
@@ -56,10 +56,9 @@
                         android:id="@+id/auth_welcome_disclaimer_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/padding_medium"
                         android:gravity="center"
                         android:text="@string/register_step2_test_notification"
-                        android:textColor="@color/secondaryTextColor"
+                        android:textColor="@color/primaryTextColor"
                         android:textSize="16sp"
                         android:textStyle="italic" />
 
@@ -87,10 +86,29 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/auth_register2_type_dropdown"
+                        android:backgroundTint="@color/secondaryLightColor"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:hint="@string/register_driver_type">
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/secondaryDarkColor"
+                            android:textColor="@color/white"
+                            android:inputType="none"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/register_frag_register_button"
-                        android:backgroundTint="@color/primaryDarkColor"
-                        android:text="@string/register_text_next_step"
+                        android:backgroundTint="@color/secondaryDarkColor"
+                        android:text="@string/register_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"/>

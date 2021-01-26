@@ -147,10 +147,18 @@ dependencies {
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.28.0"
     androidTestImplementation('org.koin:koin-test:2.1.6') { exclude group: 'org.mockito' }
 
+    // Implementations from Sabot I should probably use
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.iarcuschin:simpleratingbar:0.1.5'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.ravindu1024:Android-Image-Cropper:2.8.2'
+
     //Firebase
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    //implementation 'com.google.firebase:firebase-analytics-ktx'
     /*implementation platform('com.google.firebase:firebase-bom:26.2.0')
-    implementation 'com.firebaseui:firebase-ui-auth:6.2.1'
-    implementation 'com.google.firebase:firebase-analytics-ktx'*/
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.1'*/
 
     //Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'

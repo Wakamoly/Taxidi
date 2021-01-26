@@ -13,7 +13,7 @@
         android:id="@+id/auth_register_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/secondaryDarkColor">
+        android:background="@color/primaryDarkColor">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/auth_welcome_cardview"
@@ -57,12 +57,13 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/sign_in_email_address"
+                    style="@style/Widget.Design.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.Design.TextInputLayout"
-                    android:textColor="@color/white"
+                    android:hint="@string/example_email"
+                    android:inputType="textEmailAddress"
                     android:text="@={viewModel.emailAddress}"
-                    android:hint="@string/example_email"/>
+                    android:textColor="@color/white" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
@@ -73,16 +74,17 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/sign_in_password"
+                    style="@style/Widget.Design.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.Design.TextInputLayout"
+                    android:hint="@string/example_password"
+                    android:inputType="textPassword"
                     android:text="@={viewModel.password}"
-                    android:textColor="@color/white"
-                    android:hint="@string/example_password"/>
+                    android:textColor="@color/white" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/register_frag_register_button"
-                    android:backgroundTint="@color/primaryDarkColor"
+                    android:backgroundTint="@color/secondaryDarkColor"
                     android:text="@string/register_text_next_step"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

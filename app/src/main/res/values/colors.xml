@@ -9,14 +9,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Colors generated from Material Design: https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6A1B9A&secondary.color=616161 -->
-    <color name="primaryColor">#7B1FA2</color>
+    <!--<color name="primaryColor">#7B1FA2</color>
     <color name="primaryLightColor">#9c4dcc</color>
     <color name="primaryDarkColor">#57006B</color>
     <color name="secondaryColor">#616161</color>
     <color name="secondaryLightColor">#8e8e8e</color>
     <color name="secondaryDarkColor">#373737</color>
     <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>-->
 
     <!--More colors to try?-->
     <!--<color name="primaryColor">#8e24aa</color>
@@ -27,4 +27,14 @@
     <color name="secondaryDarkColor">#373737</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>-->
+
+    <color name="primaryColor">#37474f</color>
+    <color name="primaryLightColor">#62727b</color>
+    <color name="primaryDarkColor">#102027</color>
+    <color name="secondaryColor">#f9a825</color>
+    <color name="secondaryLightColor">#ffd95a</color>
+    <color name="secondaryDarkColor">#c17900</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
 </resources>

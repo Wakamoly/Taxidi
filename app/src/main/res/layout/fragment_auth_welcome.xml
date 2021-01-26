@@ -7,7 +7,7 @@
         android:id="@+id/auth_welcome_motion_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/secondaryDarkColor"
+        android:background="@color/primaryDarkColor"
         tools:showIn="@layout/activity_auth"
         tools:showPaths="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -68,10 +68,9 @@
                     android:id="@+id/auth_welcome_disclaimer_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/padding_medium"
                     android:gravity="center"
                     android:text="@string/welcome_disclaimer"
-                    android:textColor="@color/secondaryTextColor"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="16sp"
                     android:textStyle="italic" />
 
@@ -79,7 +78,7 @@
                     android:id="@+id/login_as_driver"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/purple_700"
+                    android:backgroundTint="@color/secondaryDarkColor"
                     android:text="@string/button_login_as_driver"
                     android:textAllCaps="false" />
 
@@ -87,7 +86,7 @@
                     android:id="@+id/login_as_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/purple_500"
+                    android:backgroundTint="@color/secondaryColor"
                     android:text="@string/button_login_as_company"
                     android:textAllCaps="false" />
 

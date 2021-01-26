@@ -20,6 +20,7 @@ import com.lucidsoftworksllc.taxidi.databinding.AuthRegisterFragmentBinding
 import com.lucidsoftworksllc.taxidi.databinding.FragmentAuthRegisterNextStepBinding
 import com.lucidsoftworksllc.taxidi.utils.ViewModelFactory
 import com.lucidsoftworksllc.taxidi.utils.hideKeyboard
+import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 
 class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextStepBinding>() {
 
@@ -41,9 +42,6 @@ class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextSt
         initView()
         binding.viewModel = _viewModel
 
-        val items = listOf("Option 1", "Option 2", "Option 3", "Option 4")
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
-        (binding.authRegister2AuthorityTypeDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         // binding.loginButton.setOnClickListener {
         //hideKeyboard()
     // launchSignInFlow()
@@ -59,6 +57,15 @@ class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextSt
             }
         }*/
         _viewModel.clearLoading()
+
+        val authTypeItems = listOf(getString(R.string.register_authority_type_1), getString(R.string.register_authority_type_2), getString(R.string.register_authority_type_3))
+        val authTypAdapter = ArrayAdapter(requireContext(), R.layout.list_item, authTypeItems)
+        (binding.authRegister2AuthorityTypeDropdown.editText as? AutoCompleteTextView)?.setAdapter(authTypAdapter)
+
+        val driverTypeItems = listOf(getString(R.string.register_driver_type_1), getString(R.string.register_driver_type_2), getString(R.string.register_driver_type_3), getString(R.string.register_driver_type_4), getString(R.string.register_driver_type_5))
+        val driverTypeAdapter = ArrayAdapter(requireContext(), R.layout.list_item, driverTypeItems)
+        (binding.authRegister2TypeDropdown.editText as? AutoCompleteTextView)?.setAdapter(driverTypeAdapter)
+
     }
 
     override fun getFragmentBinding(
@@ -68,29 +75,7 @@ class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextSt
 
     override fun onStart() {
         super.onStart()
-        _viewModel.showErrorMessage.observe(this, {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-        })
-        _viewModel.showToast.observe(this, {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-        })
-        _viewModel.showSnackBar.observe(this, {
-            Snackbar.make(this.requireView(), it, Snackbar.LENGTH_LONG).show()
-        })
-        _viewModel.showSnackBarInt.observe(this, {
-            Snackbar.make(this.requireView(), getString(it), Snackbar.LENGTH_LONG).show()
-        })
-
-        _viewModel.navigationCommand.observe(this, { command ->
-            when (command) {
-                is NavigationCommand.To -> findNavController().navigate(command.directions)
-                is NavigationCommand.Back -> findNavController().popBackStack()
-                is NavigationCommand.BackTo -> findNavController().popBackStack(
-                    command.destinationId,
-                    false
-                )
-            }
-        })
+        startBaseObservables(_viewModel)
     }
 
 }

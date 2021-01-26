@@ -17,6 +17,7 @@ import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.databinding.AuthRegisterFragmentBinding
 import com.lucidsoftworksllc.taxidi.utils.ViewModelFactory
 import com.lucidsoftworksllc.taxidi.utils.hideKeyboard
+import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 
 class AuthRegisterFragment : BaseFragmentNoVM<AuthRegisterFragmentBinding>() {
 
@@ -61,29 +62,7 @@ class AuthRegisterFragment : BaseFragmentNoVM<AuthRegisterFragmentBinding>() {
 
     override fun onStart() {
         super.onStart()
-        _viewModel.showErrorMessage.observe(this, {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-        })
-        _viewModel.showToast.observe(this, {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-        })
-        _viewModel.showSnackBar.observe(this, {
-            Snackbar.make(this.requireView(), it, Snackbar.LENGTH_LONG).show()
-        })
-        _viewModel.showSnackBarInt.observe(this, {
-            Snackbar.make(this.requireView(), getString(it), Snackbar.LENGTH_LONG).show()
-        })
-
-        _viewModel.navigationCommand.observe(this, { command ->
-            when (command) {
-                is NavigationCommand.To -> findNavController().navigate(command.directions)
-                is NavigationCommand.Back -> findNavController().popBackStack()
-                is NavigationCommand.BackTo -> findNavController().popBackStack(
-                        command.destinationId,
-                        false
-                )
-            }
-        })
+        startBaseObservables(_viewModel)
     }
 
 }
