@@ -12,6 +12,7 @@ import androidx.viewbinding.ViewBinding
 import com.lucidsoftworksllc.taxidi.auth.AuthActivity
 import com.lucidsoftworksllc.taxidi.db.TaxidiDatabase
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
+import com.lucidsoftworksllc.taxidi.utils.RemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,6 +22,7 @@ abstract class BaseFragmentNoVM<B: ViewBinding> : Fragment() {
     protected lateinit var userPreferences: UserPreferences
     protected lateinit var binding : B
     protected lateinit var mCtx: Context
+    protected val remoteDataSource = RemoteDataSource()
 
     override fun onCreateView(
             inflater: LayoutInflater,

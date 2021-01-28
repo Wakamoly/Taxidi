@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.AuthSignInViewModel
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository
+import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.api.RegisterAPI
 import com.lucidsoftworksllc.taxidi.base.BaseFragmentNoVM
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.databinding.AuthRegisterFragmentBinding
@@ -25,7 +26,7 @@ import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextStepBinding>() {
 
     private val _viewModel: AuthSignInViewModel by activityViewModels { ViewModelFactory(
-        AuthRepository(userPreferences)
+        AuthRepository(userPreferences, remoteDataSource.buildApi(RegisterAPI::class.java, userPreferences.fCMToken()))
     ) }
 
     companion object {

@@ -34,6 +34,11 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="registerModel"
+            app:argType="com.lucidsoftworksllc.taxidi.others.models.RegisterModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment
@@ -54,7 +59,13 @@
         android:id="@+id/authRegisterNextStepFragment"
         android:name="com.lucidsoftworksllc.taxidi.auth.AuthRegisterNextStepFragment"
         android:label="AuthRegisterNextStepFragment"
-        tools:layout="@layout/fragment_auth_register_next_step"/>
+        tools:layout="@layout/fragment_auth_register_next_step">
+        <action
+            android:id="@+id/action_authRegisterNextStepFragment_to_authSignInFragment"
+            app:destination="@id/authSignInFragment"
+            app:popUpTo="@id/authSignInFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 
 </navigation>

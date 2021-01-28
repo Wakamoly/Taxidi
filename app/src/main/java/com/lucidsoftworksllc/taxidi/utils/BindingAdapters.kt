@@ -1,5 +1,6 @@
 package com.lucidsoftworksllc.taxidi.utils
 
+import android.util.Log
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -30,6 +31,7 @@ object BindingAdapters {
     @BindingAdapter("android:fadeVisible")
     @JvmStatic
     fun setFadeVisible(view: View, visible: Boolean? = true) {
+        Log.d("BINDING ADAPTERS", "setFadeVisible: CALLED")
         if (view.tag == null) {
             view.tag = true
             view.visibility = if (visible == true) View.VISIBLE else View.GONE
@@ -44,4 +46,7 @@ object BindingAdapters {
             }
         }
     }
+
+
+
 }

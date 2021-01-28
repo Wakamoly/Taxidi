@@ -47,12 +47,6 @@ class AuthRegisterFragment : BaseFragmentNoVM<AuthRegisterFragmentBinding>() {
             }
         }*/
         _viewModel.clearLoading()
-
-        binding.registerFragRegisterButton.setOnClickListener {
-            hideKeyboard()
-            _viewModel.navigationCommand.value =
-                NavigationCommand.To(AuthRegisterFragmentDirections.actionAuthRegisterFragmentToAuthRegisterNextStepFragment())
-        }
     }
 
     override fun getFragmentBinding(

@@ -50,6 +50,21 @@
     <string name="personal_firstname_hint">First Name*</string>
     <string name="personal_lastname_hint">Last name*</string>
     <string name="personal_phone_hint">Personal Phone*</string>
+    <string name="err_email_address">Email address not valid!</string>
+    <string name="err_password_empty">Password field empty</string>
+    <string name="err_password_not_match">Passwords do not match!</string>
+    <string name="err_select_auth_type">Authority type not selected!</string>
+    <string name="err_select_type">Type not selected!</string>
+    <string name="err_enter_company_name">Company name not entered!</string>
+    <string name="err_enter_street_address">Street address not entered!</string>
+    <string name="err_enter_city">City not entered!</string>
+    <string name="err_enter_state">State not entered!</string>
+    <string name="err_enter_zip_code">Zip code not entered!</string>
+    <string name="err_enter_country">Country not entered!</string>
+    <string name="err_enter_company_phone">Company phone# not entered!</string>
+    <string name="err_enter_firstname">First name not entered!</string>
+    <string name="err_enter_lastname">Last name not entered!</string>
+    <string name="err_enter_personal_phone">Personal phone# not entered!</string>
 
 
 </resources>

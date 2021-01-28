@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lucidsoftworksllc.taxidi.auth.AuthActivity
 import com.lucidsoftworksllc.taxidi.db.TaxidiDatabase
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
+import com.lucidsoftworksllc.taxidi.utils.RemoteDataSource
 import com.lucidsoftworksllc.taxidi.utils.ViewModelFactory
 import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +32,7 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     protected lateinit var userPreferences: UserPreferences
     protected lateinit var binding : B
     protected lateinit var viewModel : VM
+    protected val remoteDataSource = RemoteDataSource()
     protected lateinit var mCtx: Context
 
     override fun onCreateView(
