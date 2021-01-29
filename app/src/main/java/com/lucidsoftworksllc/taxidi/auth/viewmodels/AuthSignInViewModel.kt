@@ -1,14 +1,17 @@
 package com.lucidsoftworksllc.taxidi.auth.viewmodels
 
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.multidex.BuildConfig
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.auth.AuthRegisterFragmentDirections
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.others.models.RegisterModel
+import com.lucidsoftworksllc.taxidi.utils.Result
 import com.lucidsoftworksllc.taxidi.utils.isEmailValid
 import kotlinx.coroutines.launch
 
@@ -85,13 +88,31 @@ class AuthSignInViewModel(
      * Save the user to the data source.
      */
     private fun saveUser(registerModel: RegisterModel) {
-        // TODO: 1/28/2021 showLoading fadeVisible doesn't seem to update
+        // TODO: 1/28/2021 showLoading -> fadeVisible doesn't seem to update
         showLoading.value = true
         viewModelScope.launch {
-            val result = repository.saveUser(registerModel)
-            showLoading.value = false
-            showSnackBarInt.value = R.string.reminder_saved
-            navigationCommand.value = NavigationCommand.Back
+            when (val result = repository.saveUser(registerModel)){
+
+                is Result.Success -> {
+                    showLoading.value = false
+                    if (BuildConfig.DEBUG) {
+                        // TODO: 1/28/2021 show snackbar for response in data class
+                    }
+                    /*showSnackBarInt.value = R.string.reminder_saved
+                    navigationCommand.value = NavigationCommand.Back*/
+                    // TODO: 1/28/2021 Log the user in
+                    // TODO: 1/28/2021 Save credentials to DataStore
+                    // TODO: 1/28/2021 Navigate to which-ever Main Activity per the user's type
+                }
+
+                is Result.Error -> {
+                    showLoading.value = false
+                    showSnackBar.value = result.message
+                }
+
+                Result.Loading -> showLoading.value = true
+
+            }
         }
     }
 

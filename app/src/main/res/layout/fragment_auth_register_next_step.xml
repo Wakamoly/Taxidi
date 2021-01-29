@@ -306,7 +306,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
-                        android:onClick="@{() -> viewModel.register()}"/>
+                        android:onClick="@{() -> viewModel.register()}"
+                        android:enabled="@{viewModel.showLoading.booleanValue()}"/>
 
                 </LinearLayout>
 

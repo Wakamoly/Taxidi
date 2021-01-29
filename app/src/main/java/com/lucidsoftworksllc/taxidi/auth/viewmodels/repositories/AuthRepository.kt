@@ -26,8 +26,7 @@ class AuthRepository(
     }
 
     suspend fun saveUser(registerModel: RegisterModel) = safeApiCall {
-        // TODO: 1/28/2021  
-        //api.
+        api.
     }
 
 }

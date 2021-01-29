@@ -26,16 +26,11 @@ import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextStepBinding>() {
 
     private val _viewModel: AuthSignInViewModel by activityViewModels { ViewModelFactory(
-        AuthRepository(userPreferences, remoteDataSource.buildApi(RegisterAPI::class.java, userPreferences.fCMToken()))
+        AuthRepository(userPreferences, remoteDataSource.buildApi(RegisterAPI::class.java, authToken))
     ) }
 
     companion object {
         const val TAG = "AuthRegisterNextStepFragment"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mCtx = requireContext()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

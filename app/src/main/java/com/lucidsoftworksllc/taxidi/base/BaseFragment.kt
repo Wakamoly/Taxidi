@@ -34,13 +34,22 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     protected lateinit var viewModel : VM
     protected val remoteDataSource = RemoteDataSource()
     protected lateinit var mCtx: Context
+    protected lateinit var authToken: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        userPreferences = UserPreferences(requireContext())
+        lifecycleScope.launch {
+            authToken = userPreferences.fCMToken()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        userPreferences = UserPreferences(mCtx)
+        mCtx = requireContext()
         binding = getFragmentBinding(inflater, container)
         val factory = ViewModelFactory(getFragmentRepository())
         viewModel = ViewModelProvider(this, factory).get(getViewModel())

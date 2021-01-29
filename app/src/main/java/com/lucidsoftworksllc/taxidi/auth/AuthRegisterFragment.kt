@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.AuthSignInViewModel
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository
+import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.api.RegisterAPI
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
 import com.lucidsoftworksllc.taxidi.base.BaseFragmentNoVM
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
@@ -21,15 +22,12 @@ import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 
 class AuthRegisterFragment : BaseFragmentNoVM<AuthRegisterFragmentBinding>() {
 
-    private val _viewModel: AuthSignInViewModel by activityViewModels { ViewModelFactory(AuthRepository(userPreferences)) }
+    private val _viewModel: AuthSignInViewModel by activityViewModels { ViewModelFactory(
+            AuthRepository(userPreferences, remoteDataSource.buildApi(RegisterAPI::class.java, authToken))
+    ) }
 
     companion object {
         const val TAG = "AuthRegisterFragment"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mCtx = requireContext()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
