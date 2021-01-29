@@ -306,8 +306,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
-                        android:onClick="@{() -> viewModel.register()}"
-                        android:enabled="@{viewModel.showLoading.booleanValue()}"/>
+                        android:enabled="@{!viewModel.registerShowLoading.booleanValue()}"/>
 
                 </LinearLayout>
 
@@ -321,7 +320,7 @@
                 android:backgroundTint="@color/purple_200"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:fadeVisible="@{viewModel.showLoading.booleanValue()}"/>
+                android:fadeVisible="@{viewModel.registerShowLoading.booleanValue()}"/>
 
         </androidx.cardview.widget.CardView>
 

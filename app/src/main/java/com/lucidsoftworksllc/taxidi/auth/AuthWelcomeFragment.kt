@@ -33,6 +33,10 @@ class AuthWelcomeFragment : Fragment() {
     private var stopTrucks: Boolean = false
     private var numTrucks = 1
 
+    companion object {
+        val TAG = "AuthWelcomeFragment"
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         (activity as AppCompatActivity).supportActionBar?.hide()
@@ -47,7 +51,7 @@ class AuthWelcomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         stopTrucks = false
-        startTrucks(20)
+        startTrucks(2)
     }
 
     override fun onStop() {
@@ -126,7 +130,8 @@ class AuthWelcomeFragment : Fragment() {
                         override fun onAnimationEnd(animation: Animator?) {
                             viewGroup.removeView(newTruck)
                             numTrucks--
-                            startTrucks(1)
+                            startTrucks(2)
+                            Log.d(TAG, "onAnimationEnd: Reanimating")
                         }
                     })
 
@@ -137,6 +142,7 @@ class AuthWelcomeFragment : Fragment() {
         } else {
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed({ startTrucks(trucks) }, 100)
+            Log.d(TAG, "startTrucks: delaying trucks")
         }
 
     }

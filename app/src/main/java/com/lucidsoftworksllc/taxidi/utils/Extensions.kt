@@ -13,13 +13,19 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
+import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
+import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 
 /**
@@ -88,7 +94,14 @@ object GeofencingConstants {
 }
 
 fun String.isEmailValid(): Boolean {
-    return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    // I've found the normal ways of checking an email don't allow more obscure email addresses that are actually valid.
+    // This regex should cover near 100% of even the most obscure.
+    return !TextUtils.isEmpty(this) && Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+            + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+            + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+            + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+            + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+            + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(this).matches()
 }
 
 fun Context.toastShort(message: String) =
@@ -169,3 +182,30 @@ fun Fragment.startBaseObservables(viewModel: BaseViewModel){
         }
     })
 }
+
+val Fragment.fcmToken: String
+    get() {
+        var authToken = ""
+        this.lifecycleScope.launch {
+            authToken = UserPreferences(requireContext()).fCMToken()
+        }
+        return authToken
+    }
+
+fun String.getServerResponseInt(): Int {
+    // Server responses coded 0xxx for Success values and 1xxx for failures.
+    // This is done instead of a response string from the server. A code is given, then decoded here for locality
+    return when(this) {
+        "0001" -> R.string.srvsuc_register
+        "1001" -> R.string.srverr_generic
+        "1002" -> R.string.srverr_invalid_pass
+        "1003" -> R.string.srverr_invalid_email
+        "1004" -> R.string.srverr_invalid_username
+        "1005" -> R.string.srverr_username_or_email_taken
+        "1006" -> R.string.srverr_ip_banned_lol
+        "1007" -> R.string.srverr_invalid_username2
+        "1008" -> R.string.srverr_username_or_email_taken
+        else -> R.string.srverr_unknown
+    }
+}
+

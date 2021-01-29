@@ -1,6 +1,5 @@
 package com.lucidsoftworksllc.taxidi.auth.viewmodels
 
-import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -24,6 +23,7 @@ class AuthSignInViewModel(
     val password = MutableLiveData<String>()
 
     // Register credentials
+    val username = MutableLiveData<String>()
     val password2 = MutableLiveData<String>()
 
     // Register Step 2 credentials
@@ -40,6 +40,8 @@ class AuthSignInViewModel(
     val lastName = MutableLiveData<String>()
     val personalPhone = MutableLiveData<String>()
 
+    val registerShowLoading = MutableLiveData<Boolean>()
+
     fun clearLoading(){
         showLoading.value = false
     }
@@ -51,6 +53,14 @@ class AuthSignInViewModel(
     }
 
     private fun validateRegisterFirstScreen(): Boolean {
+        if (username.value.isNullOrEmpty()) {
+            showSnackBarInt.value = R.string.err_username_empty
+            return false
+        } else if (username.value!!.length < 4 || username.value!!.length > 20){
+            showSnackBarInt.value = R.string.err_username_value_incorrect
+            return false
+        }
+
         if (emailAddress.value.isNullOrEmpty() || emailAddress.value?.isEmailValid() == false) {
             showSnackBarInt.value = R.string.err_email_address
             return false
@@ -58,6 +68,9 @@ class AuthSignInViewModel(
 
         if (password.value.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_password_empty
+            return false
+        } else if (password.value!!.length < 4) {
+            showSnackBarInt.value = R.string.err_password_invalid
             return false
         }
 
@@ -89,12 +102,13 @@ class AuthSignInViewModel(
      */
     private fun saveUser(registerModel: RegisterModel) {
         // TODO: 1/28/2021 showLoading -> fadeVisible doesn't seem to update
-        showLoading.value = true
+        registerShowLoading.value = true
         viewModelScope.launch {
             when (val result = repository.saveUser(registerModel)){
 
                 is Result.Success -> {
-                    showLoading.value = false
+                    registerShowLoading.value = false
+                    // TODO: 1/28/2021 if response error == true, decode the string response (1xxx) with String.getServerResponseInt(): Int extension function
                     if (BuildConfig.DEBUG) {
                         // TODO: 1/28/2021 show snackbar for response in data class
                     }
@@ -110,7 +124,7 @@ class AuthSignInViewModel(
                     showSnackBar.value = result.message
                 }
 
-                Result.Loading -> showLoading.value = true
+                Result.Loading -> registerShowLoading.value = true
 
             }
         }
@@ -121,76 +135,83 @@ class AuthSignInViewModel(
      */
     private fun validateEnteredData(registerModel: RegisterModel): Boolean {
 
-        // Model class values for reference
-        /*val authorityType : String,
-        val type : String,
-        val companyName : String,
-        val streetAddress : String,
-        val city : String,
-        val state : String,
-        val zipCode : String,
-        val country : String,
-        val companyPhone : String,
-        val firstName : String,
-        val lastName : String,
-        val personalPhone : String*/
+        if (registerModel.username.isNullOrEmpty()) {
+            showSnackBarInt.value = R.string.err_username_empty
+            return false
+        } else if (registerModel.username.length < 4 || username.value!!.length > 20){
+            showSnackBarInt.value = R.string.err_username_value_incorrect
+            return false
+        }
 
-        if (registerModel.authorityType.isEmpty()) {
+        if (registerModel.emailAddress.isNullOrEmpty() || !registerModel.emailAddress.isEmailValid()) {
+            showSnackBarInt.value = R.string.err_email_address
+            return false
+        }
+
+        if (registerModel.password.isNullOrEmpty()) {
+            showSnackBarInt.value = R.string.err_password_empty
+            return false
+        } else if (registerModel.password.length < 4) {
+            showSnackBarInt.value = R.string.err_password_invalid
+            return false
+        }
+
+        if (registerModel.authorityType.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_select_auth_type
             return false
         }
 
-        if (registerModel.type.isEmpty()) {
+        if (registerModel.type.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_select_type
             return false
         }
 
-        if (registerModel.companyName.isEmpty()) {
+        if (registerModel.companyName.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_company_name
             return false
         }
 
-        if (registerModel.streetAddress.isEmpty()) {
+        if (registerModel.streetAddress.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_street_address
             return false
         }
 
-        if (registerModel.city.isEmpty()) {
+        if (registerModel.city.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_city
             return false
         }
 
-        if (registerModel.state.isEmpty()) {
+        if (registerModel.state.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_state
             return false
         }
 
-        if (registerModel.zipCode.isEmpty()) {
+        if (registerModel.zipCode.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_zip_code
             return false
         }
 
-        if (registerModel.country.isEmpty()) {
+        if (registerModel.country.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_country
             return false
         }
 
-        if (registerModel.companyPhone.isEmpty()) {
+        if (registerModel.companyPhone.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_company_phone
             return false
         }
 
-        if (registerModel.firstName.isEmpty()) {
+        if (registerModel.firstName.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_firstname
             return false
         }
 
-        if (registerModel.lastName.isEmpty()) {
+        if (registerModel.lastName.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_lastname
             return false
         }
 
-        if (registerModel.personalPhone.isEmpty()) {
+        if (registerModel.personalPhone.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_personal_phone
             return false
         }

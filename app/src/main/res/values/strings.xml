@@ -50,6 +50,9 @@
     <string name="personal_firstname_hint">First Name*</string>
     <string name="personal_lastname_hint">Last name*</string>
     <string name="personal_phone_hint">Personal Phone*</string>
+    <string name="username_text">Username:</string>
+    <string name="example_username">TruckDrivingMan</string>
+
     <string name="err_email_address">Email address not valid!</string>
     <string name="err_password_empty">Password field empty</string>
     <string name="err_password_not_match">Passwords do not match!</string>
@@ -65,6 +68,18 @@
     <string name="err_enter_firstname">First name not entered!</string>
     <string name="err_enter_lastname">Last name not entered!</string>
     <string name="err_enter_personal_phone">Personal phone# not entered!</string>
+    <string name="err_username_empty">Username field empty</string>
+    <string name="err_username_value_incorrect">Username must be between 4 and 20 characters!</string>
+    <string name="err_password_invalid">Password must be at least 4 characters!</string>
+    <string name="srverr_unknown">Unknown error!</string>
+    <string name="srvsuc_register">User registered successfully</string>
+    <string name="srverr_generic">An error occurred, please try again</string>
+    <string name="srverr_invalid_pass">Please enter a valid password</string>
+    <string name="srverr_invalid_email">Please enter a valid email address</string>
+    <string name="srverr_invalid_username">Please enter a valid username</string>
+    <string name="srverr_username_or_email_taken">Username or email already in use</string>
+    <string name="srverr_ip_banned_lol">Internal Error #PI706</string>
+    <string name="srverr_invalid_username2">Username invalid! Characters must be a–z, 0–9, \"_\", or \".\"</string>
 
 
 </resources>

@@ -26,7 +26,24 @@ class AuthRepository(
     }
 
     suspend fun saveUser(registerModel: RegisterModel) = safeApiCall {
-        api.
+        api.register(
+                registerModel.signInAs,
+                registerModel.username,
+                registerModel.emailAddress,
+                registerModel.password,
+                registerModel.authorityType,
+                registerModel.type,
+                registerModel.companyName,
+                registerModel.streetAddress,
+                registerModel.city,
+                registerModel.state,
+                registerModel.zipCode,
+                registerModel.country,
+                registerModel.companyPhone,
+                registerModel.firstName,
+                registerModel.lastName,
+                registerModel.personalPhone
+        )
     }
 
 }

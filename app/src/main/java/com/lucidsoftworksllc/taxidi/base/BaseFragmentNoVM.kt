@@ -23,15 +23,11 @@ abstract class BaseFragmentNoVM<B: ViewBinding> : Fragment() {
     protected lateinit var binding : B
     protected lateinit var mCtx: Context
     protected val remoteDataSource = RemoteDataSource()
-    protected lateinit var authToken: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mCtx = requireContext()
         userPreferences = UserPreferences(mCtx)
-        lifecycleScope.launch {
-            authToken = userPreferences.fCMToken()
-        }
     }
 
     override fun onCreateView(

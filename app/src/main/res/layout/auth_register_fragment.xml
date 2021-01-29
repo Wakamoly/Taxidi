@@ -51,6 +51,23 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/username_text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium_size"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sign_in_username"
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/example_username"
+                    android:inputType="textShortMessage"
+                    android:text="@={viewModel.username}"
+                    android:textColor="@color/white" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/email_address_text"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_medium_size"/>

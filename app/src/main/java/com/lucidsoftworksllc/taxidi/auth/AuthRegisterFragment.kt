@@ -17,13 +17,14 @@ import com.lucidsoftworksllc.taxidi.base.BaseFragmentNoVM
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.databinding.AuthRegisterFragmentBinding
 import com.lucidsoftworksllc.taxidi.utils.ViewModelFactory
+import com.lucidsoftworksllc.taxidi.utils.fcmToken
 import com.lucidsoftworksllc.taxidi.utils.hideKeyboard
 import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 
 class AuthRegisterFragment : BaseFragmentNoVM<AuthRegisterFragmentBinding>() {
 
     private val _viewModel: AuthSignInViewModel by activityViewModels { ViewModelFactory(
-            AuthRepository(userPreferences, remoteDataSource.buildApi(RegisterAPI::class.java, authToken))
+            AuthRepository(userPreferences, remoteDataSource.buildApi(RegisterAPI::class.java, fcmToken))
     ) }
 
     companion object {
