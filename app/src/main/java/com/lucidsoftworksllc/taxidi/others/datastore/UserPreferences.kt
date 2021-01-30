@@ -19,7 +19,7 @@ class UserPreferences (
 
     init {
         dataStore = applicationContext.createDataStore(
-            name = "my_data_store"
+            name = STORE_NAME
         )
     }
 
@@ -28,9 +28,14 @@ class UserPreferences (
             preferences[KEY_USERNAME]
         }
 
-    private val email: Flow<String?>
+    private val userType: Flow<String?>
         get() = dataStore.data.map { preferences ->
-            preferences[KEY_EMAIL]
+            preferences[KEY_USER_TYPE]
+        }
+
+    private val userID: Flow<Int?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_USER_ID]
         }
 
     private val fCMToken: Flow<String?>
@@ -43,27 +48,33 @@ class UserPreferences (
             preferences[KEY_USER_LOGGED_IN]
         }
 
-    suspend fun saveCredentials(username: String, email: String){
+    suspend fun saveCredentials(username: String, userID: Int, type: String){
         dataStore.edit { preferences ->
-            preferences[KEY_EMAIL] = email
             preferences[KEY_USERNAME] = username
+            preferences[KEY_USER_ID] = userID
+            preferences[KEY_USER_TYPE] = type
             preferences[KEY_USER_LOGGED_IN] = true
         }
         Log.d("UserPreferences", "saveCredentials: isUserLoggedIn -> ${isUserLoggedIn()}")
+        Log.d("UserPreferences", "saveCredentials: userID -> ${userID()}")
+        Log.d("UserPreferences", "saveCredentials: userUsername -> ${userUsername()}")
+        Log.d("UserPreferences", "saveCredentials: userType -> ${userType()}")
     }
 
     suspend fun saveFCMToken(token: String) {
         dataStore.edit { preferences ->
             preferences[KEY_FCMTOKEN] = token
         }
-        Log.d("UserPreferences", "saveFCMToken: FCMToken updated -> $fCMToken")
+        Log.d("UserPreferences", "saveFCMToken: FCMToken updated -> ${fCMToken()})")
     }
 
     suspend fun isUserLoggedIn(): Boolean = isUserLoggedIn.first() ?: false
 
-    suspend fun userEmail(): String = email.first().toString()
+    suspend fun userID(): String = userID.first().toString()
 
     suspend fun userUsername(): String = username.first().toString()
+
+    suspend fun userType(): String = userType.first().toString()
 
     suspend fun fCMToken(): String = fCMToken.first().toString()
 
@@ -74,10 +85,12 @@ class UserPreferences (
     }
 
     companion object {
-        private val KEY_USERNAME = preferencesKey<String>("key_username")
-        private val KEY_EMAIL = preferencesKey<String>("key_email")
-        private val KEY_USER_LOGGED_IN = preferencesKey<Boolean>("key_is_user_logged_in")
-        private val KEY_FCMTOKEN = preferencesKey<String>("key_fcm_token")
+        private val KEY_USERNAME = stringPreferencesKey("key_username")
+        private val KEY_USER_ID = intPreferencesKey("key_user_id")
+        private val KEY_USER_TYPE = stringPreferencesKey("key_user_type")
+        private val KEY_USER_LOGGED_IN = booleanPreferencesKey("key_is_user_logged_in")
+        private val KEY_FCMTOKEN = stringPreferencesKey("key_fcm_token")
+        private const val STORE_NAME = "tax_data_store"
     }
 
 }

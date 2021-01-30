@@ -1,5 +1,6 @@
 package com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.api
 
+import com.lucidsoftworksllc.taxidi.others.models.server_responses.LoginResponseModel
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.RegisterResponseModel
 import retrofit2.http.*
 
@@ -40,5 +41,11 @@ interface RegisterAPI {
             @Field("lastName") lastName: String?,
             @Field("personalPhone") personalPhone: String?
     ) : RegisterResponseModel
+
+    @GET("users_main.php/login")
+    suspend fun login(
+            @Query("email") email: String?,
+            @Query("password") password: String?
+    ): LoginResponseModel
 
 }

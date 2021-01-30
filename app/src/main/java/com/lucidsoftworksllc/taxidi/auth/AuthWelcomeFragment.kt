@@ -131,7 +131,7 @@ class AuthWelcomeFragment : Fragment() {
                             viewGroup.removeView(newTruck)
                             numTrucks--
                             startTrucks(2)
-                            Log.d(TAG, "onAnimationEnd: Reanimating")
+                            //Log.d(TAG, "onAnimationEnd: Reanimating")
                         }
                     })
 

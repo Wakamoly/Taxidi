@@ -15,14 +15,14 @@ class AuthRepository(
 ) : BaseRepository(dispatcher) {
 
     suspend fun login(
-        email: String, username: String
-    ) {
-        // Database operations or network calls
-        saveCredentials(username, email)
+        email: String, password: String
+    ) = safeApiCall {
+        api.login(email, password)
     }
 
-    private suspend fun saveCredentials(username: String, email: String){
-        userPreferences.saveCredentials(username, email)
+    // TODO: 1/30/2021 Call this from VM
+    suspend fun saveCredentials(username: String, user_id: Int, type: String){
+        userPreferences.saveCredentials(username, user_id, type)
     }
 
     suspend fun saveUser(registerModel: RegisterModel) = safeApiCall {

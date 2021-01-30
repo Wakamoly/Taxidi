@@ -38,12 +38,6 @@ class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextSt
         super.onViewCreated(view, savedInstanceState)
         initView()
         binding.viewModel = _viewModel
-
-        // binding.loginButton.setOnClickListener {
-        //hideKeyboard()
-    // launchSignInFlow()
-    // }
-
     }
 
     private fun initView(){

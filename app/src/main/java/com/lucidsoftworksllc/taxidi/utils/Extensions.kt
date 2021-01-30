@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -24,6 +25,8 @@ import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -189,14 +192,39 @@ val Fragment.fcmToken: String
         this.lifecycleScope.launch {
             authToken = UserPreferences(requireContext()).fCMToken()
         }
+        Log.d("Extensions", "fcmToken Fragment: $authToken")
         return authToken
+    }
+
+val Activity.fcmToken: String
+    get() {
+        var authToken = ""
+        CoroutineScope(Dispatchers.Main).launch {
+            authToken = UserPreferences(this@fcmToken).fCMToken()
+        }
+        Log.d("Extensions", "fcmToken: $authToken")
+        return authToken
+    }
+
+val Activity.isUserLoggedIn: Boolean
+    get() {
+        var isUserLoggedIn = false
+        CoroutineScope(Dispatchers.Main).launch {
+            isUserLoggedIn = UserPreferences(this@isUserLoggedIn).isUserLoggedIn()
+        }
+        Log.d("Extensions", "isUserLoggedIn: $isUserLoggedIn")
+        return isUserLoggedIn
     }
 
 fun String.getServerResponseInt(): Int {
     // Server responses coded 0xxx for Success values and 1xxx for failures.
     // This is done instead of a response string from the server. A code is given, then decoded here for locality
     return when(this) {
+        // Success
         "0001" -> R.string.srvsuc_register
+        "0002" -> R.string.srvsuc_login
+
+        // Failure
         "1001" -> R.string.srverr_generic
         "1002" -> R.string.srverr_invalid_pass
         "1003" -> R.string.srverr_invalid_email
@@ -205,6 +233,8 @@ fun String.getServerResponseInt(): Int {
         "1006" -> R.string.srverr_ip_banned_lol
         "1007" -> R.string.srverr_invalid_username2
         "1008" -> R.string.srverr_username_or_email_taken
+        "1009" -> R.string.srverr_email_not_in_use
+        "1010" -> R.string.srverr_login_failure
         else -> R.string.srverr_unknown
     }
 }

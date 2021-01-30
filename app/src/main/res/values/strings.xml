@@ -80,6 +80,9 @@
     <string name="srverr_username_or_email_taken">Username or email already in use</string>
     <string name="srverr_ip_banned_lol">Internal Error #PI706</string>
     <string name="srverr_invalid_username2">Username invalid! Characters must be a–z, 0–9, \"_\", or \".\"</string>
+    <string name="srverr_email_not_in_use">User for this email does not exist!</string>
+    <string name="srverr_login_failure">Login error! Please make sure your credentials are correct.</string>
+    <string name="srvsuc_login">User logged in successfully</string>
 
 
 </resources>

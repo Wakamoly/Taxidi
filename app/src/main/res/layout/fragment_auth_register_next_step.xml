@@ -299,10 +299,14 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- TODO fix loading issue, user not notified -->
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/register_frag_register_button"
                         android:backgroundTint="@color/secondaryDarkColor"
                         android:text="@string/register_text"
+                        android:layout_marginTop="@dimen/padding_medium"
+                        android:layout_marginBottom="64dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"

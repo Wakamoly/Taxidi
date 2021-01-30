@@ -43,6 +43,15 @@ class AuthSignInViewModel(
 
     val registerShowLoading = MutableLiveData<Boolean>()
 
+    // Observable for AuthActivity to move to the corresponding main activity
+    val signInRequestSuccess = MutableLiveData<Boolean>()
+
+    init {
+        signInRequestSuccess.value = false
+        registerShowLoading.value = false
+        showLoading.value = false
+    }
+
     fun clearLoading(){
         showLoading.value = false
     }
@@ -62,16 +71,8 @@ class AuthSignInViewModel(
             return false
         }
 
-        if (emailAddress.value.isNullOrEmpty() || emailAddress.value?.isEmailValid() == false) {
-            showSnackBarInt.value = R.string.err_email_address
-            return false
-        }
-
-        if (password.value.isNullOrEmpty()) {
-            showSnackBarInt.value = R.string.err_password_empty
-            return false
-        } else if (password.value!!.length < 4) {
-            showSnackBarInt.value = R.string.err_password_invalid
+        if (!validateUserLoginCredentials()){
+            // Reusing code for email and pass
             return false
         }
 
@@ -109,21 +110,18 @@ class AuthSignInViewModel(
 
                 is Result.Success -> {
                     registerShowLoading.value = false
-                    // TODO: 1/28/2021 if response error == true, decode the string response (1xxx) with String.getServerResponseInt(): Int extension function
+                    // 1/28/2021 -> if response error == true, decode the string response (1xxx) with String.getServerResponseInt(): Int extension function
                     if (result.data.error == false) {
                         Log.d("AuthSignInVM", "saveUser: YAY")
-                        /*showSnackBarInt.value = R.string.reminder_saved
-                        navigationCommand.value = NavigationCommand.Back*/
-                        // TODO: 1/28/2021 Log the user in
-                        // TODO: 1/28/2021 Save credentials to DataStore
-                        // TODO: 1/28/2021 Navigate to which-ever Main Activity per the user's type
+                        if (BuildConfig.DEBUG) {
+                            showSnackBarInt.value = result.data.code?.getServerResponseInt()
+                        }
+                        // 1/28/2021 Log the user in
+                        logUserIn()
                     } else {
                         showSnackBarInt.value = result.data.code?.getServerResponseInt()
                     }
-                    if (BuildConfig.DEBUG) {
-                        // TODO: 1/28/2021 show snackbar for response in data class
-                        showSnackBarInt.value = result.data.code?.getServerResponseInt()
-                    }
+
                 }
 
                 is Result.Error -> {
@@ -135,6 +133,66 @@ class AuthSignInViewModel(
 
             }
         }
+    }
+
+    fun logUserIn() {
+        if (validateUserLoginCredentials()){
+            viewModelScope.launch {
+                when (val result = repository.login(emailAddress.value.toString(), password.value.toString())){
+
+                    is Result.Success -> {
+                        registerShowLoading.value = false
+                        showLoading.value = false
+                        // 1/28/2021 -> if response error == true, decode the string response (1xxx) with String.getServerResponseInt(): Int extension function
+                        if (!result.data.error) {
+                            Log.d("AuthSignInVM", "logUserIn: YAY")
+                            if (BuildConfig.DEBUG) {
+                                showSnackBarInt.value = result.data.code.getServerResponseInt()
+                            }
+                            val username = result.data.result?.username
+                            val userID = result.data.result?.user_id
+                            val type = result.data.result?.type
+                            if (username != null && userID != null && type != null){
+                                repository.saveCredentials(username, userID, type)
+                                signInRequestSuccess.value = true
+                            }
+                        } else {
+                            showSnackBarInt.value = result.data.code.getServerResponseInt()
+                        }
+
+                    }
+
+                    is Result.Error -> {
+                        registerShowLoading.value = false
+                        showLoading.value = false
+                        showSnackBar.value = result.message
+                    }
+
+                    Result.Loading -> {
+                        showLoading.value = true
+                        registerShowLoading.value = true
+                    }
+
+                }
+            }
+        }
+    }
+
+    private fun validateUserLoginCredentials(): Boolean {
+        if (emailAddress.value.isNullOrEmpty() || emailAddress.value?.isEmailValid() == false) {
+            showSnackBarInt.value = R.string.err_email_address
+            return false
+        }
+
+        if (password.value.isNullOrEmpty()) {
+            showSnackBarInt.value = R.string.err_password_empty
+            return false
+        } else if (password.value!!.length < 4) {
+            showSnackBarInt.value = R.string.err_password_invalid
+            return false
+        }
+
+        return true
     }
 
     /**
