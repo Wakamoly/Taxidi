@@ -11,6 +11,7 @@ import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.others.models.RegisterModel
 import com.lucidsoftworksllc.taxidi.utils.Result
+import com.lucidsoftworksllc.taxidi.utils.getServerResponseInt
 import com.lucidsoftworksllc.taxidi.utils.isEmailValid
 import kotlinx.coroutines.launch
 
@@ -109,14 +110,20 @@ class AuthSignInViewModel(
                 is Result.Success -> {
                     registerShowLoading.value = false
                     // TODO: 1/28/2021 if response error == true, decode the string response (1xxx) with String.getServerResponseInt(): Int extension function
+                    if (result.data.error == false) {
+                        Log.d("AuthSignInVM", "saveUser: YAY")
+                        /*showSnackBarInt.value = R.string.reminder_saved
+                        navigationCommand.value = NavigationCommand.Back*/
+                        // TODO: 1/28/2021 Log the user in
+                        // TODO: 1/28/2021 Save credentials to DataStore
+                        // TODO: 1/28/2021 Navigate to which-ever Main Activity per the user's type
+                    } else {
+                        showSnackBarInt.value = result.data.code?.getServerResponseInt()
+                    }
                     if (BuildConfig.DEBUG) {
                         // TODO: 1/28/2021 show snackbar for response in data class
+                        showSnackBarInt.value = result.data.code?.getServerResponseInt()
                     }
-                    /*showSnackBarInt.value = R.string.reminder_saved
-                    navigationCommand.value = NavigationCommand.Back*/
-                    // TODO: 1/28/2021 Log the user in
-                    // TODO: 1/28/2021 Save credentials to DataStore
-                    // TODO: 1/28/2021 Navigate to which-ever Main Activity per the user's type
                 }
 
                 is Result.Error -> {

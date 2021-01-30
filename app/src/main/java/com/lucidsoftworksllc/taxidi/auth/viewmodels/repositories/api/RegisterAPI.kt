@@ -1,5 +1,6 @@
 package com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.api
 
+import com.lucidsoftworksllc.taxidi.others.models.server_responses.RegisterResponseModel
 import retrofit2.http.*
 
 interface RegisterAPI {
@@ -38,6 +39,6 @@ interface RegisterAPI {
             @Field("firstName") firstName: String?,
             @Field("lastName") lastName: String?,
             @Field("personalPhone") personalPhone: String?
-    ) //: List<ProfilenewsRecycler>
+    ) : RegisterResponseModel
 
 }
