@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Taxidi">
+        <activity android:name=".main_activities.driver_user.DriverMainActivity"></activity>
         <activity android:name=".auth.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

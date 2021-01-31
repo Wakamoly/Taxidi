@@ -13,6 +13,7 @@ import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.AuthSignInViewModel
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.api.RegisterAPI
+import com.lucidsoftworksllc.taxidi.main_activities.driver_user.DriverMainActivity
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
 import com.lucidsoftworksllc.taxidi.utils.*
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,7 @@ class AuthActivity : AppCompatActivity() {
     //val viewModel by lazy { ViewModelProvider(this).get(AuthSignInViewModel::class.java) }
     private lateinit var viewModel : AuthSignInViewModel
     private lateinit var fcmToken: String
+    private lateinit var signedInAs: String
     private var isUserLoggedIn: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,7 @@ class AuthActivity : AppCompatActivity() {
         runBlocking {
             fcmToken = userPreferences.fCMToken()
             isUserLoggedIn = userPreferences.isUserLoggedIn()
+            signedInAs = userPreferences.userType()
         }
 
         val factory = ViewModelFactory(AuthRepository(userPreferences, RemoteDataSource().buildApi(RegisterAPI::class.java, fcmToken)))
@@ -56,9 +59,14 @@ class AuthActivity : AppCompatActivity() {
         }
 
         if (isUserLoggedIn){
-            toastLong("Login successful! This would normally move the user to a main activity. Clearing UserPreferences to return to login screen.")
-            runBlocking { userPreferences.clear() }
-            startNewActivity(AuthActivity::class.java)
+            if (signedInAs == "driver") {
+                finish()
+                startNewActivity(DriverMainActivity::class.java)
+            } else {
+                toastLong("Login successful! This would normally move the user to a main activity. Clearing UserPreferences to return to login screen.")
+                runBlocking { userPreferences.clear() }
+                startNewActivity(AuthActivity::class.java)
+            }
         } else {
             setContentView(R.layout.activity_auth)
             setupObservers()

@@ -83,6 +83,12 @@
     <string name="srverr_email_not_in_use">User for this email does not exist!</string>
     <string name="srverr_login_failure">Login error! Please make sure your credentials are correct.</string>
     <string name="srvsuc_login">User logged in successfully</string>
+    <string name="bottom_navigation_home_title">Home</string>
+    <string name="bottom_navigation_map_title">Map</string>
+    <string name="bottom_navigation_notifications_title">Notifications</string>
+    <string name="bottom_navigation_profile_title">Profile</string>
+    <string name="driver_header_image_content_description">App logo, probably</string>
+    <string name="driver_navigation_view_header_title">Taxidi</string>
 
 
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/driverHomeFragment"
+        android:title="@string/bottom_navigation_home_title"
+        android:icon="@drawable/ic_baseline_home_64"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/driverMapFragment"
+        android:title="@string/bottom_navigation_map_title"
+        android:icon="@drawable/ic_baseline_map_64"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/driverNotificationFragment"
+        android:title="@string/bottom_navigation_notifications_title"
+        android:icon="@drawable/ic_baseline_notifications_64"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/driverProfileFragment"
+        android:title="@string/bottom_navigation_profile_title"
+        android:icon="@drawable/ic_baseline_person_64"
+        app:showAsAction="ifRoom" />
+
+</menu>
