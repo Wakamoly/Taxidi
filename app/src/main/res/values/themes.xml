@@ -16,8 +16,8 @@
 
     <!-- This style defines the tint color of the overflow menu button -->
     <style name="actionOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/primaryLightColor</item>
+        <item name="android:tint">@color/secondaryColor</item>
     </style>
 
-    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>

@@ -89,6 +89,9 @@
     <string name="bottom_navigation_profile_title">Profile</string>
     <string name="driver_header_image_content_description">App logo, probably</string>
     <string name="driver_navigation_view_header_title">Taxidi</string>
+    <string name="logout">Logout</string>
+    <string name="messaging_text">Messages</string>
+    <string name="driver_fragment_home_title">Home</string>
 
 
 </resources>

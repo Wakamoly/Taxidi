@@ -23,16 +23,17 @@ import kotlinx.coroutines.runBlocking
 
 class AuthActivity : AppCompatActivity() {
 
-    //val viewModel by lazy { ViewModelProvider(this).get(AuthSignInViewModel::class.java) }
     private lateinit var viewModel : AuthSignInViewModel
     private lateinit var fcmToken: String
     private lateinit var signedInAs: String
     private var isUserLoggedIn: Boolean = false
+    private lateinit var userPreferences : UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userPreferences = UserPreferences(this@AuthActivity)
+        userPreferences = UserPreferences(this@AuthActivity)
 
+        // TODO: 2/1/2021 Is this bad practice?
         runBlocking {
             fcmToken = userPreferences.fCMToken()
             isUserLoggedIn = userPreferences.isUserLoggedIn()
@@ -50,7 +51,6 @@ class AuthActivity : AppCompatActivity() {
                     Log.d("Installations", "Installation auth token: $fbToken, current -> $fcmToken")
                     if (fbToken != fcmToken) {
                         userPreferences.saveFCMToken(fbToken)
-                        // TODO: 1/28/2021 Also send to the server
                     }
                 }
             } else {
@@ -59,14 +59,7 @@ class AuthActivity : AppCompatActivity() {
         }
 
         if (isUserLoggedIn){
-            if (signedInAs == "driver") {
-                finish()
-                startNewActivity(DriverMainActivity::class.java)
-            } else {
-                toastLong("Login successful! This would normally move the user to a main activity. Clearing UserPreferences to return to login screen.")
-                runBlocking { userPreferences.clear() }
-                startNewActivity(AuthActivity::class.java)
-            }
+            signUserIn()
         } else {
             setContentView(R.layout.activity_auth)
             setupObservers()
@@ -74,14 +67,28 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
+    private fun signUserIn() {
+        lifecycleScope.launch {
+            fcmToken = userPreferences.fCMToken()
+            isUserLoggedIn = userPreferences.isUserLoggedIn()
+            signedInAs = userPreferences.userType()
+            if (signedInAs == "driver") {
+                finish()
+                startNewActivity(DriverMainActivity::class.java)
+            } else {
+                toastLong("Login successful! This would normally move the user to a main activity, but business accounts don't work just yet... Clearing UserPreferences to return to login screen, please log in as a driver.")
+                userPreferences.clear()
+                startNewActivity(AuthActivity::class.java)
+            }
+        }
+    }
+
     private fun setupObservers() {
 
         viewModel.signInRequestSuccess.observe(this, {
             when (it) {
                 true -> {
-                    // TODO: 1/28/2021 Navigate to which-ever Main Activity per the user's type
-                    // TODO: 1/30/2021 Move to Main Activities
-                    toastLong("Login successful! This would normally move the user to a main activity")
+                    signUserIn()
                 }
             }
         })

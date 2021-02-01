@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/driver_nav_graph.xml">
+<navigation  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/driverHomeFragment"
+    tools:context=".main_activities.driver_user.DriverMainActivity">
+
+    <fragment
+        android:id="@+id/driverHomeFragment"
+        android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverHomeFragment"
+        android:label="driver_home_fragment"
+        tools:layout="@layout/driver_home_fragment" />
+
 
 </navigation>
