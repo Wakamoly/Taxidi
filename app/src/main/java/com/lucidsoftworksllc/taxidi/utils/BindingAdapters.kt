@@ -58,20 +58,38 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:loadImage")
-    fun setImageResource(view: ImageView, imageUrl: String?) {
+    @BindingAdapter("app:loadImageNoAnim")
+    fun setImageResourceNoAnim(view: ImageView, imageUrl: String?) {
         val context = view.context
         val options = RequestOptions()
-            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 
         imageUrl?.let {
             val finalImageUrl = Constants.BASE_URL + imageUrl
             Glide.with(context)
-                .setDefaultRequestOptions(options)
-                .load(finalImageUrl)
+                    .setDefaultRequestOptions(options)
+                    .load(finalImageUrl)
                     // transition crossfade has some strange bugs with other animations
-                //.transition(DrawableTransitionOptions.withCrossFade(500))
-                .into(view)
+                    //.transition(DrawableTransitionOptions.withCrossFade(500))
+                    .into(view)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:loadImage")
+    fun setImageResource(view: ImageView, imageUrl: String?) {
+        val context = view.context
+        val options = RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+
+        imageUrl?.let {
+            val finalImageUrl = Constants.BASE_URL + imageUrl
+            Glide.with(context)
+                    .setDefaultRequestOptions(options)
+                    .load(finalImageUrl)
+                    // transition crossfade has some strange bugs with other animations
+                    .transition(DrawableTransitionOptions.withCrossFade(1000))
+                    .into(view)
         }
     }
 
@@ -129,6 +147,15 @@ object BindingAdapters {
     fun setTotalNumReviews(view: TextView, value: Int?) {
         value?.let {
             val text = "$value ${view.context.getString(R.string.reviews_total_num_concat_text)}"
+            view.text = text
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:tvTotalShipments")
+    fun setTotalNumShipments(view: TextView, value: Int?) {
+        value?.let {
+            val text = "$value ${view.context.getString(R.string.shipments_total_num_concat_text)}"
             view.text = text
         }
     }

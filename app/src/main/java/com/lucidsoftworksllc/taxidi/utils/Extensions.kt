@@ -296,11 +296,8 @@ fun currentDate(): Date {
     return calendar.time
 }
 
-fun currentDateSendMessage(): String {
-    TimeZone.setDefault(TimeZone.getTimeZone("America/Chicago"))
-    val calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"))
-    return calendar.time.toFormattedString()
-}
+fun currentDateSendMessage() = currentDate().toFormattedString()
+
 
 fun Date.toFormattedString(): String {
     val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())

@@ -150,6 +150,8 @@
     <string name="online_indicator_contdesc">Online indicator</string>
     <string name="not_verified_text">Not Verified</string>
     <string name="is_verified_text">Verified</string>
+    <string name="shipments_total_num_concat_text">Shipments Sent</string>
+    <string name="hire_button_text">Hire</string>
 
 
 </resources>

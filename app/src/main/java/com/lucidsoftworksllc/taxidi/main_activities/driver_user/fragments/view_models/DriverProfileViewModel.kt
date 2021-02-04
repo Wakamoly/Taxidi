@@ -69,9 +69,9 @@ class DriverProfileViewModel (
         showLoading.value = false
         profileLoaded.value = false
         if (!data.error) {
-            if (BuildConfig.DEBUG) {
+            /*if (BuildConfig.DEBUG) {
                 showSnackBarInt.value = data.code.getServerResponseInt()
-            }
+            }*/
             if (data.result != null) {
                 data.result.apply {
                     profileDisplayName.value = display_name
