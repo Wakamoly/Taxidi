@@ -78,6 +78,7 @@
     <string name="err_password_invalid">Password must be at least 4 characters!</string>
     <string name="srverr_unknown">Unknown error!</string>
     <string name="srvsuc_register">User registered successfully</string>
+    <string name="srvsuc_login">User logged in successfully</string>
     <string name="srverr_generic">An error occurred, please try again</string>
     <string name="srverr_invalid_pass">Please enter a valid password</string>
     <string name="srverr_invalid_email">Please enter a valid email address</string>
@@ -87,7 +88,9 @@
     <string name="srverr_invalid_username2">Username invalid! Characters must be a–z, 0–9, \"_\", or \".\"</string>
     <string name="srverr_email_not_in_use">User for this email does not exist!</string>
     <string name="srverr_login_failure">Login error! Please make sure your credentials are correct.</string>
-    <string name="srvsuc_login">User logged in successfully</string>
+    <string name="srverr_profile_id">Couldn\'t get profile\'s ID!</string>
+
+
     <string name="bottom_navigation_home_title">Home</string>
     <string name="bottom_navigation_map_title">Map</string>
     <string name="bottom_navigation_notifications_title">Notifications</string>
@@ -138,6 +141,8 @@
     <string name="driver_fragment_notifications_title">Notifications</string>
     <string name="driver_fragment_profile_title">Profile</string>
     <string name="edit_my_profile_text">Edit Profile</string>
+    <string name="srverr_load_profile">Error loading profile!</string>
+    <string name="srvsuc_load_profile">Loaded profile successfully!</string>
 
 
 </resources>

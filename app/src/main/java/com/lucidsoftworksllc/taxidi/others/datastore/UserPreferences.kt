@@ -38,6 +38,11 @@ class UserPreferences (
             preferences[KEY_USER_ID]
         }
 
+    private val userStatus: Flow<Int?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_USER_STATUS]
+        }
+
     private val fCMToken: Flow<String?>
         get() = dataStore.data.map { preferences ->
             preferences[KEY_FCMTOKEN]
@@ -54,11 +59,13 @@ class UserPreferences (
             preferences[KEY_USER_ID] = userID
             preferences[KEY_USER_TYPE] = type
             preferences[KEY_USER_LOGGED_IN] = true
+            preferences[KEY_USER_STATUS] = UserStatus.IDLE.out
         }
         Log.d("UserPreferences", "saveCredentials: isUserLoggedIn -> ${isUserLoggedIn()}")
         Log.d("UserPreferences", "saveCredentials: userID -> ${userID()}")
         Log.d("UserPreferences", "saveCredentials: userUsername -> ${userUsername()}")
         Log.d("UserPreferences", "saveCredentials: userType -> ${userType()}")
+        Log.d("UserPreferences", "saveCredentials: userStatus -> ${userStatus()}")
     }
 
     suspend fun saveFCMToken(token: String) {
@@ -70,7 +77,9 @@ class UserPreferences (
 
     suspend fun isUserLoggedIn(): Boolean = isUserLoggedIn.first() ?: false
 
-    suspend fun userID(): String = userID.first().toString()
+    suspend fun userID(): Int = userID.first() ?: 0
+
+    suspend fun userStatus(): Int = userStatus.first() ?: 0
 
     suspend fun userUsername(): String = username.first().toString()
 
@@ -87,6 +96,7 @@ class UserPreferences (
     companion object {
         private val KEY_USERNAME = stringPreferencesKey("key_username")
         private val KEY_USER_ID = intPreferencesKey("key_user_id")
+        private val KEY_USER_STATUS = intPreferencesKey("key_user_status")
         private val KEY_USER_TYPE = stringPreferencesKey("key_user_type")
         private val KEY_USER_LOGGED_IN = booleanPreferencesKey("key_is_user_logged_in")
         private val KEY_FCMTOKEN = stringPreferencesKey("key_fcm_token")
@@ -95,27 +105,9 @@ class UserPreferences (
 
 }
 
-/**
- * Extension functions for DataStore
- */
-fun <T> DataStore<Preferences>.getValueFlow(
-        key: Preferences.Key<T>,
-        defaultValue: T
-): Flow<T> {
-    return this.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
-            }.map { preferences ->
-                preferences[key] ?: defaultValue
-            }
-}
-
-suspend fun <T> DataStore<Preferences>.setValue(key: Preferences.Key<T>, value: T) {
-    this.edit { preferences ->
-        preferences[key] = value
-    }
+enum class UserStatus(val out: Int) {
+    // Offline won't receive offers, Idle will receive offers, Active means that the user is currently in transit.
+    OFFLINE(0),
+    IDLE(1),
+    ACTIVE(2)
 }

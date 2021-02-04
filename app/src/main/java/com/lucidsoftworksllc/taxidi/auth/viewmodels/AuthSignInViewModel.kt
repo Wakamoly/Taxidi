@@ -3,7 +3,7 @@ package com.lucidsoftworksllc.taxidi.auth.viewmodels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.multidex.BuildConfig
+import com.lucidsoftworksllc.taxidi.BuildConfig
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.auth.AuthRegisterFragmentDirections
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository

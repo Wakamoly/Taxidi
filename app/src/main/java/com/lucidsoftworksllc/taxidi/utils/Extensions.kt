@@ -7,10 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -202,6 +205,16 @@ val Fragment.fcmToken: String
         return authToken
     }
 
+val Fragment.deviceUserID: Int
+    get() {
+        var userID: Int
+        runBlocking {
+            userID = UserPreferences(requireContext()).userID()
+        }
+        Log.d("Extensions", "deviceUserID Fragment: $userID")
+        return userID
+    }
+
 val Activity.getFcmToken: String
     get() {
         var authToken: String
@@ -239,6 +252,7 @@ fun String.getServerResponseInt(): Int {
         // Success
         "0001" -> R.string.srvsuc_register
         "0002" -> R.string.srvsuc_login
+        "0003" -> R.string.srvsuc_load_profile
 
         // Failure
         "1001" -> R.string.srverr_generic
@@ -251,6 +265,8 @@ fun String.getServerResponseInt(): Int {
         "1008" -> R.string.srverr_username_or_email_taken
         "1009" -> R.string.srverr_email_not_in_use
         "1010" -> R.string.srverr_login_failure
+        "1011" -> R.string.srverr_profile_id
+        "1012" -> R.string.srverr_load_profile
         else -> R.string.srverr_unknown
     }
 }
@@ -334,5 +350,18 @@ fun isUserOnline(dateString: String): Boolean {
 private fun getTimeDistanceInMinutes(time: Long): Int {
     val timeDistance: Long = currentDate().time - time
     return (abs(timeDistance) / 1000 / 60.toFloat()).roundToInt()
+}
+
+/**
+ * Adds TextWatcher to the EditText
+ */
+fun EditText.onTextChanged(listener: (String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            listener(s.toString())
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    })
 }
 

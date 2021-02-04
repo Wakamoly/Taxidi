@@ -28,7 +28,17 @@
         android:id="@+id/driverProfileFragment"
         android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverProfileFragment"
         android:label="DriverProfileFragment"
-        tools:layout="@layout/driver_profile_fragment"/>
+        tools:layout="@layout/driver_profile_fragment">
+        <argument
+            android:name="username"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="userId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 
 
 </navigation>

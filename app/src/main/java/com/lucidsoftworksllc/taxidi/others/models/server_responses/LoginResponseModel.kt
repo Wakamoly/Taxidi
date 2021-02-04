@@ -12,9 +12,9 @@ package com.lucidsoftworksllc.taxidi.others.models.server_responses
 }*/
 
 data class LoginResponseModel(
-        val error: Boolean,
-        val code: String,
-        val result: LoginCredentialModel?
+    val error: Boolean,
+    val code: String,
+    val result: LoginCredentialModel?
 )
 
 data class LoginCredentialModel (

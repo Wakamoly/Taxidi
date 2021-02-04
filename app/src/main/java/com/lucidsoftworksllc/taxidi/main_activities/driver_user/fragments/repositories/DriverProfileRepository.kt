@@ -12,6 +12,13 @@ class DriverProfileRepository (
     dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseRepository(dispatcher) {
 
+    suspend fun getProfileID(username: String) = safeApiCall {
+        api.getProfileByUsername(username)
+    }
+
+    suspend fun loadProfile(userId: Int) = safeApiCall {
+        api.loadProfile(userId)
+    }
 
 
 }

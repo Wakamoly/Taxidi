@@ -1,10 +1,18 @@
 package com.lucidsoftworksllc.taxidi.utils
 
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
 
 
@@ -44,6 +52,41 @@ object BindingAdapters {
                 if (view.visibility == View.VISIBLE)
                     view.fadeOut()
             }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:loadImage")
+    fun setImageResource(view: ImageView, imageUrl: String?) {
+        val context = view.context
+        //val options = RequestOptions()
+          //  .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+
+        imageUrl?.let {
+            val finalImageUrl = Constants.BASE_URL + imageUrl
+            Glide.with(context)
+                //.setDefaultRequestOptions(options)
+                .load(finalImageUrl)
+                .transition(DrawableTransitionOptions.withCrossFade(500))
+                .into(view)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:userStatusInt")
+    fun setUserStatusDrawable(view: ImageView, statusInt: Int?) {
+        statusInt?.let {
+            val context = view.context
+            var drawable: Drawable? = null
+            when (it) {
+                // 0 is inactive
+                // 1 is idle
+                // 3 is active
+                0 -> { drawable = ContextCompat.getDrawable(context, R.drawable.ic_offline_24) }
+                1 -> { drawable = ContextCompat.getDrawable(context, R.drawable.ic_online_idle_24) }
+                2 -> { drawable = ContextCompat.getDrawable(context, R.drawable.ic_online_active_24) }
+            }
+            view.setImageDrawable(drawable)
         }
     }
 

@@ -37,7 +37,6 @@ class AuthSignInFragment : BaseFragmentNoVM<AuthSignInFragmentBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         binding.viewModel = _viewModel
-       // binding.loginButton.setOnClickListener { launchSignInFlow() }
     }
 
     private fun initView(){
