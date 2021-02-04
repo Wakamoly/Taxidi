@@ -33,12 +33,9 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         userPreferences = UserPreferences(this@AuthActivity)
 
-        // TODO: 2/1/2021 Is this bad practice?
-        runBlocking {
-            fcmToken = userPreferences.fCMToken()
-            isUserLoggedIn = userPreferences.isUserLoggedIn()
-            signedInAs = userPreferences.userType()
-        }
+        fcmToken = getFcmToken
+        isUserLoggedIn = getIsUserLoggedIn
+        signedInAs = getSignedInAs
 
         val factory = ViewModelFactory(AuthRepository(userPreferences, RemoteDataSource().buildApi(RegisterAPI::class.java, fcmToken)))
         viewModel = ViewModelProvider(this, factory).get(AuthSignInViewModel::class.java)
@@ -69,9 +66,9 @@ class AuthActivity : AppCompatActivity() {
 
     private fun signUserIn() {
         lifecycleScope.launch {
-            fcmToken = userPreferences.fCMToken()
-            isUserLoggedIn = userPreferences.isUserLoggedIn()
-            signedInAs = userPreferences.userType()
+            fcmToken = getFcmToken
+            isUserLoggedIn = getIsUserLoggedIn
+            signedInAs = getSignedInAs
             if (signedInAs == "driver") {
                 finish()
                 startNewActivity(DriverMainActivity::class.java)

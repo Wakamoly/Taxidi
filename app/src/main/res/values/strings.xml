@@ -53,6 +53,11 @@
     <string name="username_text">Username:</string>
     <string name="example_username">TruckDrivingMan</string>
 
+    <string name="normal_map">Normal Map</string>
+    <string name="hybrid_map">Hybrid Map</string>
+    <string name="satellite_map">Satellite Map</string>
+    <string name="terrain_map">Terrain Map</string>
+
     <string name="err_email_address">Email address not valid!</string>
     <string name="err_password_empty">Password field empty</string>
     <string name="err_password_not_match">Passwords do not match!</string>
@@ -92,6 +97,47 @@
     <string name="logout">Logout</string>
     <string name="messaging_text">Messages</string>
     <string name="driver_fragment_home_title">Home</string>
+
+    <!-- Date Util -->
+    <string name="date_util_term_less">less than</string>
+    <string name="date_util_term_a">a</string>
+    <string name="date_util_term_an">an</string>
+
+    <string name="date_util_unit_second">second</string>
+    <string name="date_util_unit_seconds">seconds</string>
+    <string name="date_util_unit_minute">minute</string>
+    <string name="date_util_unit_minutes">minutes</string>
+    <string name="date_util_unit_hour">hour</string>
+    <string name="date_util_unit_hours">hours</string>
+    <string name="date_util_unit_day">day</string>
+    <string name="date_util_unit_days">days</string>
+    <string name="date_util_unit_month">month</string>
+    <string name="date_util_unit_months">months</string>
+    <string name="date_util_unit_year">year</string>
+    <string name="date_util_unit_years">years</string>
+
+    <string name="date_util_prefix_lt">less than a</string>
+    <string name="date_util_prefix_about">about</string>
+    <string name="date_util_prefix_over">over</string>
+    <string name="date_util_prefix_almost">almost</string>
+
+    <string name="date_util_suffix">ago</string>
+    <string name="user_online">Online now</string>
+    <string name="map_fragment_name">Load Map</string>
+    <string name="contentdesc_user_active_image_indicator">User active image indicator</string>
+    <string name="stats_view_title">Stats</string>
+    <string name="current_card_title">Current:</string>
+    <string name="num_shipped_text"># Shipped:</string>
+    <string name="stat_card_verified_text">Verified:</string>
+    <string name="no_data">No data</string>
+    <string name="support">Support</string>
+    <string name="others_text">Others</string>
+    <string name="contact">Contact Us</string>
+    <string name="title_about">About</string>
+    <string name="read_all_text">Mark all as read</string>
+    <string name="driver_fragment_notifications_title">Notifications</string>
+    <string name="driver_fragment_profile_title">Profile</string>
+    <string name="edit_my_profile_text">Edit Profile</string>
 
 
 </resources>

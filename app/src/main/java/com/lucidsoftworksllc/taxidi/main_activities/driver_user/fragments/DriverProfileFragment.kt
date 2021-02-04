@@ -4,30 +4,27 @@ import android.os.Bundle
 import android.view.*
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
-import com.lucidsoftworksllc.taxidi.databinding.DriverHomeFragmentBinding
-import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverHomeRepository
-import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverHomeAPI
-import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_models.DriverHomeViewModel
+import com.lucidsoftworksllc.taxidi.databinding.DriverProfileFragmentBinding
+import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverProfileRepository
+import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverProfileAPI
+import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_models.DriverProfileViewModel
 import com.lucidsoftworksllc.taxidi.utils.fcmToken
 import com.lucidsoftworksllc.taxidi.utils.setTitle
 import com.lucidsoftworksllc.taxidi.utils.toastShort
 
-class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentBinding, DriverHomeRepository>() {
+class DriverProfileFragment : BaseFragment<DriverProfileViewModel, DriverProfileFragmentBinding, DriverProfileRepository>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        setTitle(getString(R.string.driver_fragment_home_title))
+        setTitle(getString(R.string.driver_fragment_profile_title))
         binding.viewModel = viewModel
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.messaging -> {
+            R.id.edit_my_profile -> {
                 requireContext().toastShort("Not yet implemented")
-            }
-            R.id.logout -> {
-                logout()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -36,17 +33,17 @@ class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentB
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.driver_home_menu, menu)
+        inflater.inflate(R.menu.driver_profile_menu, menu)
     }
 
-    override fun getViewModel() = DriverHomeViewModel::class.java
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = DriverHomeFragmentBinding.inflate(inflater, container, false)
-    override fun getFragmentRepository() = DriverHomeRepository(
+    ) = DriverProfileFragmentBinding.inflate(inflater, container, false)
+    override fun getFragmentRepository() = DriverProfileRepository(
         userPreferences,
-        remoteDataSource.buildApi(DriverHomeAPI::class.java, fcmToken)
+        remoteDataSource.buildApi(DriverProfileAPI::class.java, fcmToken)
     )
+    override fun getViewModel() = DriverProfileViewModel::class.java
 
 }

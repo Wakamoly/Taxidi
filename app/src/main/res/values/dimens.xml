@@ -9,4 +9,5 @@
     <dimen name="header_height">192dp</dimen>
     <dimen name="header_padding">16dp</dimen>
     <dimen name="header_image_width">200dp</dimen>
+    <dimen name="card_view_corner_radius">10dp</dimen>
 </resources>

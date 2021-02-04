@@ -37,7 +37,8 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userPreferences = UserPreferences(requireContext())
+        mCtx = requireContext()
+        userPreferences = UserPreferences(mCtx)
     }
 
     override fun onCreateView(
@@ -45,18 +46,17 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mCtx = requireContext()
         binding = getFragmentBinding(inflater, container)
         val factory = ViewModelFactory(getFragmentRepository())
         viewModel = ViewModelProvider(this, factory).get(getViewModel())
-
+        startBaseObservables(viewModel)
         return binding.root
     }
 
     fun logout() = lifecycleScope.launch {
         withContext(Dispatchers.IO) {
             userPreferences.clear()
-            TaxidiDatabase(mCtx).clearAllTables()
+//            TaxidiDatabase(mCtx).clearAllTables()
         }
         val intent = Intent(mCtx, AuthActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -69,10 +69,5 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) : B
 
     abstract fun getFragmentRepository(): R
-
-    override fun onStart() {
-        super.onStart()
-        startBaseObservables(viewModel)
-    }
 
 }

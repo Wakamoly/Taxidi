@@ -12,7 +12,7 @@
         android:icon="@drawable/ic_baseline_map_64"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/driverNotificationFragment"
+    <item android:id="@+id/driverNotificationsFragment"
         android:title="@string/bottom_navigation_notifications_title"
         android:icon="@drawable/ic_baseline_notifications_64"
         app:showAsAction="ifRoom" />

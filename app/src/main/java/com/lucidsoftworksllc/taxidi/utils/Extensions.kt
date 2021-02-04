@@ -28,7 +28,13 @@ import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 
 /**
@@ -188,29 +194,39 @@ fun Fragment.startBaseObservables(viewModel: BaseViewModel){
 
 val Fragment.fcmToken: String
     get() {
-        var authToken = ""
-        this.lifecycleScope.launch {
+        var authToken: String
+        runBlocking {
             authToken = UserPreferences(requireContext()).fCMToken()
         }
         Log.d("Extensions", "fcmToken Fragment: $authToken")
         return authToken
     }
 
-val Activity.fcmToken: String
+val Activity.getFcmToken: String
     get() {
-        var authToken = ""
-        CoroutineScope(Dispatchers.Main).launch {
-            authToken = UserPreferences(this@fcmToken).fCMToken()
+        var authToken: String
+        runBlocking {
+            authToken = UserPreferences(this@getFcmToken).fCMToken()
         }
         Log.d("Extensions", "fcmToken: $authToken")
         return authToken
     }
 
-val Activity.isUserLoggedIn: Boolean
+val Activity.getSignedInAs: String
     get() {
-        var isUserLoggedIn = false
-        CoroutineScope(Dispatchers.Main).launch {
-            isUserLoggedIn = UserPreferences(this@isUserLoggedIn).isUserLoggedIn()
+        var signedInAs: String
+        runBlocking {
+            signedInAs = UserPreferences(this@getSignedInAs).userType()
+        }
+        Log.d("Extensions", "signedInAs: $signedInAs")
+        return signedInAs
+    }
+
+val Activity.getIsUserLoggedIn: Boolean
+    get() {
+        var isUserLoggedIn: Boolean
+        runBlocking {
+            isUserLoggedIn = UserPreferences(this@getIsUserLoggedIn).isUserLoggedIn()
         }
         Log.d("Extensions", "isUserLoggedIn: $isUserLoggedIn")
         return isUserLoggedIn
@@ -237,5 +253,86 @@ fun String.getServerResponseInt(): Int {
         "1010" -> R.string.srverr_login_failure
         else -> R.string.srverr_unknown
     }
+}
+
+/**
+ *
+ * TIME-SINCE FUNCTIONS
+ *
+ *
+ */
+
+
+fun stringToDate(string: String) : Date {
+    val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    return try {
+        val date: Date = format.parse(string)
+        date
+    } catch (e: ParseException) {
+        e.printStackTrace()
+        currentDate()
+    }
+}
+
+fun currentDate(): Date {
+    TimeZone.setDefault(TimeZone.getTimeZone("America/Chicago"))
+    val calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"))
+    return calendar.time
+}
+
+fun currentDateSendMessage(): String {
+    TimeZone.setDefault(TimeZone.getTimeZone("America/Chicago"))
+    val calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"))
+    return calendar.time.toFormattedString()
+}
+
+fun Date.toFormattedString(): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    return formatter.format(this)
+}
+
+fun getTimeAgo(dateString: String, ctx: Context): String? {
+    val date = stringToDate(dateString)
+    val time: Long = date.time
+    val curDate: Date = currentDate()
+    val now: Long = curDate.time
+    if (time > now || time <= 0) {
+        return null
+    }
+    val timeAgo = when (val dim = getTimeDistanceInMinutes(time)) {
+        0 -> ctx.resources.getString(R.string.date_util_term_less) + " " + ctx.resources.getString(R.string.date_util_term_a) + " " + ctx.resources.getString(R.string.date_util_unit_minute)
+        1 -> "1 " + ctx.resources.getString(R.string.date_util_unit_minute)
+        in 2..50 -> dim.toString() + " " + ctx.resources.getString(R.string.date_util_unit_minutes)
+        in 51..89 -> ctx.resources.getString(R.string.date_util_prefix_about) + " " + ctx.resources.getString(R.string.date_util_term_an) + " " + ctx.resources.getString(R.string.date_util_unit_hour)
+        in 90..1439 -> ctx.resources.getString(R.string.date_util_prefix_about) + " " + (dim / 60.toFloat()).roundToInt() + " " + ctx.resources.getString(R.string.date_util_unit_hours)
+        in 1440..2519 -> "1 " + ctx.resources.getString(R.string.date_util_unit_day)
+        in 2520..43199 -> (dim / 1440.toFloat()).roundToInt().toString() + " " + ctx.resources.getString(R.string.date_util_unit_days)
+        in 43200..86399 -> ctx.resources.getString(R.string.date_util_prefix_about) + " " + ctx.resources.getString(R.string.date_util_term_a) + " " + ctx.resources.getString(R.string.date_util_unit_month)
+        in 86400..525599 -> (dim / 43200.toFloat()).roundToInt().toString() + " " + ctx.resources.getString(R.string.date_util_unit_months)
+        in 525600..655199 -> ctx.resources.getString(R.string.date_util_prefix_about) + " " + ctx.resources.getString(R.string.date_util_term_a) + " " + ctx.resources.getString(R.string.date_util_unit_year)
+        in 655200..914399 -> ctx.resources.getString(R.string.date_util_prefix_over) + " " + ctx.resources.getString(R.string.date_util_term_a) + " " + ctx.resources.getString(R.string.date_util_unit_year)
+        in 914400..1051199 -> ctx.resources.getString(R.string.date_util_prefix_almost) + " 2 " + ctx.resources.getString(R.string.date_util_unit_years)
+        else -> ctx.resources.getString(R.string.date_util_prefix_about) + " " + (dim / 525600.toFloat()).roundToInt() + " " + ctx.resources.getString(R.string.date_util_unit_years)
+    }
+    return timeAgo + " " + ctx.resources.getString(R.string.date_util_suffix)
+}
+
+fun isUserOnline(dateString: String): Boolean {
+    val date = stringToDate(dateString)
+    val time: Long = date.time
+    val curDate: Date = currentDate()
+    val now: Long = curDate.time
+    if (time > now || time <= 0) {
+        return false
+    }
+    return when (getTimeDistanceInMinutes(time)) {
+        in 0..5 -> true
+        else -> false
+    }
+}
+
+private fun getTimeDistanceInMinutes(time: Long): Int {
+    val timeDistance: Long = currentDate().time - time
+    return (abs(timeDistance) / 1000 / 60.toFloat()).roundToInt()
 }
 

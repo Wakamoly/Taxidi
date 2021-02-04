@@ -12,5 +12,23 @@
         android:label="driver_home_fragment"
         tools:layout="@layout/driver_home_fragment" />
 
+    <fragment
+        android:id="@+id/driverMapFragment"
+        android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverMapFragment"
+        android:label="DriverMapFragment"
+        tools:layout="@layout/driver_map_fragment" />
+
+    <fragment
+        android:id="@+id/driverNotificationsFragment"
+        android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverNotificationsFragment"
+        android:label="driver_notifications_fragment"
+        tools:layout="@layout/driver_notifications_fragment" />
+
+    <fragment
+        android:id="@+id/driverProfileFragment"
+        android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverProfileFragment"
+        android:label="DriverProfileFragment"
+        tools:layout="@layout/driver_profile_fragment"/>
+
 
 </navigation>

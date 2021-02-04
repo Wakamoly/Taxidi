@@ -2,6 +2,7 @@
   <dictionary name="brend">
     <words>
       <w>cardview</w>
+      <w>contentdesc</w>
       <w>fcmtoken</w>
       <w>geofence</w>
       <w>geofencing</w>

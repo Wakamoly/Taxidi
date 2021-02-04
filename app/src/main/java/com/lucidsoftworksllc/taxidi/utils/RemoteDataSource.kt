@@ -1,6 +1,6 @@
 package com.lucidsoftworksllc.taxidi.utils
 
-import androidx.multidex.BuildConfig
+import com.lucidsoftworksllc.taxidi.BuildConfig
 import com.lucidsoftworksllc.taxidi.utils.Constants.ROOT_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.databinding.FragmentAuthWelcomeBinding
+import com.lucidsoftworksllc.taxidi.utils.toastShort
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -61,7 +62,9 @@ class AuthWelcomeFragment : Fragment() {
 
     private fun setupOnClicks() {
         binding.loginAsCompany.setOnClickListener {
-            requireView().findNavController().navigate(AuthWelcomeFragmentDirections.actionAuthWelcomeFragmentToAuthSignInFragment("company"))
+            // TODO: 2/1/2021 Fix business registration
+            requireContext().toastShort("Company login/register not implemented yet")
+            //requireView().findNavController().navigate(AuthWelcomeFragmentDirections.actionAuthWelcomeFragmentToAuthSignInFragment("company"))
         }
         binding.loginAsDriver.setOnClickListener {
             requireView().findNavController().navigate(AuthWelcomeFragmentDirections.actionAuthWelcomeFragmentToAuthSignInFragment("driver"))

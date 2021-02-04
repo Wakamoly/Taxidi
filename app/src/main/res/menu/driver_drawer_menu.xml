@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/driverHomeFragment"
+        android:title="@string/bottom_navigation_home_title"
+        android:icon="@drawable/ic_baseline_home_64"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/driverMapFragment"
+        android:title="@string/bottom_navigation_map_title"
+        android:icon="@drawable/ic_baseline_map_64"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/driverNotificationsFragment"
+        android:title="@string/bottom_navigation_notifications_title"
+        android:icon="@drawable/ic_baseline_notifications_64"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/driverProfileFragment"
+        android:title="@string/bottom_navigation_profile_title"
+        android:icon="@drawable/ic_baseline_person_64"
+        app:showAsAction="ifRoom" />
+
+    <!-- TODO: Finish this menu -->
+    <!--<item android:title="@string/others_text">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_action_profile"
+                android:title="@string/title_profile" />
+            <item
+                android:id="@+id/nav_publics"
+                android:icon="@drawable/ic_group_add_black_24dp"
+                android:title="@string/title_publics" />
+            <item
+                android:id="@+id/nav_clans"
+                android:icon="@drawable/ic_action_groups"
+                android:title="@string/clans" />
+        </menu>
+    </item>-->
+
+    <item android:title="@string/support">
+        <menu>
+            <item
+                android:id="@+id/nav_contact_us"
+                android:icon="@drawable/ic_sharp_message_24"
+                android:title="@string/contact" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_baseline_list_24"
+                android:title="@string/title_about" />
+        </menu>
+    </item>
+
+</menu>

@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/primaryDarkColor"
                 app:itemIconTint="@color/secondaryColor"
+                app:itemTextColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:menu="@menu/driver_bottom_navigation" />
 
@@ -63,7 +64,7 @@
             app:headerLayout="@layout/driver_nav_header"
             app:itemIconTint="@drawable/drawer_item_color"
             app:itemTextColor="@drawable/drawer_item_color"
-            app:menu="@menu/driver_bottom_navigation"
+            app:menu="@menu/driver_drawer_menu"
             tools:visibility="visible"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>
