@@ -38,5 +38,6 @@ data class DriverProfileCredentialModel(
     val num_shipped: Int,
     val status: Int,
     // May cause a problem
-    val average: Int
+    val average: Int,
+    val review_count: Int
 )

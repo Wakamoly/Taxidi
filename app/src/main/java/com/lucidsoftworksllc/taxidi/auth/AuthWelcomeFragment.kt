@@ -45,6 +45,7 @@ class AuthWelcomeFragment : Fragment() {
         binding = FragmentAuthWelcomeBinding.inflate(inflater, container, false)
         viewGroup = binding.authWelcomeRelativeLayout
         motionLayout = binding.authWelcomeMotionLayout
+        binding.lifecycleOwner = this
         setupOnClicks()
         return binding.root
     }

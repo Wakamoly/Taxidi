@@ -26,6 +26,8 @@ class DriverProfileFragment : BaseFragment<DriverProfileViewModel, DriverProfile
     }
 
     private fun initObservers() {
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         when {
             args.userId != 0 -> {
                 viewModel.loadProfile(args.userId)
@@ -38,7 +40,19 @@ class DriverProfileFragment : BaseFragment<DriverProfileViewModel, DriverProfile
                 viewModel.loadProfile(deviceUserID)
             }
         }
-        binding.viewModel = viewModel
+        viewModel.profileLoaded.observe(viewLifecycleOwner, {
+            when (it) {
+                true -> {
+                    // Start Motion Layout
+                    /*val transition = binding.driverProfileMotionLayout.getTransition(R.id.driver_profile_scene_init_transition)
+                    transition.*/
+                    binding.driverProfileMotionLayout.transitionToEnd()
+                }
+                false -> {
+                    // Do nothing
+                }
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -18,6 +18,7 @@ class DriverNotificationsFragment : BaseFragment<DriverNotificationsViewModel, D
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setTitle(getString(R.string.driver_fragment_notifications_title))
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
     }
 

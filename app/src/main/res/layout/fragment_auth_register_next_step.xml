@@ -324,7 +324,7 @@
                 android:backgroundTint="@color/purple_200"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:fadeVisible="@{viewModel.registerShowLoading.booleanValue()}"/>
+                app:fadeVisible="@{viewModel.registerShowLoading.booleanValue()}"/>
 
         </androidx.cardview.widget.CardView>
 

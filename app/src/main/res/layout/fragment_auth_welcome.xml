@@ -10,7 +10,6 @@
         android:background="@color/primaryDarkColor"
         tools:showIn="@layout/activity_auth"
         tools:showPaths="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutDescription="@xml/activity_auth_scene"
         tools:context=".authentication.AuthenticationActivity">
 

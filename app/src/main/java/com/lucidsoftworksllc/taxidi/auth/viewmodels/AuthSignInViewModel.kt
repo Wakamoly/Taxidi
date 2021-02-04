@@ -137,6 +137,7 @@ class AuthSignInViewModel(
 
     fun logUserIn() {
         if (validateUserLoginCredentials()){
+            showLoading.value = true
             viewModelScope.launch {
                 when (val result = repository.login(emailAddress.value.toString(), password.value.toString())){
 

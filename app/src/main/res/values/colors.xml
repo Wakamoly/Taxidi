@@ -37,4 +37,8 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
 
+    <color name="red">#D82014</color>
+    <color name="green">#4AD841</color>
+    <color name="yellow">#D8CA40</color>
+
 </resources>

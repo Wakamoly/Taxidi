@@ -143,6 +143,13 @@
     <string name="edit_my_profile_text">Edit Profile</string>
     <string name="srverr_load_profile">Error loading profile!</string>
     <string name="srvsuc_load_profile">Loaded profile successfully!</string>
+    <string name="profile_description_example">Description description description description description description description description description description description description description description description description description description description description description description description description description description description description</string>
+    <string name="send_message_button_text">Send Message</string>
+    <string name="reviews_total_num_concat_text">Reviews</string>
+    <string name="profile_background_photo_contdesc">Profile background photo</string>
+    <string name="online_indicator_contdesc">Online indicator</string>
+    <string name="not_verified_text">Not Verified</string>
+    <string name="is_verified_text">Verified</string>
 
 
 </resources>

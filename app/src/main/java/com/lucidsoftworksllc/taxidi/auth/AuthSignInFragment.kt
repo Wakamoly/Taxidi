@@ -36,6 +36,7 @@ class AuthSignInFragment : BaseFragmentNoVM<AuthSignInFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        binding.lifecycleOwner = this
         binding.viewModel = _viewModel
     }
 
@@ -47,6 +48,11 @@ class AuthSignInFragment : BaseFragmentNoVM<AuthSignInFragmentBinding>() {
             }
         }
         _viewModel.clearLoading()
+
+        binding.signinFragLoginButton.setOnClickListener {
+            hideKeyboard()
+            _viewModel.logUserIn()
+        }
 
         binding.signinFragRegisterButton.setOnClickListener {
             hideKeyboard()

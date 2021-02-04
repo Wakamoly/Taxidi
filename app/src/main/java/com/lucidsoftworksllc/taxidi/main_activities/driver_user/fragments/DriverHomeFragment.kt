@@ -18,6 +18,7 @@ class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentB
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setTitle(getString(R.string.driver_fragment_home_title))
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
     }
 

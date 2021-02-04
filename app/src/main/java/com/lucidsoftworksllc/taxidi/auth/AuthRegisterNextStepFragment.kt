@@ -37,6 +37,7 @@ class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextSt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        binding.lifecycleOwner = this
         binding.viewModel = _viewModel
     }
 

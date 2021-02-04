@@ -89,7 +89,7 @@
                     android:backgroundTint="@color/secondaryColor"
                     android:text="@string/login"
                     android:textAllCaps="false"
-                    android:onClick="@{() -> viewModel.logUserIn()}"/>
+                    android:enabled="@{!viewModel.showLoading.booleanValue()}"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/signin_frag_register_button"
@@ -97,6 +97,7 @@
                     android:text="@string/register_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{!viewModel.showLoading.booleanValue()}"
                     android:textAllCaps="false"/>
 
             </LinearLayout>
@@ -108,7 +109,7 @@
                 android:layout_gravity="center"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:fadeVisible="@{viewModel.showLoading.booleanValue()}"/>
+                app:fadeVisible="@{viewModel.showLoading.booleanValue()}"/>
 
         </androidx.cardview.widget.CardView>
 
