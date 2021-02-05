@@ -43,9 +43,6 @@ class DriverProfileFragment : BaseFragment<DriverProfileViewModel, DriverProfile
         viewModel.profileLoaded.observe(viewLifecycleOwner, {
             when (it) {
                 true -> {
-                    // Start Motion Layout
-                    /*val transition = binding.driverProfileMotionLayout.getTransition(R.id.driver_profile_scene_init_transition)
-                    transition.*/
                     binding.driverProfileMotionLayout.transitionToEnd()
                 }
                 false -> {

@@ -195,6 +195,11 @@ fun Fragment.startBaseObservables(viewModel: BaseViewModel){
     })
 }
 
+/**
+ * Datastore references
+ * TODO 2/4/21 Remove runBlocking calls, find a better way to grab these values.
+ */
+
 val Fragment.fcmToken: String
     get() {
         var authToken: String
@@ -253,6 +258,7 @@ fun String.getServerResponseInt(): Int {
         "0001" -> R.string.srvsuc_register
         "0002" -> R.string.srvsuc_login
         "0003" -> R.string.srvsuc_load_profile
+        "0004" -> R.string.srvsuc_load_notifications
 
         // Failure
         "1001" -> R.string.srverr_generic
@@ -267,6 +273,12 @@ fun String.getServerResponseInt(): Int {
         "1010" -> R.string.srverr_login_failure
         "1011" -> R.string.srverr_profile_id
         "1012" -> R.string.srverr_load_profile
+        "1013" -> R.string.srverr_load_notifications
+        "1014" -> R.string.srverr_load_notifications_token
+        "1015" -> R.string.srverr_load_notifications_lastid
+        "1016" -> R.string.srverr_load_notifications_uid
+        "1017" -> R.string.srverr_load_notifications_lastonline
+        "1018" -> R.string.srverr_load_notifications_username
         else -> R.string.srverr_unknown
     }
 }
@@ -282,8 +294,8 @@ fun String.getServerResponseInt(): Int {
 fun stringToDate(string: String) : Date {
     val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     return try {
-        val date: Date = format.parse(string)
-        date
+        // TODO: 2/5/2021 Remove this assertion
+        format.parse(string)!!
     } catch (e: ParseException) {
         e.printStackTrace()
         currentDate()

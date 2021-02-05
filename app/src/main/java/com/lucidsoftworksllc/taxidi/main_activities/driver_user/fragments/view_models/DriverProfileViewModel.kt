@@ -33,8 +33,6 @@ class DriverProfileViewModel (
 
     val profileLoaded = MutableLiveData<Boolean>()
 
-    // TODO: 2/3/2021 Need for a reset function?
-
     fun getProfileID(username: String) {
         profileLoaded.value = false
         showLoading.value = true

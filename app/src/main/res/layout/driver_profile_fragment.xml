@@ -62,7 +62,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:civ_border_color="@color/white"
-                        app:civ_border_width="5dp"
+                        app:civ_border_width="@dimen/default_border_width"
                         app:loadImageNoAnim="@{viewModel.profileImage}"
                         tools:src="@drawable/ic_nope_red_24"
                         tools:background="@color/secondaryDarkColor"/>
@@ -198,8 +198,8 @@
 
                                     <ImageView
                                         android:id="@+id/profile_info_online_image"
-                                        android:layout_width="12dp"
-                                        android:layout_height="12dp"
+                                        android:layout_width="@dimen/drawable_size_small"
+                                        android:layout_height="@dimen/drawable_size_small"
                                         android:src="@drawable/ic_online"
                                         android:layout_gravity="center_vertical"
                                         android:layout_marginEnd="3dp"
@@ -211,7 +211,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/white"
                                         android:textStyle="italic"
-                                        app:tvLastOnline="@{viewModel.profileLastOnline}"
+                                        app:tvTimeSince="@{viewModel.profileLastOnline}"
                                         tools:text="24 hours ago"/>
 
                                 </LinearLayout>
@@ -223,8 +223,8 @@
 
                                     <ImageView
                                         android:id="@+id/profile_info_verified_image"
-                                        android:layout_width="12dp"
-                                        android:layout_height="12dp"
+                                        android:layout_width="@dimen/drawable_size_small"
+                                        android:layout_height="@dimen/drawable_size_small"
                                         android:src="@drawable/ic_check_circle_green_24"
                                         android:layout_gravity="center_vertical"
                                         android:layout_marginEnd="3dp"

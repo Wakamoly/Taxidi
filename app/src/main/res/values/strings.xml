@@ -152,6 +152,13 @@
     <string name="is_verified_text">Verified</string>
     <string name="shipments_total_num_concat_text">Shipments Sent</string>
     <string name="hire_button_text">Hire</string>
+    <string name="srvsuc_load_notifications">Loaded notifications successfully!</string>
+    <string name="srverr_load_notifications">Couldn\'t load notifications!</string>
+    <string name="srverr_load_notifications_token"><![CDATA[Couldn\'t load notifications! -> 1014]]></string>
+    <string name="srverr_load_notifications_lastid"><![CDATA[Couldn\'t load notifications! -> 1015]]></string>
+    <string name="srverr_load_notifications_uid"><![CDATA[Couldn\'t load notifications! -> 1016]]></string>
+    <string name="srverr_load_notifications_lastonline"><![CDATA[Couldn\'t load notifications! -> 1017]]></string>
+    <string name="srverr_load_notifications_username"><![CDATA[Couldn\'t load notifications! -> 1018]]></string>
 
 
 </resources>

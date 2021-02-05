@@ -3,6 +3,7 @@ package com.lucidsoftworksllc.taxidi.utils
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -41,7 +42,6 @@ object BindingAdapters {
     @BindingAdapter("app:fadeVisible")
     @JvmStatic
     fun setFadeVisible(view: View, visible: Boolean? = true) {
-        Log.d("BINDING ADAPTERS", "setFadeVisible: CALLED")
         if (view.tag == null) {
             view.tag = true
             view.visibility = if (visible == true) View.VISIBLE else View.GONE
@@ -133,8 +133,8 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:tvLastOnline")
-    fun setLastOnlineText(view: TextView, value: String?) {
+    @BindingAdapter("app:tvTimeSince")
+    fun setTimeSinceText(view: TextView, value: String?) {
         value?.let {
             if (!value.isNullOrEmpty()){
                 view.text = getTimeAgo(value, view.context)
@@ -203,6 +203,54 @@ object BindingAdapters {
                 }
             }
             view.text = text
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:notificationType")
+    fun setNotificationTypeDrawable(view: ImageView, value: String?) {
+        value?.let {
+            val context = view.context
+            val drawable = when (it) {
+                "reviewed" -> {
+                    ContextCompat.getDrawable(context, R.drawable.ic_baseline_star_rate_24)
+                }
+                "leave_a_review" -> {
+                    ContextCompat.getDrawable(context, R.drawable.ic_baseline_stars_24)
+                }
+                "load_proposition" -> {
+                    ContextCompat.getDrawable(context, R.drawable.ic_baseline_store_24)
+                }
+                "load_in_progress" -> {
+                    ContextCompat.getDrawable(context, R.drawable.ic_baseline_add_location_24_green)
+                }
+                "load_picked_up" -> {
+                    ContextCompat.getDrawable(context, R.drawable.ic_baseline_forward_to_inbox_24_blue)
+                }
+                "load_completed" -> {
+                    ContextCompat.getDrawable(context, R.drawable.ic_check_circle_green_24)
+                }
+                else -> {
+                    ContextCompat.getDrawable(context, R.drawable.ic_baseline_contact_support_24)
+                }
+            }
+            view.setImageDrawable(drawable)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:notificationSeen")
+    fun setNotiViewBackground(view: ViewGroup, value: Int?) {
+        value?.let {
+            val context = view.context
+            var color = 0
+            when (it) {
+                // 0 is unopened
+                // 1 is opened
+                0 -> { color = ContextCompat.getColor(context, R.color.primaryDarkColor) }
+                1 -> { color = ContextCompat.getColor(context, R.color.primaryColor) }
+            }
+            view.setBackgroundColor(color)
         }
     }
 
