@@ -17,9 +17,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/driver_notifications_recycler"
             android:layout_height="match_parent"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clipToPadding="false"
+            android:liveData="@{viewModel.notifications}"
+            tools:itemCount="7"
+            tools:listitem="@layout/item_notification" />
 
-        <!--android:fadeVisible="@{viewModel.showNoData.booleanValue()}"-->
         <TextView
             android:id="@+id/no_data_home_news"
             android:layout_width="wrap_content"
@@ -32,9 +39,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:fadeVisible="@{viewModel.showNoData.booleanValue()}"
             app:drawableTopCompat="@drawable/ic_no_data" />
 
-        <!--android:fadeVisible="@{viewModel.showLoading.booleanValue()}"-->
         <ProgressBar
             android:id="@+id/home_news_progressbar"
             android:layout_width="wrap_content"
@@ -44,6 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:fadeVisible="@{viewModel.showLoading.booleanValue()}"
             android:visibility="gone"
             tools:visibility="visible"/>
 

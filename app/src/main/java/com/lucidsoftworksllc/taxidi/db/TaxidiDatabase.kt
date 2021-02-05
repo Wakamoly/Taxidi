@@ -5,22 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.lucidsoftworksllc.taxidi.db.dao.DriverNotificationDao
+import com.lucidsoftworksllc.taxidi.db.entities.DriverNotificationEntity
 
 
-/*@Database(
+@Database(
     entities = [
-       // ShoeEntity::class,
-        //UserEntity::class
+       DriverNotificationEntity::class
     ],
-    version = 1)*/
+    version = 1)
 @TypeConverters(DbConverters::class)
 abstract class TaxidiDatabase : RoomDatabase() {
 
-    //abstract fun getUserDao() : UserDao
-    //abstract fun getShoeDao() : ShoeDao
+    abstract fun getDriverNotiDao() : DriverNotificationDao
 
     companion object{
-        val DATABASE_NAME: String = "taxididatabase"
+        const val DATABASE_NAME: String = "taxididatabase"
         @Volatile private var instance : TaxidiDatabase? = null
         private val LOCK = Any()
 

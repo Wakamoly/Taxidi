@@ -37,8 +37,7 @@ class AuthActivity : AppCompatActivity() {
         isUserLoggedIn = getIsUserLoggedIn
         signedInAs = getSignedInAs
 
-        val factory = ViewModelFactory(AuthRepository(userPreferences, RemoteDataSource().buildApi(RegisterAPI::class.java, fcmToken)))
-        viewModel = ViewModelProvider(this, factory).get(AuthSignInViewModel::class.java)
+        setupViewModel()
 
         FirebaseApp.initializeApp(this)
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
@@ -48,6 +47,9 @@ class AuthActivity : AppCompatActivity() {
                     Log.d("Installations", "Installation auth token: $fbToken, current -> $fcmToken")
                     if (fbToken != fcmToken) {
                         userPreferences.saveFCMToken(fbToken)
+
+                        // TODO: 2/5/2021 Does this work?
+                        setupViewModel()
                     }
                 }
             } else {
@@ -62,6 +64,11 @@ class AuthActivity : AppCompatActivity() {
             setupObservers()
         }
 
+    }
+
+    private fun setupViewModel() {
+        val factory = ViewModelFactory(AuthRepository(userPreferences, RemoteDataSource().buildApi(RegisterAPI::class.java, fcmToken)))
+        viewModel = ViewModelProvider(this@AuthActivity, factory).get(AuthSignInViewModel::class.java)
     }
 
     private fun signUserIn() {

@@ -11,8 +11,7 @@ class DataBindingViewHolder<T>(private val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: T) {
-        // TODO: 1/23/2021 Fix this?
-       // binding.setVariable(BR.item, item)
+        binding.setVariable(BR.model, item)
         binding.executePendingBindings()
     }
 }

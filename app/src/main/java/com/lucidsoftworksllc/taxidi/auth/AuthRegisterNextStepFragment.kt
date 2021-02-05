@@ -26,9 +26,7 @@ import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
 
 class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextStepBinding>() {
 
-    private val _viewModel: AuthSignInViewModel by activityViewModels { ViewModelFactory(
-            AuthRepository(userPreferences, remoteDataSource.buildApi(RegisterAPI::class.java, fcmToken))
-    ) }
+    private val _viewModel: AuthSignInViewModel by activityViewModels()
 
     companion object {
         const val TAG = "AuthRegNextStepFragment"

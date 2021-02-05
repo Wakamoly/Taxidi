@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 object BindingAdapters {
@@ -251,6 +252,22 @@ object BindingAdapters {
                 1 -> { color = ContextCompat.getColor(context, R.color.primaryColor) }
             }
             view.setBackgroundColor(color)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:notificationSeenCivBG")
+    fun setNotiViewBackgroundCircleImageView(view: CircleImageView, value: Int?) {
+        value?.let {
+            val context = view.context
+            var color = 0
+            when (it) {
+                // 0 is unopened
+                // 1 is opened
+                0 -> { color = ContextCompat.getColor(context, R.color.primaryDarkColor) }
+                1 -> { color = ContextCompat.getColor(context, R.color.primaryColor) }
+            }
+            view.circleBackgroundColor = color
         }
     }
 

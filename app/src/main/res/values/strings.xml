@@ -159,6 +159,7 @@
     <string name="srverr_load_notifications_uid"><![CDATA[Couldn\'t load notifications! -> 1016]]></string>
     <string name="srverr_load_notifications_lastonline"><![CDATA[Couldn\'t load notifications! -> 1017]]></string>
     <string name="srverr_load_notifications_username"><![CDATA[Couldn\'t load notifications! -> 1018]]></string>
+    <string name="srverr_notification_generic">Couldn\'t get notifications!</string>
 
 
 </resources>

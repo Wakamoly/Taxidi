@@ -17,5 +17,6 @@
     <dimen name="drawable_size_small">12dp</dimen>
     <dimen name="default_border_width">5dp</dimen>
     <dimen name="small_border_width">2dp</dimen>
-    <dimen name="drawable_size_medium">18dp</dimen>
+    <dimen name="drawable_size_medium">22dp</dimen>
+    <dimen name="profile_pic_notification_size">50dp</dimen>
 </resources>

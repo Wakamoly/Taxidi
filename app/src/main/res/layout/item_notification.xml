@@ -6,14 +6,15 @@
     <data>
         <variable
             name="model"
-            type="com.lucidsoftworksllc.taxidi.others.models.server_responses.DriverNotificationsResponseModel.ProfileNotification" />
+            type="com.lucidsoftworksllc.taxidi.others.models.server_responses.ProfileNotification" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/notification_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_medium"
+        android:layout_margin="@dimen/padding_small"
+        app:cardCornerRadius="@dimen/card_view_corner_radius"
         app:fadeVisible="@{true}"
         android:foreground="?attr/selectableItemBackground">
 
@@ -26,24 +27,40 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_pic"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/profile_pic_notification_size"
+                android:layout_height="@dimen/profile_pic_notification_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:loadImage="@{model.profile_pic}"
+                app:loadImageNoAnim="@{model.profile_pic}"
                 app:civ_border_width="@dimen/small_border_width"
                 app:civ_border_color="@color/white"
-                tools:src="@drawable/ic_check_circle_green_24"/>
+                tools:src="@drawable/ic_baseline_local_shipping_64"/>
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/notification_type"
                 android:layout_width="@dimen/drawable_size_medium"
                 android:layout_height="@dimen/drawable_size_medium"
                 app:layout_constraintEnd_toEndOf="@id/profile_pic"
                 app:layout_constraintBottom_toBottomOf="@id/profile_pic"
-                tools:src="@drawable/ic_sharp_message_24"
+                tools:src="@drawable/ic_check_circle_green_24"
                 app:notificationType="@{model.type}"
+                app:notificationSeenCivBG="@{model.opened}"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/white"
                 />
+
+            <TextView
+                android:id="@+id/display_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_small"
+                android:text="@{model.display_name}"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintStart_toEndOf="@id/profile_pic"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="TruckDrivingMan" />
 
             <TextView
                 android:id="@+id/title"
@@ -54,7 +71,7 @@
                 android:textColor="@color/primaryTextColor"
                 android:textSize="@dimen/text_size_normal"
                 app:layout_constraintStart_toEndOf="@id/profile_pic"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/display_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Title" />
 
@@ -68,7 +85,7 @@
                 app:layout_constraintStart_toStartOf="@id/title"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="@string/profile_description_example" />
+                tools:text="Description" />
 
             <TextView
                 android:id="@+id/time_since"

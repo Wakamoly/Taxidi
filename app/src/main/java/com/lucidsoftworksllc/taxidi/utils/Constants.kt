@@ -2,7 +2,7 @@ package com.lucidsoftworksllc.taxidi.utils
 
 object Constants {
     // URL constants, Sabot is a pet-project of mine, I'll be using the existing domain for this project.
-    const val BASE_URL = "https://sabotcommunity.com/"
+    const val BASE_URL = "https://www.sabotcommunity.com/"
     private const val APP_VERSION_FINAL = "v0.0.1a"
     private const val APP_VERSION_URL = "$APP_VERSION_FINAL/"
     const val ROOT_URL = BASE_URL + "taxidi/" + APP_VERSION_URL

@@ -56,7 +56,7 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
     fun logout() = lifecycleScope.launch {
         withContext(Dispatchers.IO) {
             userPreferences.clear()
-//            TaxidiDatabase(mCtx).clearAllTables()
+            TaxidiDatabase(mCtx).clearAllTables()
         }
         val intent = Intent(mCtx, AuthActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -72,6 +72,8 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        // TODO: 2/5/2021
+        //    kotlin.UninitializedPropertyAccessException: lateinit property map has not been initialized -> after loaded this fragment, then screen rotated a few times.
         map.let { map ->
             outState.putParcelable(KEY_CAMERA_POSITION, map.cameraPosition)
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
