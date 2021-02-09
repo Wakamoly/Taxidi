@@ -20,6 +20,7 @@
             android:background="@color/primaryLightColor"
             android:padding="@dimen/padding_medium">
 
+            <!--app:loadImageNoAnim="@{model.companyImage}"-->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/company_profile_image"
                 android:layout_width="@dimen/profile_pic_notification_size"
@@ -28,7 +29,6 @@
                 app:civ_border_width="@dimen/small_border_width"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:loadImageNoAnim="@{model.companyImage}"
                 tools:src="@drawable/ic_baseline_local_shipping_64" />
 
             <TextView
@@ -218,6 +218,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!--app:loadImage="@{model.loadImage}"-->
             <ImageView
                 android:id="@+id/load_image"
                 android:layout_width="100dp"
@@ -228,7 +229,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/load_weight"
-                app:loadImage="@{model.loadImage}"
                 tools:srcCompat="@drawable/ic_baseline_local_shipping_200" />
 
             <!--<androidx.cardview.widget.CardView
