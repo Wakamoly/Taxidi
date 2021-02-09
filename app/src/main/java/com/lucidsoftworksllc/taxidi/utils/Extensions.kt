@@ -23,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.maps.model.LatLng
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
@@ -372,5 +373,9 @@ fun EditText.onTextChanged(listener: (String) -> Unit) {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     })
+}
+
+fun latLngToLatLngForSomeReason(latLng: com.google.android.gms.maps.model.LatLng) : LatLng {
+    return LatLng(latLng.latitude, latLng.longitude)
 }
 

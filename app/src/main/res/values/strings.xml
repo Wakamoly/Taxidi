@@ -161,5 +161,52 @@
     <string name="srverr_load_notifications_username"><![CDATA[Couldn\'t load notifications! -> 1018]]></string>
     <string name="srverr_notification_generic">Couldn\'t get notifications!</string>
 
+    <string name="enable_gps">Enable GPS</string>
+    <string name="required_for_this_app">Required for this app</string>
+    <string name="enable_now">Enable Now</string>
+    <string name="location_permission_not_granted">Location permission not granted!</string>
+    <string name="current_location">Current Location</string>
+    <string name="where_to">Where to?</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="request_pickup">Request Pickup</string>
+    <string name="your_driver_is_arriving">Your driver is arriving</string>
+    <string name="requesting_your_driver">Requesting your driver</string>
+    <string name="your_pickup_is_booked">Your pickup is booked!</string>
+    <string name="your_pickup_has_arrived">Your driver has arrived!</string>
+    <string name="your_pickup_is_on_route_to_dest">Your pickup is on route to destination!</string>
+    <string name="route_end">Your shipment has reached it\'s destination!</string>
+    <string name="route_not_available_choose_different_locations">Route Not Available: Choose different pickup and drop location</string>
+    <string name="load_type_text">Type:</string>
+    <string name="load_weight_text">Load Weight:</string>
+    <string name="trailer_type_text">Trailer Type:</string>
+    <string name="trip_distance_text">Trip Distance:</string>
+    <string name="pay_text">Pay:</string>
+    <string name="placard_explosive">Explosive</string>
+    <string name="placard_non_hazardous">Non-Hazardous</string>
+    <string name="placard_flammable_gas">Flammable gas</string>
+    <string name="placard_non_flam_non_tox_gas">Non-flammable Non-toxic Gas</string>
+    <string name="placard_toxic_gas">Toxic Gas</string>
+    <string name="placard_flammable_liquid">Flammable Liquid</string>
+    <string name="placard_flammable_solid">Flammable Solid</string>
+    <string name="placard_spont_combust">Spontaneously Combustible</string>
+    <string name="placard_dang_wet">Dangerous when wet</string>
+    <string name="placard_oxi_agent">Oxidizing Agent</string>
+    <string name="placard_organ_perox">Organic Peroxide</string>
+    <string name="placard_toxic">Toxic</string>
+    <string name="placard_infec_sub">Infectious Substance</string>
+    <string name="placard_radioactive">Radioactive</string>
+    <string name="placard_corrosive">Corrosive</string>
+    <string name="placard_misc_hazard">Misc. Hazardous</string>
+    <string name="pounds_text">lbs</string>
+    <string name="trailer_dry_van">Dry van</string>
+    <string name="trailer_flatbed">Flatbed</string>
+    <string name="trailer_step_deck">Stepdeck</string>
+    <string name="trailer_reefer">Reefer</string>
+    <string name="trailer_auto_carrier">Auto Carrier</string>
+    <string name="trailer_dump">Dump Trailer</string>
+    <string name="trailer_tanker">Tanker</string>
+    <string name="trailer_ltl_dry_van">LTL Dry Van</string>
+    <string name="trailer_partial_dry_van">Partial Dry Van</string>
+
 
 </resources>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="@dimen/card_view_corner_radius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primaryLightColor"
+            android:padding="@dimen/padding_medium">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/company_profile_image"
+                android:layout_width="@dimen/profile_pic_notification_size"
+                android:layout_height="@dimen/profile_pic_notification_size"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="@dimen/small_border_width"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadImageNoAnim="@{model.companyImage}"
+                tools:src="@drawable/ic_baseline_local_shipping_64" />
+
+            <TextView
+                android:id="@+id/company_display_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{model.companyName}"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/company_profile_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="TruckDrivingMan" />
+
+            <TextView
+                android:id="@+id/load_type_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/load_type_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="italic"
+                android:layout_marginEnd="3dp"
+                app:layout_constraintEnd_toStartOf="@+id/load_type"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@id/company_display_name"
+                app:layout_constraintStart_toEndOf="@+id/company_profile_image"
+                tools:layout_editor_absoluteY="27dp" />
+
+            <TextView
+                android:id="@+id/load_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold"
+                app:loadTypeText="@{model.loadType}"
+                app:layout_constraintTop_toBottomOf="@id/company_display_name"
+                app:layout_constraintEnd_toStartOf="@+id/load_type_image"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/load_type_text"
+                tools:layout_editor_absoluteY="27dp"
+                tools:text="Hazardous" />
+
+            <ImageView
+                android:id="@+id/load_type_image"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                app:loadTypeImage="@{model.loadType}"
+                app:layout_constraintBottom_toBottomOf="@+id/load_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/load_type"
+                app:layout_constraintTop_toTopOf="@+id/load_type"
+                tools:src="@drawable/placard_0_dangerous" />
+
+            <TextView
+                android:id="@+id/load_weight_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:text="@string/load_weight_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/load_weight"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/company_profile_image"
+                app:layout_constraintTop_toBottomOf="@id/load_type" />
+
+            <TextView
+                android:id="@+id/load_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:setLoadWeight="@{model.loadWeight}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/load_weight_text"
+                app:layout_constraintTop_toBottomOf="@id/load_type"
+                tools:text="5000 lbs" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/left_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_small"
+                app:layout_constraintBottom_toBottomOf="@+id/load_image"
+                app:layout_constraintEnd_toStartOf="@id/load_image"
+                app:layout_constraintTop_toTopOf="@+id/load_image">
+
+                <TextView
+                    android:id="@+id/trailer_type_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:text="@string/trailer_type_text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/trailer_type"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/trailer_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:setTrailerType="@{model.trailerType}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/trailer_type_text"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Flatbed" />
+
+                <TextView
+                    android:id="@+id/trip_distance_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:text="@string/trip_distance_text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/trip_distance"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/trailer_type" />
+
+                <TextView
+                    android:id="@+id/trip_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{model.distance}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/trip_distance_text"
+                    app:layout_constraintTop_toBottomOf="@id/trailer_type"
+                    tools:text="500 miles" />
+
+                <TextView
+                    android:id="@+id/load_pay_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:text="@string/pay_text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/load_pay"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/trip_distance" />
+
+                <TextView
+                    android:id="@+id/load_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:loadPay="@{model.loadPay}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/load_pay_text"
+                    app:layout_constraintTop_toBottomOf="@id/trip_distance"
+                    tools:text="$1.00/mi" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/load_image"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:maxWidth="100dp"
+                android:maxHeight="75dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/load_weight"
+                app:loadImage="@{model.loadImage}"
+                tools:srcCompat="@drawable/ic_baseline_local_shipping_200" />
+
+            <!--<androidx.cardview.widget.CardView
+                android:id="@+id/load_image_cardview"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:cardCornerRadius="@dimen/card_view_corner_radius"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/load_weight">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:loadImageNoAnim="@{model.loadImage}"
+                    tools:srcCompat="@drawable/ic_baseline_local_shipping_200" />
+
+            </androidx.cardview.widget.CardView>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

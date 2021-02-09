@@ -26,6 +26,7 @@ class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentB
         when (item.itemId) {
             R.id.messaging -> {
                 requireContext().toastShort("Not yet implemented")
+                // TODO: 2/5/2021 Bring the user to the messaging activity.
             }
             R.id.logout -> {
                 logout()

@@ -63,16 +63,19 @@ object BindingAdapters {
     fun setImageResourceNoAnim(view: ImageView, imageUrl: String?) {
         val context = view.context
         val options = RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 
         imageUrl?.let {
             val finalImageUrl = Constants.BASE_URL + imageUrl
             Glide.with(context)
-                    .setDefaultRequestOptions(options)
-                    .load(finalImageUrl)
-                    // transition crossfade has some strange bugs with other animations
-                    //.transition(DrawableTransitionOptions.withCrossFade(500))
-                    .into(view)
+                .setDefaultRequestOptions(options)
+                .load(finalImageUrl)
+                .error(R.drawable.ic_baseline_broken_image_24)
+                .fallback(R.drawable.ic_baseline_broken_image_24)
+                // transition crossfade has some strange bugs with other animations
+                //.transition(DrawableTransitionOptions.withCrossFade(500))
+                .into(view)
+            view.requestLayout()
         }
     }
 
@@ -81,16 +84,16 @@ object BindingAdapters {
     fun setImageResource(view: ImageView, imageUrl: String?) {
         val context = view.context
         val options = RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 
         imageUrl?.let {
             val finalImageUrl = Constants.BASE_URL + imageUrl
             Glide.with(context)
-                    .setDefaultRequestOptions(options)
-                    .load(finalImageUrl)
-                    // transition crossfade has some strange bugs with other animations
-                    .transition(DrawableTransitionOptions.withCrossFade(1000))
-                    .into(view)
+                .setDefaultRequestOptions(options)
+                .load(finalImageUrl)
+                // transition crossfade has some strange bugs with other animations
+                .transition(DrawableTransitionOptions.withCrossFade(1000))
+                .into(view)
         }
     }
 
@@ -270,6 +273,203 @@ object BindingAdapters {
             view.circleBackgroundColor = color
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("app:loadTypeText")
+    fun setLoadTypeSettingsText(view: TextView, value: Int?) {
+        value?.let {
+            val context = view.context
+            var color = 0
+            var text = ""
+            // 1 explosive
+            // 2 flammable gas
+            // 3 non-flam non-tox gas
+            // 4 toxic gas
+            // 5 flammable liquid
+            // 6 flammable solid
+            // 7 spontaneously combustible
+            // 8 dangerous when wet
+            // 9 oxidizing agent
+            // 10 organic peroxide
+            // 11 toxic
+            // 12 infectious substance
+            // 13 radioactive
+            // 14 corrosive
+            // 15 misc. dangerous goods
+            // 16-35 non-hazardous
+            when (it) {
+                1 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_explosive)
+                }
+                2 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_flammable_gas)
+                }
+                3 -> {
+                    color = ContextCompat.getColor(context, R.color.green)
+                    text = context.getString(R.string.placard_non_flam_non_tox_gas)
+                }
+                4 -> {
+                    color = ContextCompat.getColor(context, R.color.yellow)
+                    text = context.getString(R.string.placard_toxic_gas)
+                }
+                5 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_flammable_liquid)
+                }
+                6 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_flammable_solid)
+                }
+                7 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_spont_combust)
+                }
+                8 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_dang_wet)
+                }
+                9 -> {
+                    color = ContextCompat.getColor(context, R.color.yellow)
+                    text = context.getString(R.string.placard_oxi_agent)
+                }
+                10 -> {
+                    color = ContextCompat.getColor(context, R.color.green)
+                    text = context.getString(R.string.placard_organ_perox)
+                }
+                11 -> {
+                    color = ContextCompat.getColor(context, R.color.yellow)
+                    text = context.getString(R.string.placard_toxic)
+                }
+                12 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_infec_sub)
+                }
+                13 -> {
+                    color = ContextCompat.getColor(context, R.color.yellow)
+                    text = context.getString(R.string.placard_radioactive)
+                }
+                14 -> {
+                    color = ContextCompat.getColor(context, R.color.yellow)
+                    text = context.getString(R.string.placard_corrosive)
+                }
+                15 -> {
+                    color = ContextCompat.getColor(context, R.color.red)
+                    text = context.getString(R.string.placard_misc_hazard)
+                }
+                else -> {
+                    color = ContextCompat.getColor(context, R.color.white)
+                    text = context.getString(R.string.placard_non_hazardous)
+                }
+            }
+            view.setTextColor(color)
+            view.text = text
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:loadTypeImage")
+    fun setLoadTypeSettingsImage(view: ImageView, value: Int?) {
+        value?.let {
+            val context = view.context
+            var drawable : Drawable? = null
+            // 1 explosive
+            // 2 flammable gas
+            // 3 non-flam non-tox gas
+            // 4 toxic gas
+            // 5 flammable liquid
+            // 6 flammable solid
+            // 7 spontaneously combustible
+            // 8 dangerous when wet
+            // 9 oxidizing agent
+            // 10 organic peroxide
+            // 11 toxic
+            // 12 infectious substance
+            // 13 radioactive
+            // 14 corrosive
+            // 15 misc. dangerous goods
+            // 16-35 non-hazardous
+            when (it) {
+                1 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_1_1_explosives) }
+                2 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_2_flammable_gas) }
+                3 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_2_non_flammable_gas) }
+                4 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_6_toxic) }
+                5 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_3_flammable) }
+                6 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_4_flammable_solid) }
+                7 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_4_spontaneously_combustible) }
+                8 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_4_dangerous_when_wet) }
+                9 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_5_1_oxidizer) }
+                10 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_5_2_organic_peroxide) }
+                11 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_6_toxic) }
+                12 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_6_inhalation_hazard) }
+                13 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_7_radioactive) }
+                14 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_8_corrosive) }
+                15 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_0_dangerous) }
+                //else -> {  }
+            }
+            drawable?.let { drawable ->
+                view.setImageDrawable(drawable)
+            }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setLoadWeight")
+    fun setLoadWeightText(view: TextView, value: Double?) {
+        value?.let {
+            val context = view.context
+            val text : String = value.toString() + context.getString(R.string.pounds_text)
+            view.text = text
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setTrailerType")
+    fun setTrailerType(view: TextView, value: Int?) {
+        value?.let {
+            val context = view.context
+            val text = when (it) {
+                // 1 flatbed
+                // 2 step deck
+                // 3 reefer
+                // 4 auto carrier
+                // 5 dump trailer
+                // 6 tanker
+                // 7 LTL Dry van
+                // 8 Partial Dry van
+                // 9-15 dry van
+                1 -> { context.getString(R.string.trailer_flatbed) }
+                2 -> { context.getString(R.string.trailer_step_deck) }
+                3 -> { context.getString(R.string.trailer_reefer) }
+                4 -> { context.getString(R.string.trailer_auto_carrier) }
+                5 -> { context.getString(R.string.trailer_dump) }
+                6 -> { context.getString(R.string.trailer_tanker) }
+                7 -> { context.getString(R.string.trailer_ltl_dry_van) }
+                8 -> { context.getString(R.string.trailer_partial_dry_van) }
+                else -> { context.getString(R.string.trailer_dry_van) }
+            }
+            view.text = text
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:loadPay")
+    fun setLoadPayText(view: TextView, value: Double?) {
+        value?.let {
+            val context = view.context
+            val text = "$$value/mi"
+            val color = when (it) {
+                in(0.00..2.00) -> { ContextCompat.getColor(context, R.color.red) }
+                in(2.00..2.75) -> { ContextCompat.getColor(context, R.color.yellow) }
+                else -> { ContextCompat.getColor(context, R.color.green) }
+            }
+            view.setTextColor(color)
+            view.text = text
+        }
+    }
+
+
 
 
 

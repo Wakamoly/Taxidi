@@ -31,7 +31,6 @@ class DriverNotificationsRepository (
 
     suspend fun refreshNotifications() : Result<DriverNotificationsResponseModel> {
         val apiResult = safeApiCall {
-            Log.d("DriverNotificationsRepo", "refresh: Grabbing Notifications!")
             api.loadNotifications(userPreferences.userID(), notificationDao.getLastID())
         }
         if (apiResult is Result.Success){
