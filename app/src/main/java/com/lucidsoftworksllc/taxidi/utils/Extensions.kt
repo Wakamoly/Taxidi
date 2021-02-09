@@ -379,3 +379,11 @@ fun latLngToLatLngForSomeReason(latLng: com.google.android.gms.maps.model.LatLng
     return LatLng(latLng.latitude, latLng.longitude)
 }
 
+fun latLngListToLatLngListForSomeReason(latLngs: List<com.google.maps.model.LatLng>) : Collection<com.google.android.gms.maps.model.LatLng> {
+    val list = arrayListOf<com.google.android.gms.maps.model.LatLng>()
+    for (latlng in latLngs){
+        list.add(com.google.android.gms.maps.model.LatLng(latlng.lat, latlng.lng))
+    }
+    return list
+}
+

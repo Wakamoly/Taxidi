@@ -28,6 +28,7 @@ android {
             // TODO : to use Google Maps, put your API key into your local.properties as [apiKey = ...]
             // and rebuild the project.
             resValue("string", "google_maps_key", localProperties['apiKey'])
+            resValue("string", "directions_google_maps_key", localProperties['directionsApiKey'])
         }
         release {
             minifyEnabled true
@@ -167,6 +168,8 @@ dependencies {
     //Maps & Geofencing
     implementation "com.google.android.gms:play-services-location:17.1.0"
     implementation "com.google.android.gms:play-services-maps:17.0.0"
+    // Places Library (required for search places)
+    implementation 'com.google.android.libraries.places:places:2.4.0'
     // Google Maps Services (needed for directions)
     api 'com.google.maps:google-maps-services:0.2.9'
 

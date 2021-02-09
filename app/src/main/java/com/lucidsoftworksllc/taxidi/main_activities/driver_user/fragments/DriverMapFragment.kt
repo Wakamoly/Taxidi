@@ -18,9 +18,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.DirectionsApiRequest
+import com.google.maps.PendingResult
+import com.google.maps.model.DirectionsResult
+import com.google.maps.model.TravelMode
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
 import com.lucidsoftworksllc.taxidi.databinding.DriverMapFragmentBinding
+import com.lucidsoftworksllc.taxidi.main_activities.driver_user.driver_simulator.Simulator
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverMapRepository
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapsView
@@ -28,6 +33,10 @@ import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_m
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.CompanyMarkerCustomInfoWindow
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
 import com.lucidsoftworksllc.taxidi.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBinding, DriverMapRepository>(), DriverMapsView {
 
@@ -301,6 +310,59 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         googleMap.setInfoWindowAdapter(companyInfoWindow)
         if (reInitNearby) {
             showNearbyCompanies(viewModel.nearbyCompanies.value)
+        }
+        googleMap.setOnInfoWindowClickListener(infoWindowClickCallback)
+    }
+
+    private val infoWindowClickCallback = GoogleMap.OnInfoWindowClickListener { marker ->
+        // TODO: 2/9/2021 Implement clicks on info window
+        val infoWindowData: CompanyMapMarkerModel? = marker.tag as CompanyMapMarkerModel?
+        requireView().snackbar("Info window clicked -> ${infoWindowData?.companyName}", "Yeet")
+        var tripPath = arrayListOf<LatLng>()
+        infoWindowData?.let {
+            if (currentLatLng != null){
+                //showPath(listOf(currentLatLng!!, infoWindowData.latLng, infoWindowData.toLatLng))
+
+                val directionsApiRequest = DirectionsApiRequest(Simulator.geoApiContext)
+                directionsApiRequest.mode(TravelMode.DRIVING)
+                directionsApiRequest.origin(latLngToLatLngForSomeReason(infoWindowData.latLng))
+                directionsApiRequest.destination(latLngToLatLngForSomeReason(infoWindowData.toLatLng))
+                directionsApiRequest.setCallback(object :
+                    PendingResult.Callback<DirectionsResult> {
+                    override fun onResult(result: DirectionsResult) {
+                        Log.d(TAG, "DirectionsResult : $result")
+                        tripPath.clear()
+                        val routeList = result.routes
+                        // Actually it will have zero or 1 route as we haven't asked Google API for multiple paths
+
+                        if (routeList.isEmpty()) {
+                            val jsonObjectFailure = JSONObject()
+                            jsonObjectFailure.put(Constants.TYPE, Constants.ROUTES_NOT_AVAILABLE)
+                            /*Simulator.mainThread.post {
+                                webSocketListener.onError(jsonObjectFailure.toString())
+                            }*/
+                        } else {
+                            for (route in routeList) {
+                                val path = route.overviewPolyline.decodePath()
+                                tripPath.addAll(latLngListToLatLngListForSomeReason(path))
+                            }
+                            //Simulator.startTimerForTrip(webSocketListener)
+                            CoroutineScope(Dispatchers.Main).launch {
+                                showPath(tripPath)
+                            }
+                        }
+
+                    }
+
+                    override fun onFailure(e: Throwable?) {
+                        Log.d(TAG, "onFailure : ${e?.message}")
+                        requireView().snackbar("${e?.message}", "")
+                    }
+                })
+
+                } else {
+                showPath(listOf(infoWindowData.latLng, infoWindowData.toLatLng))
+            }
         }
     }
 

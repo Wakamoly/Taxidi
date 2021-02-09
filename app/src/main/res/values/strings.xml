@@ -207,6 +207,7 @@
     <string name="trailer_tanker">Tanker</string>
     <string name="trailer_ltl_dry_van">LTL Dry Van</string>
     <string name="trailer_partial_dry_van">Partial Dry Van</string>
+    <string name="contdesc_image_of_load_to_pick_up">Image of load to pick up</string>
 
 
 </resources>

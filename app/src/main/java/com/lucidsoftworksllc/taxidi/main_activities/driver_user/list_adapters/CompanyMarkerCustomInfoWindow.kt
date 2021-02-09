@@ -2,7 +2,6 @@ package com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
@@ -32,6 +31,9 @@ class CompanyMarkerCustomInfoWindow(val context: Context) : GoogleMap.InfoWindow
         binding.model = infoWindowData
         binding.executePendingBindings()
 
+        /**
+         * View binding with Glide on image views won't work on info windows, using a listener to reload the window seamlessly on success
+         */
         if (infoWindowData?.loadImage != null) {
             val finalImageUrl = Constants.BASE_URL + infoWindowData.loadImage
             Glide.with(context)

@@ -254,7 +254,6 @@ object Simulator {
                     startTimerForPickUp(webSocketListener)
                 }
 
-
             }
 
             override fun onFailure(e: Throwable) {
