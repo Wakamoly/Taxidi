@@ -25,16 +25,32 @@ android {
     }
     buildTypes {
         debug {
-            // TODO : to use Google Maps, put your API key into your local.properties as [apiKey = ...]
-            // and rebuild the project.
+            /**
+             TODO*  To use this app, comment these lines below with "//"
+             * Example -> //resValue("string", "google_maps_key", localProperties['apiKey'])
+             * Example 2 -> //resValue("string", "directions_google_maps_key", localProperties['directionsApiKey'])
+             *
+             TODO* Then, rebuild the project with Alt+B -> "Rebuild Project".
+             *
+             TODO* <<<<--- Under Gradle Scripts on the left pane, there should be a file named "local.properties" generated
+             TODO* Open it and paste this formatting at the bottom v
+             *
+              apiKey=YOUR_GOOGLE_MAPS_API_KEY_HERE
+              directionsApiKey=YOUR_DIRECTIONS_API_KEY_HERE
+             *
+             * ###### Note the Directions API key is a separate key from Google Maps, as it can only be limited to IP addresses or not at all #######
+             *
+             TODO* Replace the YOUR_KEY_HERE values, uncomment these resValues below, then "Sync Now" in the top right should appear,
+             TODO* click it, then Alt+B -> Rebuild Project again, and all should work just fine.
+             */
             resValue("string", "google_maps_key", localProperties['apiKey'])
             resValue("string", "directions_google_maps_key", localProperties['directionsApiKey'])
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue("string", "google_maps_key", localProperties['apiKey'])
-            resValue("string", "directions_google_maps_key", localProperties['directionsApiKey'])
+            //resValue("string", "google_maps_key", localProperties['apiKey'])
+            //resValue("string", "directions_google_maps_key", localProperties['directionsApiKey'])
         }
     }
     compileOptions {
