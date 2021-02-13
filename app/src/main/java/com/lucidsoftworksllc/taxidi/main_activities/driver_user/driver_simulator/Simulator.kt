@@ -9,7 +9,9 @@ import com.google.maps.GeoApiContext
 import com.google.maps.PendingResult
 import com.google.maps.model.DirectionsResult
 import com.google.maps.model.TravelMode
+import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverMapFragment
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
+import com.lucidsoftworksllc.taxidi.utils.Constants
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_ID
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_IMAGE
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_NAME
@@ -28,8 +30,10 @@ import com.lucidsoftworksllc.taxidi.utils.Constants.LOAD_WEIGHT
 import com.lucidsoftworksllc.taxidi.utils.Constants.LOCATION
 import com.lucidsoftworksllc.taxidi.utils.Constants.LOCATIONS
 import com.lucidsoftworksllc.taxidi.utils.Constants.NEARBY_COMPANIES
+import com.lucidsoftworksllc.taxidi.utils.Constants.PATH
 import com.lucidsoftworksllc.taxidi.utils.Constants.PICKUP_PATH
 import com.lucidsoftworksllc.taxidi.utils.Constants.ROUTES_NOT_AVAILABLE
+import com.lucidsoftworksllc.taxidi.utils.Constants.SAMPLE_TRIP_PATH
 import com.lucidsoftworksllc.taxidi.utils.Constants.TO_LAT
 import com.lucidsoftworksllc.taxidi.utils.Constants.TO_LNG
 import com.lucidsoftworksllc.taxidi.utils.Constants.TRAILER_TYPE
@@ -47,7 +51,12 @@ import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomLoadType
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomLoadWeight
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomToLatLng
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomTrailerTypeNeeded
+import com.lucidsoftworksllc.taxidi.utils.latLngListToLatLngListForSomeOtherReason
 import com.lucidsoftworksllc.taxidi.utils.latLngToLatLngForSomeReason
+import com.lucidsoftworksllc.taxidi.utils.snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -246,7 +255,7 @@ object Simulator {
                         jsonObjectLatLng.put(LNG, pickUp.lng)
                         jsonArray.put(jsonObjectLatLng)
                     }
-                    jsonObject.put("path", jsonArray)
+                    jsonObject.put(PATH, jsonArray)
                     mainThread.post {
                         webSocketListener.onMessage(jsonObject.toString())
                     }
@@ -382,7 +391,7 @@ object Simulator {
                         jsonObjectLatLng.put(LNG, trip.lng)
                         jsonArray.put(jsonObjectLatLng)
                     }
-                    jsonObject.put("path", jsonArray)
+                    jsonObject.put(PATH, jsonArray)
                     mainThread.post {
                         webSocketListener.onMessage(jsonObject.toString())
                     }
@@ -429,6 +438,65 @@ object Simulator {
             timer?.cancel()
             timer = null
         }
+    }
+
+    fun getRoute(origin: LatLng, destination: LatLng, webSocketListener: WebSocketListener) {
+        val directionsApiRequest = DirectionsApiRequest(geoApiContext)
+        directionsApiRequest.mode(TravelMode.DRIVING)
+        directionsApiRequest.origin(latLngToLatLngForSomeReason(origin))
+        directionsApiRequest.destination(latLngToLatLngForSomeReason(destination))
+        directionsApiRequest.setCallback(object :
+                PendingResult.Callback<DirectionsResult> {
+            override fun onResult(result: DirectionsResult) {
+                Log.d(TAG, "DirectionsResult : ${result.routes.size}")
+                tripPath.clear()
+                val routeList = result.routes
+                // Actually it will have zero or 1 route as we haven't asked Google API for multiple paths
+
+                if (routeList.isEmpty()) {
+                    Log.d(TAG, "Routelist empty! OriginLat : ${origin.latitude}")
+                    Log.d(TAG, "OriginLng : ${origin.longitude}")
+                    Log.d(TAG, "DestLat : ${destination.latitude}")
+                    Log.d(TAG, "DestLng : ${destination.longitude}")
+                    val jsonObjectFailure = JSONObject()
+                    jsonObjectFailure.put(TYPE, ROUTES_NOT_AVAILABLE)
+                    mainThread.post {
+                        webSocketListener.onError(jsonObjectFailure.toString())
+                    }
+                } else {
+                    for (route in routeList) {
+                        val path = route.overviewPolyline.decodePath()
+                        tripPath.addAll(path)
+                    }
+
+                    val jsonObject = JSONObject()
+                    jsonObject.put(TYPE, SAMPLE_TRIP_PATH)
+                    val jsonArray = JSONArray()
+                    for (trip in tripPath) {
+                        val jsonObjectLatLng = JSONObject()
+                        jsonObjectLatLng.put(LAT, trip.lat)
+                        jsonObjectLatLng.put(LNG, trip.lng)
+                        jsonArray.put(jsonObjectLatLng)
+                    }
+                    jsonObject.put(PATH, jsonArray)
+                    mainThread.post {
+                        webSocketListener.onMessage(jsonObject.toString())
+                    }
+
+                }
+
+            }
+
+            override fun onFailure(e: Throwable?) {
+                Log.d(TAG, "onFailure : ${e?.message}")
+                val jsonObjectFailure = JSONObject()
+                jsonObjectFailure.put(TYPE, DIRECTION_API_FAILED)
+                jsonObjectFailure.put(ERROR, e?.message)
+                mainThread.post {
+                    webSocketListener.onError(jsonObjectFailure.toString())
+                }
+            }
+        })
     }
 
 }

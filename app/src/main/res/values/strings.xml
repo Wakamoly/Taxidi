@@ -208,6 +208,10 @@
     <string name="trailer_ltl_dry_van">LTL Dry Van</string>
     <string name="trailer_partial_dry_van">Partial Dry Van</string>
     <string name="contdesc_image_of_load_to_pick_up">Image of load to pick up</string>
+    <string name="route_not_available">Route not available!</string>
+    <string name="details_text">Details</string>
+    <string name="dismiss_text">Dismiss</string>
+    <string name="route_not_available_most_likely_in_the_ocean">Route not available! End point most likely in the ocean, or something, probably.</string>
 
 
 </resources>

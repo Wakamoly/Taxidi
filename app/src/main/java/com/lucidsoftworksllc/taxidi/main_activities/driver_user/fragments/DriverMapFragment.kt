@@ -37,6 +37,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.ArrayList
 
 class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBinding, DriverMapRepository>(), DriverMapsView {
 
@@ -55,6 +56,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     private var currentLatLngFromServer: LatLng? = null
     private var movingCompanyMarker: Marker? = null
     private var reInitNearby = false
+    private var companyMapMarkerModel : CompanyMapMarkerModel? = null
 
     companion object {
         private const val TAG = "MapsActivity"
@@ -113,11 +115,27 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                 10 -> {
                     showNearbyCompanies(viewModel.nearbyCompanies.value)
                 }
+                11 -> {
+                    // Show path and show layout for accept/deny
+                    showSampleTripPath(viewModel.sampleTripPath.value)
+                }
             }
         })
     }
 
+    private fun showSampleTripPath(values: ArrayList<LatLng>?) {
+        values?.let {
+            showPath(values)
+        }
+    }
+
     private fun setUpClickListener() {
+        binding.tripDismissButton.setOnClickListener {
+            binding.tripDetailAccessWindowMotion.transitionToStart()
+        }
+        binding.tripDetailsButton.setOnClickListener {
+            viewModel.navigateToShipmentDetails(companyMapMarkerModel)
+        }
         /*pickUpTextView.setOnClickListener {
             launchLocationAutoCompleteActivity(PICKUP_REQUEST_CODE)
         }
@@ -186,16 +204,22 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
             override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
                 if (currentLatLng == null) {
-                    for (location in locationResult.locations) {
-                        if (currentLatLng == null) {
-                            currentLatLng = LatLng(location.latitude, location.longitude)
-                            setCurrentLocationAsPickUp()
-                            enableMyLocationOnMap()
-                            moveCamera(currentLatLng)
-                            animateCamera(currentLatLng)
-                            viewModel.requestNearbyCompanies(currentLatLng!!)
-                        }
+                    val location = locationResult.locations.first()
+                    currentLatLng = LatLng(location.latitude, location.longitude)
+                    setCurrentLocationAsPickUp()
+                    enableMyLocationOnMap()
+                    moveCamera(currentLatLng)
+                    animateCamera(currentLatLng)
+                    if (viewModel.nearbyCompanies.value != null && viewModel.nearbyCompanies.value!!.isNotEmpty()){
+                        showNearbyCompanies(viewModel.nearbyCompanies.value)
+                    } else {
+                        viewModel.requestNearbyCompanies(currentLatLng!!)
                     }
+                    /*for (location in locationResult.locations) {
+                        if (currentLatLng == null) {
+
+                        }
+                    }*/
                 }
                 // Few more things we can do here:
                 // For example: Update the location of user on server
@@ -271,7 +295,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     }
 
     override fun onDestroy() {
-        //presenter.onDetach()
         fusedLocationProviderClient?.removeLocationUpdates(locationCallback)
         super.onDestroy()
     }
@@ -315,54 +338,20 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     }
 
     private val infoWindowClickCallback = GoogleMap.OnInfoWindowClickListener { marker ->
-        // TODO: 2/9/2021 Implement clicks on info window
         val infoWindowData: CompanyMapMarkerModel? = marker.tag as CompanyMapMarkerModel?
-        requireView().snackbar("Info window clicked -> ${infoWindowData?.companyName}", "Yeet")
-        var tripPath = arrayListOf<LatLng>()
         infoWindowData?.let {
-            if (currentLatLng != null){
-                //showPath(listOf(currentLatLng!!, infoWindowData.latLng, infoWindowData.toLatLng))
+            // Reset the selected marker, then set it again
+            companyMapMarkerModel = null
+            companyMapMarkerModel = it
+            val origin = infoWindowData.latLng
+            val destination = infoWindowData.toLatLng
+            viewModel.getRoute(origin, destination)
+            binding.tripDetailAccessWindowMotion.transitionToEnd()
+            /*if (currentLatLng != null){
 
-                val directionsApiRequest = DirectionsApiRequest(Simulator.geoApiContext)
-                directionsApiRequest.mode(TravelMode.DRIVING)
-                directionsApiRequest.origin(latLngToLatLngForSomeReason(infoWindowData.latLng))
-                directionsApiRequest.destination(latLngToLatLngForSomeReason(infoWindowData.toLatLng))
-                directionsApiRequest.setCallback(object :
-                    PendingResult.Callback<DirectionsResult> {
-                    override fun onResult(result: DirectionsResult) {
-                        Log.d(TAG, "DirectionsResult : $result")
-                        tripPath.clear()
-                        val routeList = result.routes
-                        // Actually it will have zero or 1 route as we haven't asked Google API for multiple paths
-
-                        if (routeList.isEmpty()) {
-                            val jsonObjectFailure = JSONObject()
-                            jsonObjectFailure.put(Constants.TYPE, Constants.ROUTES_NOT_AVAILABLE)
-                            /*Simulator.mainThread.post {
-                                webSocketListener.onError(jsonObjectFailure.toString())
-                            }*/
-                        } else {
-                            for (route in routeList) {
-                                val path = route.overviewPolyline.decodePath()
-                                tripPath.addAll(latLngListToLatLngListForSomeReason(path))
-                            }
-                            //Simulator.startTimerForTrip(webSocketListener)
-                            CoroutineScope(Dispatchers.Main).launch {
-                                showPath(tripPath)
-                            }
-                        }
-
-                    }
-
-                    override fun onFailure(e: Throwable?) {
-                        Log.d(TAG, "onFailure : ${e?.message}")
-                        requireView().snackbar("${e?.message}", "")
-                    }
-                })
-
-                } else {
+            } else {
                 showPath(listOf(infoWindowData.latLng, infoWindowData.toLatLng))
-            }
+            }*/
         }
     }
 
@@ -393,35 +382,36 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
 
     override fun showPath(latLngList: List<LatLng>?) {
         latLngList?.let {
+            resetMarkers()
             val builder = LatLngBounds.Builder()
             for (latLng in latLngList) {
                 builder.include(latLng)
             }
             val bounds = builder.build()
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 2))
-            val polylineOptions = PolylineOptions()
-            polylineOptions.color(Color.GRAY)
-            polylineOptions.width(5f)
-            polylineOptions.addAll(latLngList)
-            greyPolyLine = googleMap.addPolyline(polylineOptions)
-
-            val blackPolylineOptions = PolylineOptions()
-            blackPolylineOptions.width(5f)
-            blackPolylineOptions.color(Color.BLACK)
-            blackPolyline = googleMap.addPolyline(blackPolylineOptions)
-
-            originMarker = addOriginDestinationMarkerAndGet(latLngList[0])
-            originMarker?.setAnchor(0.5f, 0.5f)
-            destinationMarker = addOriginDestinationMarkerAndGet(latLngList[latLngList.size - 1])
-            destinationMarker?.setAnchor(0.5f, 0.5f)
-
-            val polylineAnimator = AnimationUtils.polyLineAnimator()
-            polylineAnimator.addUpdateListener { valueAnimator ->
-                val percentValue = (valueAnimator.animatedValue as Int)
-                val index = (greyPolyLine?.points!!.size * (percentValue / 100.0f)).toInt()
-                blackPolyline?.points = greyPolyLine?.points!!.subList(0, index)
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
+            PolylineOptions().color(Color.GRAY).width(5f).addAll(latLngList).apply {
+                greyPolyLine = googleMap.addPolyline(this)
             }
-            polylineAnimator.start()
+
+            PolylineOptions().width(5f).color(Color.BLACK).apply {
+                googleMap.addPolyline(this)
+            }
+
+            originMarker = addOriginDestinationMarkerAndGet(latLngList[0]).apply {
+                setAnchor(0.5f, 0.5f)
+            }
+            destinationMarker = addOriginDestinationMarkerAndGet(latLngList[latLngList.size - 1]).apply {
+                setAnchor(0.5f, 0.5f)
+            }
+
+            AnimationUtils.polyLineAnimator().apply {
+                addUpdateListener { valueAnimator ->
+                    val percentValue = (valueAnimator.animatedValue as Int)
+                    val index = (greyPolyLine?.points!!.size * (percentValue / 100.0f)).toInt()
+                    blackPolyline?.points = greyPolyLine?.points!!.subList(0, index)
+                }
+                start()
+            }
         }
     }
 
@@ -484,6 +474,14 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     override fun informTripEnd() {
         viewModel.showSnackBarInt.value = R.string.route_end
         //nextRideButton.visibility = View.VISIBLE
+        resetMarkers()
+        greyPolyLine?.remove()
+        blackPolyline?.remove()
+        originMarker?.remove()
+        destinationMarker?.remove()
+    }
+
+    private fun resetMarkers() {
         greyPolyLine?.remove()
         blackPolyline?.remove()
         originMarker?.remove()
@@ -491,8 +489,8 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     }
 
     override fun showRoutesNotAvailableError() {
-        viewModel.showSnackBarInt.value = R.string.route_not_available_choose_different_locations
-        reset()
+        viewModel.showSnackBarInt.value = R.string.route_not_available_most_likely_in_the_ocean
+        //reset()
     }
 
     override fun showDirectionApiFailedError(error: String?) {

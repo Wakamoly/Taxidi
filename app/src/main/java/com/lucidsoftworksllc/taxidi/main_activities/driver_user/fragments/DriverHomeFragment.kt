@@ -47,7 +47,7 @@ class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentB
         container: ViewGroup?
     ) = DriverHomeFragmentBinding.inflate(inflater, container, false)
     override fun getFragmentRepository() = DriverHomeRepository(
-        userPreferences,
+        userPreferences, // Datastore
         remoteDataSource.buildApi(DriverHomeAPI::class.java, fcmToken)
     )
 

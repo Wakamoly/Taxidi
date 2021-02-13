@@ -61,9 +61,9 @@ class CompanyMarkerCustomInfoWindow(val context: Context) : GoogleMap.InfoWindow
         var marker: Marker? = null
 
         private fun onSuccess() {
-            if (marker != null && marker!!.isInfoWindowShown) {
-                marker!!.hideInfoWindow()
-                marker!!.showInfoWindow()
+            if (marker != null && marker?.isInfoWindowShown == true) {
+                marker?.hideInfoWindow()
+                marker?.showInfoWindow()
             }
         }
 

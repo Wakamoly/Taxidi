@@ -31,7 +31,13 @@ object Constants {
     const val PICKUP_LNG = "pickUpLng"
     const val DROP_LAT = "dropLat"
     const val DROP_LNG = "dropLng"
+    const val ORIGIN_LAT = "originLat"
+    const val ORIGIN_LNG = "origiLng"
+    const val DEST_LAT = "destLat"
+    const val DEST_LNG = "destLng"
     const val REQUEST_COMPANY = "requestCompany"
+    const val REQUEST_ROUTE = "requestRoute"
+    const val SAMPLE_TRIP_PATH = "sampleTripPath"
 
     const val COMPANY_NAME = "companyName"
     const val COMPANY_ID = "companyID"

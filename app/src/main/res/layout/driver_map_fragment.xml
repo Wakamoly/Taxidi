@@ -21,6 +21,60 @@
             android:layout_height="match_parent"
             tools:ignore="FragmentTagUsage" />
 
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/trip_detail_access_window_motion"
+            android:layout_margin="@dimen/padding_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layoutDescription="@xml/driver_map_fragment_scene">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/trip_details_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardCornerRadius="@dimen/card_view_corner_radius">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primaryLightColor">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/trip_details_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@+id/trip_dismiss_button"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:text="@string/details_text"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/trip_dismiss_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/dismiss_text"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/trip_details_button" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

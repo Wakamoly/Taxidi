@@ -43,7 +43,7 @@ class AuthActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 CoroutineScope(Dispatchers.IO).launch {
-                    val fbToken = task.result!!
+                    val fbToken = task.result
                     Log.d("Installations", "Installation auth token: $fbToken, current -> $fcmToken")
                     if (fbToken != fcmToken) {
                         userPreferences.saveFCMToken(fbToken)

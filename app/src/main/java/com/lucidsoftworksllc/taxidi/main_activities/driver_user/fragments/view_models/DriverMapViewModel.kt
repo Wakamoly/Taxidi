@@ -10,11 +10,17 @@ import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.reposi
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.MapNetworkService
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
 import com.lucidsoftworksllc.taxidi.utils.Constants
+import com.lucidsoftworksllc.taxidi.utils.Constants.DEST_LAT
+import com.lucidsoftworksllc.taxidi.utils.Constants.DEST_LNG
 import com.lucidsoftworksllc.taxidi.utils.Constants.DROP_LAT
 import com.lucidsoftworksllc.taxidi.utils.Constants.DROP_LNG
+import com.lucidsoftworksllc.taxidi.utils.Constants.ORIGIN_LAT
+import com.lucidsoftworksllc.taxidi.utils.Constants.ORIGIN_LNG
+import com.lucidsoftworksllc.taxidi.utils.Constants.PATH
 import com.lucidsoftworksllc.taxidi.utils.Constants.PICKUP_LAT
 import com.lucidsoftworksllc.taxidi.utils.Constants.PICKUP_LNG
 import com.lucidsoftworksllc.taxidi.utils.Constants.REQUEST_COMPANY
+import com.lucidsoftworksllc.taxidi.utils.Constants.REQUEST_ROUTE
 import com.lucidsoftworksllc.taxidi.utils.Constants.TYPE
 import org.json.JSONObject
 
@@ -31,12 +37,31 @@ class DriverMapViewModel(
     val companyLocation = MutableLiveData<LatLng>()
     val directionApiFailedError = MutableLiveData<String>()
     val nearbyCompanies = MutableLiveData<ArrayList<CompanyMapMarkerModel>>()
+    val sampleTripPath = MutableLiveData<ArrayList<LatLng>>()
 
     // TODO: 2/7/2021 Move to Repo
     private var webSocket: WebSocket = MapNetworkService().createWebSocket(this)
 
     init {
         webSocket.connect()
+    }
+
+    fun navigateToShipmentDetails(selectedShipment: CompanyMapMarkerModel?) {
+        if (selectedShipment != null) {
+            showSnackBar.value = "Selected shipment -> ${selectedShipment.companyName}"
+        } else {
+            showSnackBar.value = "Selected shipment is null!"
+        }
+    }
+
+    fun getRoute(origin: LatLng, destination: LatLng) {
+        val jsonObject = JSONObject()
+        jsonObject.put(TYPE, REQUEST_ROUTE)
+        jsonObject.put(ORIGIN_LAT, origin.latitude)
+        jsonObject.put(ORIGIN_LNG, origin.longitude)
+        jsonObject.put(DEST_LAT, destination.latitude)
+        jsonObject.put(DEST_LNG, destination.longitude)
+        webSocket.sendMessage(jsonObject.toString())
     }
 
     fun requestNearbyCompanies(latLng: LatLng) {
@@ -62,7 +87,7 @@ class DriverMapViewModel(
         Log.d(TAG, "onConnect")
     }
 
-    private fun handleOnMessageNearbyCabs(jsonObject: JSONObject) {
+    private fun handleOnMessageNearbyCompanies(jsonObject: JSONObject) {
         val nearbyCompanies = arrayListOf<CompanyMapMarkerModel>()
         val jsonArray = jsonObject.getJSONArray(Constants.LOCATIONS)
         for (i in 0 until jsonArray.length()) {
@@ -108,13 +133,13 @@ class DriverMapViewModel(
         val jsonObject = JSONObject(data)
         when (jsonObject.getString(TYPE)) {
             Constants.NEARBY_COMPANIES -> {
-                handleOnMessageNearbyCabs(jsonObject)
+                handleOnMessageNearbyCompanies(jsonObject)
             }
             Constants.LOAD_BOOKED -> {
                 viewState.value = 1
             }
             Constants.PICKUP_PATH, Constants.TRIP_PATH -> {
-                val jsonArray = jsonObject.getJSONArray("path")
+                val jsonArray = jsonObject.getJSONArray(PATH)
                 val pickUpPath = arrayListOf<LatLng>()
                 for (i in 0 until jsonArray.length()) {
                     val lat = (jsonArray.get(i) as JSONObject).getDouble(Constants.LAT)
@@ -142,6 +167,18 @@ class DriverMapViewModel(
             }
             Constants.TRIP_END -> {
                 viewState.value = 7
+            }
+            Constants.SAMPLE_TRIP_PATH -> {
+                val jsonArray = jsonObject.getJSONArray(PATH)
+                val sampleTripPath = arrayListOf<LatLng>()
+                for (i in 0 until jsonArray.length()) {
+                    val lat = (jsonArray.get(i) as JSONObject).getDouble(Constants.LAT)
+                    val lng = (jsonArray.get(i) as JSONObject).getDouble(Constants.LNG)
+                    val latLng = LatLng(lat, lng)
+                    sampleTripPath.add(latLng)
+                }
+                this.sampleTripPath.value = sampleTripPath
+                viewState.value = 11
             }
         }
     }
