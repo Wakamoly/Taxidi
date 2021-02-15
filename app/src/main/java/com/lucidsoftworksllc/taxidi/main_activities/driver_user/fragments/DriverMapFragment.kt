@@ -1,6 +1,7 @@
 package com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
@@ -9,6 +10,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -20,7 +22,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
+import com.lucidsoftworksllc.taxidi.databinding.DialogStartDriveBinding
 import com.lucidsoftworksllc.taxidi.databinding.DriverMapFragmentBinding
+import com.lucidsoftworksllc.taxidi.databinding.ItemCompanyMapMarkerBinding
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverMapRepository
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapsView
@@ -28,6 +32,7 @@ import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_m
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.CompanyMarkerCustomInfoWindow
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
 import com.lucidsoftworksllc.taxidi.utils.*
+import com.yarolegovich.lovelydialog.LovelyCustomDialog
 import java.util.ArrayList
 
 class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBinding, DriverMapRepository>(), DriverMapsView {
@@ -129,7 +134,21 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
             // TODO: 2/15/2021 FIX
             if (companyMapMarkerModel != null) {
                 binding.tripDetailAccessWindowMotion.transitionToStart()
-                viewModel.requestCompany(companyMapMarkerModel!!.latLng, companyMapMarkerModel!!.toLatLng)
+                val dialogBinding = DialogStartDriveBinding.inflate(layoutInflater)
+                dialogBinding.model = companyMapMarkerModel
+                binding.executePendingBindings()
+                val dialog = LovelyCustomDialog(requireContext())
+                dialog.setView(dialogBinding.root)
+                    .setTopColorRes(R.color.primaryColor)
+                    .setIcon(R.drawable.ic_baseline_local_shipping_64)
+                    .setListener(dialogBinding.buttonCancel.id) {
+                        dialog.dismiss()
+                    }
+                    .setListener(dialogBinding.buttonStartDrive.id) {
+                        dialog.dismiss()
+                        viewModel.requestCompany(companyMapMarkerModel!!.latLng, companyMapMarkerModel!!.toLatLng)
+                    }
+                    .show()
             } else {
                 requireView().snackbar("Map marker info null!")
             }
@@ -207,11 +226,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                     } else {
                         viewModel.requestNearbyCompanies(currentLatLng!!)
                     }
-                    /*for (location in locationResult.locations) {
-                        if (currentLatLng == null) {
-
-                        }
-                    }*/
                 }
                 // Few more things we can do here:
                 // For example: Update the location of user on server
@@ -224,16 +238,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         )
     }
 
-    private fun checkAndShowRequestButton() {
-        if (pickUpLatLng !== null && dropLatLng !== null) {
-            //requestCabButton.visibility = View.VISIBLE
-            //requestCabButton.isEnabled = true
-        }
-    }
-
     private fun reset() {
-        //statusTextView.visibility = View.GONE
-        //nextRideButton.visibility = View.GONE
         nearbyCompanyMarkerList.forEach { it.remove() }
         nearbyCompanyMarkerList.clear()
         previousLatLngFromServer = null
@@ -243,12 +248,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
             animateCamera(currentLatLng)
             setCurrentLocationAsPickUp()
             viewModel.requestNearbyCompanies(currentLatLng!!)
-        } else {
-            //pickUpTextView.text = ""
         }
-        //pickUpTextView.isEnabled = true
-        //dropTextView.isEnabled = true
-        //dropTextView.text = ""
         movingDriverMarker?.remove()
         greyPolyLine?.remove()
         blackPolyline?.remove()
@@ -482,6 +482,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         viewModel.showSnackBarInt.value = R.string.route_end_driver
         resetMarkers()
         // TODO: 2/15/2021 Generate dropoff ticket
+        // TODO: 2/15/2021 Inform server dropoff has occured
     }
 
     private fun resetMarkers() {

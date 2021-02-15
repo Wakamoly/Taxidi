@@ -216,6 +216,8 @@
     <string name="you_have_arrived_at_pickup">You have arrived at the pickup location!</string>
     <string name="you_are_on_route_to_dropoff">You are on route to dropoff location!</string>
     <string name="route_end_driver">You have arrived at the dropoff location!</string>
+    <string name="accept_text">Accept</string>
+    <string name="load_details">Load Details</string>
 
 
 </resources>
