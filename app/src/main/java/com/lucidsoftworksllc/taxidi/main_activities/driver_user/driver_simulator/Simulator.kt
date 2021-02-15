@@ -90,8 +90,8 @@ object Simulator {
              */
             val randomOperatorForLat = (0..1).random()
             val randomOperatorForLng = (0..1).random()
-            var randomDeltaForLat = (10..50).random() / 1000.00
-            var randomDeltaForLng = (10..50).random() / 1000.00
+            var randomDeltaForLat = (1..50).random() / 1000.00
+            var randomDeltaForLng = (1..50).random() / 1000.00
             if (randomOperatorForLat == 1) {
                 randomDeltaForLat *= -1
             }

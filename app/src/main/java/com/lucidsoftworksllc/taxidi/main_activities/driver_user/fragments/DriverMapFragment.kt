@@ -57,8 +57,8 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setTitle(getString(R.string.map_fragment_name))
+        super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
@@ -66,6 +66,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        setTitle(getString(R.string.map_fragment_name))
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.driver_map) as SupportMapFragment
         mapFragment.getMapAsync(callback)
@@ -136,17 +137,23 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     }
 
     private fun moveCamera(latLng: LatLng?) {
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        if (::googleMap.isInitialized){
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        }
     }
 
     private fun animateCamera(latLng: LatLng?) {
         val cameraPosition = CameraPosition.Builder().target(latLng).zoom(15.5f).build()
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        if (::googleMap.isInitialized){
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
     }
 
     private fun centerCamera(latLng: LatLng?) {
         val cameraPosition = CameraPosition.Builder().target(latLng).zoom(15.5f).build()
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        if (::googleMap.isInitialized){
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
     }
 
     private fun addCompanyMarkerAndGet(company: CompanyMapMarkerModel): Marker {
@@ -399,9 +406,14 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         }
     }
 
-    private fun addTruckMarkerAndGet(latLng: LatLng): Marker {
+    private fun addTruckMarkerAndGet(latLng: LatLng): Marker? {
         val bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(MapUtils.getTruckBitmap(requireContext()))
-        return googleMap.addMarker(MarkerOptions().position(latLng).flat(true).icon(bitmapDescriptor))
+        return if (::googleMap.isInitialized){
+            googleMap.addMarker(MarkerOptions().position(latLng).flat(true).icon(bitmapDescriptor))
+        } else {
+            // TODO: 2/15/2021 Set latlng and googlemap init reinit
+            null
+        }
     }
 
     override fun updateSimulatedDriverLocation(latLng: LatLng?) {
@@ -419,6 +431,8 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                 previousLatLngFromServer = currentLatLngFromServer
                 currentLatLngFromServer = latLng
                 val valueAnimator = AnimationUtils.truckAnimator()
+                var rotation = 0f
+                var count = 0
                 valueAnimator.addUpdateListener { va ->
                     if (currentLatLngFromServer != null && previousLatLngFromServer != null) {
                         val multiplier = va.animatedFraction
@@ -428,10 +442,16 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                         )
                         movingDriverMarker?.position = nextLocation
                         movingDriverMarker?.setAnchor(0.5f, 0.5f)
-                        val rotation = MapUtils.getRotation(
-                                previousLatLngFromServer!!,
-                                nextLocation
-                        )
+                        // Reducing rate at which the rotation is set
+                        if (count % 10 == 0 || count == 0) {
+                            rotation = MapUtils.getRotation(
+                                    previousLatLngFromServer!!,
+                                    nextLocation
+                            )
+                            count = 0
+                        }
+                        count++
+
                         if (!rotation.isNaN()) {
                             movingDriverMarker?.rotation = rotation
                         }
