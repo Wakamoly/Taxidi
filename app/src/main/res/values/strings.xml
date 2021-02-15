@@ -212,6 +212,10 @@
     <string name="details_text">Details</string>
     <string name="dismiss_text">Dismiss</string>
     <string name="route_not_available_most_likely_in_the_ocean">Route not available! End point most likely in the ocean, or something, probably.</string>
+    <string name="you_are_arriving_at_pickup">You are arriving at the pickup location!</string>
+    <string name="you_have_arrived_at_pickup">You have arrived at the pickup location!</string>
+    <string name="you_are_on_route_to_dropoff">You are on route to dropoff location!</string>
+    <string name="route_end_driver">You have arrived at the dropoff location!</string>
 
 
 </resources>

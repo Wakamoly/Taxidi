@@ -18,14 +18,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.maps.DirectionsApiRequest
-import com.google.maps.PendingResult
-import com.google.maps.model.DirectionsResult
-import com.google.maps.model.TravelMode
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
 import com.lucidsoftworksllc.taxidi.databinding.DriverMapFragmentBinding
-import com.lucidsoftworksllc.taxidi.main_activities.driver_user.driver_simulator.Simulator
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverMapRepository
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapsView
@@ -33,10 +28,6 @@ import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_m
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.CompanyMarkerCustomInfoWindow
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
 import com.lucidsoftworksllc.taxidi.utils.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.util.ArrayList
 
 class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBinding, DriverMapRepository>(), DriverMapsView {
@@ -54,7 +45,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     private var blackPolyline: Polyline? = null
     private var previousLatLngFromServer: LatLng? = null
     private var currentLatLngFromServer: LatLng? = null
-    private var movingCompanyMarker: Marker? = null
+    private var movingDriverMarker: Marker? = null
     private var reInitNearby = false
     private var companyMapMarkerModel : CompanyMapMarkerModel? = null
 
@@ -92,7 +83,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                     showPath(viewModel.pickUpPath.value?.toList())
                 }
                 3 -> {
-                    //updateCompanyLocation(viewModel.companyLocation.value)
+                    updateSimulatedDriverLocation(viewModel.driverLocation.value)
                 }
                 4 -> {
                     informDriverIsArriving()
@@ -116,7 +107,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                     showNearbyCompanies(viewModel.nearbyCompanies.value)
                 }
                 11 -> {
-                    // Show path and show layout for accept/deny
                     showSampleTripPath(viewModel.sampleTripPath.value)
                 }
             }
@@ -134,25 +124,15 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
             binding.tripDetailAccessWindowMotion.transitionToStart()
         }
         binding.tripDetailsButton.setOnClickListener {
-            viewModel.navigateToShipmentDetails(companyMapMarkerModel)
+            //viewModel.navigateToShipmentDetails(companyMapMarkerModel)
+            // TODO: 2/15/2021 FIX
+            if (companyMapMarkerModel != null) {
+                binding.tripDetailAccessWindowMotion.transitionToStart()
+                viewModel.requestCompany(companyMapMarkerModel!!.latLng, companyMapMarkerModel!!.toLatLng)
+            } else {
+                requireView().snackbar("Map marker info null!")
+            }
         }
-        /*pickUpTextView.setOnClickListener {
-            launchLocationAutoCompleteActivity(PICKUP_REQUEST_CODE)
-        }
-        dropTextView.setOnClickListener {
-            launchLocationAutoCompleteActivity(DROP_REQUEST_CODE)
-        }
-        requestCabButton.setOnClickListener {
-            statusTextView.visibility = View.VISIBLE
-            statusTextView.text = getString(R.string.requesting_your_cab)
-            requestCabButton.isEnabled = false
-            pickUpTextView.isEnabled = false
-            dropTextView.isEnabled = false
-            presenter.requestCab(pickUpLatLng!!, dropLatLng!!)
-        }
-        nextRideButton.setOnClickListener {
-            reset()
-        }*/
     }
 
     private fun moveCamera(latLng: LatLng?) {
@@ -164,7 +144,12 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
-    private fun addCarMarkerAndGet(company: CompanyMapMarkerModel): Marker {
+    private fun centerCamera(latLng: LatLng?) {
+        val cameraPosition = CameraPosition.Builder().target(latLng).zoom(15.5f).build()
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    }
+
+    private fun addCompanyMarkerAndGet(company: CompanyMapMarkerModel): Marker {
         val bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(
             MapUtils.getBusinessBitmap(
                 requireContext()
@@ -257,7 +242,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         //pickUpTextView.isEnabled = true
         //dropTextView.isEnabled = true
         //dropTextView.text = ""
-        movingCompanyMarker?.remove()
+        movingDriverMarker?.remove()
         greyPolyLine?.remove()
         blackPolyline?.remove()
         originMarker?.remove()
@@ -267,7 +252,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         blackPolyline = null
         originMarker = null
         destinationMarker = null
-        movingCompanyMarker = null
+        movingDriverMarker = null
     }
 
     override fun onStart() {
@@ -364,7 +349,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
             nearbyCompanyMarkerList.clear()
             if (::googleMap.isInitialized){
                 for (company in companies) {
-                    val nearbyCompanyMarker = addCarMarkerAndGet(company)
+                    val nearbyCompanyMarker = addCompanyMarkerAndGet(company)
                     nearbyCompanyMarkerList.add(nearbyCompanyMarker)
                 }
             } else {
@@ -376,7 +361,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     override fun informCompanyBooked() {
         nearbyCompanyMarkerList.forEach { it.remove() }
         nearbyCompanyMarkerList.clear()
-        //requestCabButton.visibility = View.GONE
         viewModel.showSnackBarInt.value = R.string.your_pickup_is_booked
     }
 
@@ -415,16 +399,21 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         }
     }
 
-    /*override fun updateCompanyLocation(latLng: LatLng?) {
+    private fun addTruckMarkerAndGet(latLng: LatLng): Marker {
+        val bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(MapUtils.getTruckBitmap(requireContext()))
+        return googleMap.addMarker(MarkerOptions().position(latLng).flat(true).icon(bitmapDescriptor))
+    }
+
+    override fun updateSimulatedDriverLocation(latLng: LatLng?) {
         latLng?.let {
-            if (movingCompanyMarker == null) {
-                movingCompanyMarker = addCarMarkerAndGet(latLng)
+            if (movingDriverMarker == null) {
+                movingDriverMarker = addTruckMarkerAndGet(latLng)
             }
             if (previousLatLngFromServer == null) {
                 currentLatLngFromServer = latLng
                 previousLatLngFromServer = currentLatLngFromServer
-                movingCompanyMarker?.position = currentLatLngFromServer
-                movingCompanyMarker?.setAnchor(0.5f, 0.5f)
+                movingDriverMarker?.position = currentLatLngFromServer
+                movingDriverMarker?.setAnchor(0.5f, 0.5f)
                 animateCamera(currentLatLngFromServer)
             } else {
                 previousLatLngFromServer = currentLatLngFromServer
@@ -434,51 +423,45 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                     if (currentLatLngFromServer != null && previousLatLngFromServer != null) {
                         val multiplier = va.animatedFraction
                         val nextLocation = LatLng(
-                            multiplier * currentLatLngFromServer!!.latitude + (1 - multiplier) * previousLatLngFromServer!!.latitude,
-                            multiplier * currentLatLngFromServer!!.longitude + (1 - multiplier) * previousLatLngFromServer!!.longitude
+                                multiplier * currentLatLngFromServer!!.latitude + (1 - multiplier) * previousLatLngFromServer!!.latitude,
+                                multiplier * currentLatLngFromServer!!.longitude + (1 - multiplier) * previousLatLngFromServer!!.longitude
                         )
-                        movingCompanyMarker?.position = nextLocation
-                        movingCompanyMarker?.setAnchor(0.5f, 0.5f)
+                        movingDriverMarker?.position = nextLocation
+                        movingDriverMarker?.setAnchor(0.5f, 0.5f)
                         val rotation = MapUtils.getRotation(
-                            previousLatLngFromServer!!,
-                            nextLocation
+                                previousLatLngFromServer!!,
+                                nextLocation
                         )
                         if (!rotation.isNaN()) {
-                            movingCompanyMarker?.rotation = rotation
+                            movingDriverMarker?.rotation = rotation
                         }
-                        animateCamera(nextLocation)
+                        centerCamera(nextLocation)
                     }
                 }
                 valueAnimator.start()
             }
         }
-    }*/
+    }
 
     override fun informDriverIsArriving() {
-        viewModel.showSnackBarInt.value = R.string.your_driver_is_arriving
+        viewModel.showSnackBarInt.value = R.string.you_are_arriving_at_pickup
     }
 
     override fun informDriverArrived() {
-        viewModel.showSnackBarInt.value = R.string.your_pickup_has_arrived
-        greyPolyLine?.remove()
-        blackPolyline?.remove()
-        originMarker?.remove()
-        destinationMarker?.remove()
+        viewModel.showSnackBarInt.value = R.string.you_have_arrived_at_pickup
+        resetMarkers()
+        // TODO: 2/15/2021 Generate pickup ticket
     }
 
     override fun informTripStart() {
-        viewModel.showSnackBarInt.value = R.string.your_pickup_is_on_route_to_dest
+        viewModel.showSnackBarInt.value = R.string.you_are_on_route_to_dropoff
         previousLatLngFromServer = null
     }
 
     override fun informTripEnd() {
-        viewModel.showSnackBarInt.value = R.string.route_end
-        //nextRideButton.visibility = View.VISIBLE
+        viewModel.showSnackBarInt.value = R.string.route_end_driver
         resetMarkers()
-        greyPolyLine?.remove()
-        blackPolyline?.remove()
-        originMarker?.remove()
-        destinationMarker?.remove()
+        // TODO: 2/15/2021 Generate dropoff ticket
     }
 
     private fun resetMarkers() {
@@ -490,7 +473,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
 
     override fun showRoutesNotAvailableError() {
         viewModel.showSnackBarInt.value = R.string.route_not_available_most_likely_in_the_ocean
-        //reset()
     }
 
     override fun showDirectionApiFailedError(error: String?) {
@@ -520,95 +502,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
         }
         return false
     }
-
-    /*private fun getLocationPermission() {
-        *//*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         *//*
-        if (ContextCompat.checkSelfPermission(mCtx.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
-            locationPermissionGranted = true
-            updateLocationUI()
-            getDeviceLocation()
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
-        }
-    }*/
-
-    /*override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray) {
-        locationPermissionGranted = false
-        when (requestCode) {
-            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationPermissionGranted = true
-                }
-            }
-        }
-        updateLocationUI()
-    }*/
-
-    /*private fun updateLocationUI() {
-        try {
-            if (locationPermissionGranted) {
-                map.isMyLocationEnabled = true
-                map.uiSettings?.isMyLocationButtonEnabled = true
-            } else {
-                map.isMyLocationEnabled = false
-                map.uiSettings?.isMyLocationButtonEnabled = false
-                lastKnownLocation = null
-                getLocationPermission()
-            }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
-        }
-    }*/
-
-    /*private fun getDeviceLocation() {
-        *//*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         *//*
-        try {
-            if (locationPermissionGranted) {
-                val locationResult = FusedLocationProviderClient(mCtx).lastLocation
-                locationResult.addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        // Set the map's camera position to the current location of the device.
-                        lastKnownLocation = task.result
-                        if (lastKnownLocation != null) {
-                            map.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(
-                                LatLng(lastKnownLocation?.latitude ?: defaultLocation.latitude,
-                                    lastKnownLocation?.longitude ?: defaultLocation.longitude), defaultZoom
-                            ))
-                        }
-                    } else {
-                        Log.d(TAG, "Current location is null. Using defaults.")
-                        Log.e(TAG, "Exception: %s", task.exception)
-                        map.moveCamera(
-                            CameraUpdateFactory
-                            .newLatLngZoom(defaultLocation, defaultZoom))
-                        map.uiSettings?.isMyLocationButtonEnabled = false
-                    }
-                }
-            }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
-            map.moveCamera(
-                CameraUpdateFactory
-                .newLatLngZoom(defaultLocation, defaultZoom))
-            map.uiSettings?.isMyLocationButtonEnabled = false
-        }
-    }*/
 
     /**
      *

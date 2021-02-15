@@ -18,12 +18,12 @@ object MapUtils {
 
     fun getTruckBitmap(context: Context): Bitmap {
         val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_light_duty)
-        return Bitmap.createScaledBitmap(bitmap, 50, 100, false)
+        return Bitmap.createScaledBitmap(bitmap, 100, 100, false)
     }
 
     fun getBusinessBitmap(context: Context): Bitmap {
         val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_warehouse_large)
-        return Bitmap.createScaledBitmap(bitmap, 150, 150, false)
+        return Bitmap.createScaledBitmap(bitmap, 100, 100, false)
     }
 
     fun getDestinationBitmap(): Bitmap {

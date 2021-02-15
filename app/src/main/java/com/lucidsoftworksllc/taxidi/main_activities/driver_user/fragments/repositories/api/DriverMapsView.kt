@@ -11,7 +11,7 @@ interface DriverMapsView {
 
     fun showPath(latLngList: List<LatLng>?)
 
-    //fun updateCompanyLocation(latLng: LatLng?)
+    fun updateSimulatedDriverLocation(latLng: LatLng?)
 
     fun informDriverIsArriving()
 

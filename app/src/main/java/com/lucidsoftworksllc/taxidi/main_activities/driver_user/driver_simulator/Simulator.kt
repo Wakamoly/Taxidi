@@ -195,32 +195,16 @@ object Simulator {
     }
 
     fun requestCompany(
-        pickUpLocation: LatLng,
-        dropLocation: LatLng,
-        webSocketListener: WebSocketListener
+            pickUpLocation: LatLng,
+            dropLocation: LatLng,
+            webSocketListener: WebSocketListener
     ) {
         Simulator.pickUpLocation = pickUpLocation
         Simulator.dropLocation = dropLocation
 
-        val randomOperatorForLat = (0..1).random()
-        val randomOperatorForLng = (0..1).random()
-
-        var randomDeltaForLat = (5..30).random() / 10000.00
-        var randomDeltaForLng = (5..30).random() / 10000.00
-
-        if (randomOperatorForLat == 1) {
-            randomDeltaForLat *= -1
-        }
-        if (randomOperatorForLng == 1) {
-            randomDeltaForLng *= -1
-        }
-        val latFakeNearby = (pickUpLocation.latitude + randomDeltaForLat).coerceAtMost(90.00)
-        val lngFakeNearby = (pickUpLocation.longitude + randomDeltaForLng).coerceAtMost(180.00)
-
-        val bookedCompanyCurrentLocation = LatLng(latFakeNearby, lngFakeNearby)
         val directionsApiRequest = DirectionsApiRequest(geoApiContext)
         directionsApiRequest.mode(TravelMode.DRIVING)
-        directionsApiRequest.origin(latLngToLatLngForSomeReason(bookedCompanyCurrentLocation))
+        directionsApiRequest.origin(latLngToLatLngForSomeReason(currentLocation))
         directionsApiRequest.destination(latLngToLatLngForSomeReason(Simulator.pickUpLocation))
         directionsApiRequest.setCallback(object : PendingResult.Callback<DirectionsResult> {
             override fun onResult(result: DirectionsResult) {
