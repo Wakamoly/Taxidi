@@ -15,13 +15,9 @@ class UserPreferences (
     context: Context
 ) {
     private val applicationContext = context.applicationContext
-    private val dataStore: DataStore<Preferences>
-
-    init {
-        dataStore = applicationContext.createDataStore(
-            name = STORE_NAME
-        )
-    }
+    private val dataStore: DataStore<Preferences> = applicationContext.createDataStore(
+        name = STORE_NAME
+    )
 
     private val username: Flow<String?>
         get() = dataStore.data.map { preferences ->
@@ -48,24 +44,31 @@ class UserPreferences (
             preferences[KEY_FCMTOKEN]
         }
 
+    private val authToken: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_AUTH_TOKEN]
+        }
+
     private val isUserLoggedIn: Flow<Boolean?>
         get() = dataStore.data.map { preferences ->
             preferences[KEY_USER_LOGGED_IN]
         }
 
-    suspend fun saveCredentials(username: String, userID: Int, type: String){
+    suspend fun saveCredentials(username: String, userID: Int, type: String, authToken: String){
         dataStore.edit { preferences ->
             preferences[KEY_USERNAME] = username
             preferences[KEY_USER_ID] = userID
             preferences[KEY_USER_TYPE] = type
             preferences[KEY_USER_LOGGED_IN] = true
             preferences[KEY_USER_STATUS] = UserStatus.IDLE.out
+            preferences[KEY_AUTH_TOKEN] = authToken
         }
         Log.d("UserPreferences", "saveCredentials: isUserLoggedIn -> ${isUserLoggedIn()}")
         Log.d("UserPreferences", "saveCredentials: userID -> ${userID()}")
         Log.d("UserPreferences", "saveCredentials: userUsername -> ${userUsername()}")
         Log.d("UserPreferences", "saveCredentials: userType -> ${userType()}")
         Log.d("UserPreferences", "saveCredentials: userStatus -> ${userStatus()}")
+        Log.d("UserPreferences", "saveCredentials: authToken -> ${authToken()}")
     }
 
     suspend fun saveFCMToken(token: String) {
@@ -87,6 +90,8 @@ class UserPreferences (
 
     suspend fun fCMToken(): String = fCMToken.first().toString()
 
+    suspend fun authToken(): String = authToken.first().toString()
+
     suspend fun clear(){
         dataStore.edit { preferences ->
             preferences.clear()
@@ -100,6 +105,7 @@ class UserPreferences (
         private val KEY_USER_TYPE = stringPreferencesKey("key_user_type")
         private val KEY_USER_LOGGED_IN = booleanPreferencesKey("key_is_user_logged_in")
         private val KEY_FCMTOKEN = stringPreferencesKey("key_fcm_token")
+        private val KEY_AUTH_TOKEN = stringPreferencesKey("key_auth_token")
         private const val STORE_NAME = "tax_data_store"
     }
 

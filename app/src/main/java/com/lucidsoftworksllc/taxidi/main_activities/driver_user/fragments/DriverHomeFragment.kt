@@ -8,9 +8,10 @@ import com.lucidsoftworksllc.taxidi.databinding.DriverHomeFragmentBinding
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverHomeRepository
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverHomeAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_models.DriverHomeViewModel
-import com.lucidsoftworksllc.taxidi.utils.fcmToken
-import com.lucidsoftworksllc.taxidi.utils.setTitle
-import com.lucidsoftworksllc.taxidi.utils.toastShort
+import com.lucidsoftworksllc.taxidi.utils.Extensions.authToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.fcmToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.setTitle
+import com.lucidsoftworksllc.taxidi.utils.Extensions.toastShort
 
 class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentBinding, DriverHomeRepository>() {
 
@@ -48,7 +49,7 @@ class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentB
     ) = DriverHomeFragmentBinding.inflate(inflater, container, false)
     override fun getFragmentRepository() = DriverHomeRepository(
         userPreferences, // Datastore
-        remoteDataSource.buildApi(DriverHomeAPI::class.java, fcmToken)
+        remoteDataSource.buildApi(DriverHomeAPI::class.java, authToken)
     )
 
 }

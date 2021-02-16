@@ -21,8 +21,8 @@ class AuthRepository(
     }
 
     // TODO: 1/30/2021 Call this from VM
-    suspend fun saveCredentials(username: String, user_id: Int, type: String){
-        userPreferences.saveCredentials(username, user_id, type)
+    suspend fun saveCredentials(username: String, user_id: Int, type: String, authToken: String){
+        userPreferences.saveCredentials(username, user_id, type, authToken)
     }
 
     suspend fun saveUser(registerModel: RegisterModel) = safeApiCall {

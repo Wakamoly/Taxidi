@@ -9,10 +9,11 @@ import com.lucidsoftworksllc.taxidi.databinding.DriverProfileFragmentBinding
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverProfileRepository
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverProfileAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_models.DriverProfileViewModel
-import com.lucidsoftworksllc.taxidi.utils.deviceUserID
-import com.lucidsoftworksllc.taxidi.utils.fcmToken
-import com.lucidsoftworksllc.taxidi.utils.setTitle
-import com.lucidsoftworksllc.taxidi.utils.toastShort
+import com.lucidsoftworksllc.taxidi.utils.Extensions.authToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.deviceUserID
+import com.lucidsoftworksllc.taxidi.utils.Extensions.fcmToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.setTitle
+import com.lucidsoftworksllc.taxidi.utils.Extensions.toastShort
 
 class DriverProfileFragment : BaseFragment<DriverProfileViewModel, DriverProfileFragmentBinding, DriverProfileRepository>() {
 
@@ -73,7 +74,7 @@ class DriverProfileFragment : BaseFragment<DriverProfileViewModel, DriverProfile
     ) = DriverProfileFragmentBinding.inflate(inflater, container, false)
     override fun getFragmentRepository() = DriverProfileRepository(
         userPreferences,
-        remoteDataSource.buildApi(DriverProfileAPI::class.java, fcmToken)
+        remoteDataSource.buildApi(DriverProfileAPI::class.java, authToken)
     )
     override fun getViewModel() = DriverProfileViewModel::class.java
 

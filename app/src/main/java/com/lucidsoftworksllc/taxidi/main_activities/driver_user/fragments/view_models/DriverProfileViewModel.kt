@@ -1,16 +1,13 @@
 package com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_models
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.lucidsoftworksllc.taxidi.BuildConfig
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverProfileRepository
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.DriverProfileResponseModel
+import com.lucidsoftworksllc.taxidi.utils.Extensions.getServerResponseInt
 import com.lucidsoftworksllc.taxidi.utils.Result
-import com.lucidsoftworksllc.taxidi.utils.getServerResponseInt
 import kotlinx.coroutines.launch
 
 class DriverProfileViewModel (

@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverMapRepository
-import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
 import kotlinx.coroutines.launch
 
 class DriverMapViewModel(
@@ -24,6 +23,12 @@ class DriverMapViewModel(
 
     override fun onCleared() {
         super.onCleared()
+        viewState.value = null
+        pickUpPath.value = null
+        driverLocation.value = null
+        directionApiFailedError.value = null
+        nearbyCompanies.value = null
+        sampleTripPath.value = null
         repository.onDisconnect()
     }
 
@@ -42,14 +47,6 @@ class DriverMapViewModel(
     fun requestCompany(pickUpLatLng: LatLng, dropLatLng: LatLng) {
         viewModelScope.launch {
             repository.requestCompany(pickUpLatLng, dropLatLng)
-        }
-    }
-
-    fun navigateToShipmentDetails(selectedShipment: CompanyMapMarkerModel?) {
-        if (selectedShipment != null) {
-            showSnackBar.value = "Selected shipment -> ${selectedShipment.companyName}"
-        } else {
-            showSnackBar.value = "Selected shipment is null!"
         }
     }
 

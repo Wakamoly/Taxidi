@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverNotificationsRepository
+import com.lucidsoftworksllc.taxidi.utils.Extensions.getServerResponseInt
 import com.lucidsoftworksllc.taxidi.utils.Result
-import com.lucidsoftworksllc.taxidi.utils.getServerResponseInt
 import kotlinx.coroutines.launch
 
 class DriverNotificationsViewModel (

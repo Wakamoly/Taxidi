@@ -17,7 +17,7 @@ import org.json.JSONObject
 class DriverMapRepository (
     private val userPreferences: UserPreferences,
     private val api: DriverMapAPI,
-    private val networkService: MapNetworkService = MapNetworkService(),
+    networkService: MapNetworkService = MapNetworkService(),
     dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseRepository(dispatcher), WebSocketListener {
 

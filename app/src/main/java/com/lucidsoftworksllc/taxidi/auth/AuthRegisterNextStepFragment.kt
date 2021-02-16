@@ -5,23 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.AuthSignInViewModel
-import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository
-import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.api.RegisterAPI
 import com.lucidsoftworksllc.taxidi.base.BaseFragmentNoVM
 import com.lucidsoftworksllc.taxidi.databinding.FragmentAuthRegisterNextStepBinding
 import com.lucidsoftworksllc.taxidi.others.models.RegisterModel
-import com.lucidsoftworksllc.taxidi.utils.ViewModelFactory
-import com.lucidsoftworksllc.taxidi.utils.fcmToken
-import com.lucidsoftworksllc.taxidi.utils.startBaseObservables
+import com.lucidsoftworksllc.taxidi.utils.Extensions.startBaseObservables
 
 
 class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextStepBinding>() {
@@ -40,12 +33,6 @@ class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextSt
     }
 
     private fun initView(){
-        /*args.signInAs.let { signInAs ->
-            Log.d(TAG, "onViewCreated: SignInAs: $signInAs")
-            viewModel.apply {
-                //setValues(reminderData)
-            }
-        }*/
         _viewModel.clearLoading()
 
         val authTypeItems = listOf(getString(R.string.register_authority_type_1), getString(R.string.register_authority_type_2), getString(R.string.register_authority_type_3))

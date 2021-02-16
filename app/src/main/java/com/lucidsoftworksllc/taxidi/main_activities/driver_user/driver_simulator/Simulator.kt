@@ -9,9 +9,7 @@ import com.google.maps.GeoApiContext
 import com.google.maps.PendingResult
 import com.google.maps.model.DirectionsResult
 import com.google.maps.model.TravelMode
-import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverMapFragment
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
-import com.lucidsoftworksllc.taxidi.utils.Constants
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_ID
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_IMAGE
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_NAME
@@ -41,6 +39,7 @@ import com.lucidsoftworksllc.taxidi.utils.Constants.TRIP_END
 import com.lucidsoftworksllc.taxidi.utils.Constants.TRIP_PATH
 import com.lucidsoftworksllc.taxidi.utils.Constants.TRIP_START
 import com.lucidsoftworksllc.taxidi.utils.Constants.TYPE
+import com.lucidsoftworksllc.taxidi.utils.Extensions.latLngToLatLngForSomeReason
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getDistanceFromBothLatLngs
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomCompanyID
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomCompanyImage
@@ -51,12 +50,6 @@ import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomLoadType
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomLoadWeight
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomToLatLng
 import com.lucidsoftworksllc.taxidi.utils.MapUtils.getRandomTrailerTypeNeeded
-import com.lucidsoftworksllc.taxidi.utils.latLngListToLatLngListForSomeOtherReason
-import com.lucidsoftworksllc.taxidi.utils.latLngToLatLngForSomeReason
-import com.lucidsoftworksllc.taxidi.utils.snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*

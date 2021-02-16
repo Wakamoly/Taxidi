@@ -1,7 +1,6 @@
 package com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
@@ -10,7 +9,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -24,7 +22,6 @@ import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
 import com.lucidsoftworksllc.taxidi.databinding.DialogStartDriveBinding
 import com.lucidsoftworksllc.taxidi.databinding.DriverMapFragmentBinding
-import com.lucidsoftworksllc.taxidi.databinding.ItemCompanyMapMarkerBinding
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverMapRepository
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMapsView
@@ -32,8 +29,13 @@ import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_m
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.CompanyMarkerCustomInfoWindow
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
 import com.lucidsoftworksllc.taxidi.utils.*
+import com.lucidsoftworksllc.taxidi.utils.Extensions.authToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.fcmToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.setTitle
+import com.lucidsoftworksllc.taxidi.utils.Extensions.snackbar
+import com.lucidsoftworksllc.taxidi.utils.Extensions.toastLong
 import com.yarolegovich.lovelydialog.LovelyCustomDialog
-import java.util.ArrayList
+import java.util.*
 
 class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBinding, DriverMapRepository>(), DriverMapsView {
 
@@ -130,7 +132,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
             binding.tripDetailAccessWindowMotion.transitionToStart()
         }
         binding.tripDetailsButton.setOnClickListener {
-            //viewModel.navigateToShipmentDetails(companyMapMarkerModel)
             // TODO: 2/15/2021 FIX
             if (companyMapMarkerModel != null) {
                 binding.tripDetailAccessWindowMotion.transitionToStart()
@@ -556,7 +557,7 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
     override fun getViewModel() = DriverMapViewModel::class.java
     override fun getFragmentRepository() = DriverMapRepository(
         userPreferences,
-        remoteDataSource.buildApi(DriverMapAPI::class.java, fcmToken)
+        remoteDataSource.buildApi(DriverMapAPI::class.java, authToken)
     )
 
 }

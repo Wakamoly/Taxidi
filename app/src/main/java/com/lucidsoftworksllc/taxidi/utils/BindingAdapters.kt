@@ -17,6 +17,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
+import com.lucidsoftworksllc.taxidi.utils.Extensions.fadeIn
+import com.lucidsoftworksllc.taxidi.utils.Extensions.fadeOut
+import com.lucidsoftworksllc.taxidi.utils.Extensions.getTimeAgo
 import de.hdodenhof.circleimageview.CircleImageView
 
 

@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.databinding.FragmentAuthWelcomeBinding
-import com.lucidsoftworksllc.taxidi.utils.toastShort
+import com.lucidsoftworksllc.taxidi.utils.Extensions.toastShort
 import java.util.*
-import kotlin.concurrent.schedule
 
 class AuthWelcomeFragment : Fragment() {
 

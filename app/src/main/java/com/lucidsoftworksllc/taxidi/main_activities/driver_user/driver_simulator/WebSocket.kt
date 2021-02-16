@@ -60,7 +60,6 @@ class WebSocket(private var webSocketListener: WebSocketListener) {
 
     fun disconnect() {
         Simulator.stopTimer()
-        this.webSocketListener.onDisconnect()
     }
 
 }

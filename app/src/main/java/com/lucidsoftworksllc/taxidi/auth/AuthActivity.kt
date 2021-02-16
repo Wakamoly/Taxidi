@@ -3,6 +3,7 @@ package com.lucidsoftworksllc.taxidi.auth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -16,67 +17,36 @@ import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.api.RegisterAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.DriverMainActivity
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
 import com.lucidsoftworksllc.taxidi.utils.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import com.lucidsoftworksllc.taxidi.utils.Extensions.getSignedInAs
+import com.lucidsoftworksllc.taxidi.utils.Extensions.startNewActivity
+import com.lucidsoftworksllc.taxidi.utils.Extensions.toastLong
+import kotlinx.coroutines.*
 
 class AuthActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : AuthSignInViewModel
-    private lateinit var fcmToken: String
-    private lateinit var signedInAs: String
-    private var isUserLoggedIn: Boolean = false
     private lateinit var userPreferences : UserPreferences
+
+    private val viewModel : AuthSignInViewModel by viewModels {
+        ViewModelFactory(AuthRepository(UserPreferences(this@AuthActivity), RemoteDataSource().buildApi(RegisterAPI::class.java)))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userPreferences = UserPreferences(this@AuthActivity)
-
-        fcmToken = getFcmToken
-        isUserLoggedIn = getIsUserLoggedIn
-        signedInAs = getSignedInAs
-
-        setupViewModel()
-
-        FirebaseApp.initializeApp(this)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    val fbToken = task.result
-                    Log.d("Installations", "Installation auth token: $fbToken, current -> $fcmToken")
-                    if (fbToken != fcmToken) {
-                        userPreferences.saveFCMToken(fbToken)
-
-                        // TODO: 2/5/2021 Does this work?
-                        setupViewModel()
-                    }
-                }
+        lifecycleScope.launch {
+            userPreferences = UserPreferences(this@AuthActivity)
+            if (userPreferences.isUserLoggedIn()){
+                signUserIn()
             } else {
-                Log.e("Installations", "Unable to get Installation auth token")
+                setContentView(R.layout.activity_auth)
+                setupObservers()
             }
         }
-
-        if (isUserLoggedIn){
-            signUserIn()
-        } else {
-            setContentView(R.layout.activity_auth)
-            setupObservers()
-        }
-
-    }
-
-    private fun setupViewModel() {
-        val factory = ViewModelFactory(AuthRepository(userPreferences, RemoteDataSource().buildApi(RegisterAPI::class.java, fcmToken)))
-        viewModel = ViewModelProvider(this@AuthActivity, factory).get(AuthSignInViewModel::class.java)
     }
 
     private fun signUserIn() {
         lifecycleScope.launch {
-            fcmToken = getFcmToken
-            isUserLoggedIn = getIsUserLoggedIn
-            signedInAs = getSignedInAs
-            if (signedInAs == "driver") {
+            val userType = getSignedInAs
+            if (userType == "driver") {
                 finish()
                 startNewActivity(DriverMainActivity::class.java)
             } else {
@@ -88,7 +58,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-
         viewModel.signInRequestSuccess.observe(this, {
             when (it) {
                 true -> {
@@ -96,7 +65,6 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
         })
-
     }
 
 }

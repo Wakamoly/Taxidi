@@ -157,7 +157,7 @@
     <string name="srverr_load_notifications_token"><![CDATA[Couldn\'t load notifications! -> 1014]]></string>
     <string name="srverr_load_notifications_lastid"><![CDATA[Couldn\'t load notifications! -> 1015]]></string>
     <string name="srverr_load_notifications_uid"><![CDATA[Couldn\'t load notifications! -> 1016]]></string>
-    <string name="srverr_load_notifications_lastonline"><![CDATA[Couldn\'t load notifications! -> 1017]]></string>
+    <string name="srverr_auth_token_lastonline"><![CDATA[Server error! -> 1017]]></string>
     <string name="srverr_load_notifications_username"><![CDATA[Couldn\'t load notifications! -> 1018]]></string>
     <string name="srverr_notification_generic">Couldn\'t get notifications!</string>
 
@@ -218,6 +218,8 @@
     <string name="route_end_driver">You have arrived at the dropoff location!</string>
     <string name="accept_text">Accept</string>
     <string name="load_details">Load Details</string>
+    <string name="srvsuc_upload_fcm">FCM token successfully saved</string>
+    <string name="srverr_fcm_submitted_empty"><![CDATA[Server error! -> 1019]]></string>
 
 
 </resources>

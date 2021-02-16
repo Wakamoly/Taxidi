@@ -11,10 +11,10 @@ import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.reposi
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverNotificationsAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_models.DriverNotificationsViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.DriverNotificationsListAdapter
-import com.lucidsoftworksllc.taxidi.utils.fcmToken
-import com.lucidsoftworksllc.taxidi.utils.setTitle
-import com.lucidsoftworksllc.taxidi.utils.setup
-import com.lucidsoftworksllc.taxidi.utils.toastShort
+import com.lucidsoftworksllc.taxidi.utils.Extensions.authToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.fcmToken
+import com.lucidsoftworksllc.taxidi.utils.Extensions.setTitle
+import com.lucidsoftworksllc.taxidi.utils.Extensions.setup
 
 class DriverNotificationsFragment : BaseFragment<DriverNotificationsViewModel, DriverNotificationsFragmentBinding, DriverNotificationsRepository>() {
 
@@ -38,10 +38,9 @@ class DriverNotificationsFragment : BaseFragment<DriverNotificationsViewModel, D
         val adapter = DriverNotificationsListAdapter {
             // TODO: 2/5/2021 Navigate accordingly
             when (it.link) {
-
+                //navigateToAddReminder(it)
             }
             viewModel.setSingleNotificationRead(it.id)
-            //navigateToAddReminder(it)
         }
 
         // Setup the recycler view using the extension function.
@@ -70,7 +69,7 @@ class DriverNotificationsFragment : BaseFragment<DriverNotificationsViewModel, D
     ) = DriverNotificationsFragmentBinding.inflate(inflater, container, false)
     override fun getFragmentRepository() = DriverNotificationsRepository(
         userPreferences,
-        remoteDataSource.buildApi(DriverNotificationsAPI::class.java, fcmToken),
+        remoteDataSource.buildApi(DriverNotificationsAPI::class.java, authToken),
         notificationDao
     )
 

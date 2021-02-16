@@ -10,9 +10,9 @@ import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.others.models.RegisterModel
+import com.lucidsoftworksllc.taxidi.utils.Extensions.getServerResponseInt
+import com.lucidsoftworksllc.taxidi.utils.Extensions.isEmailValid
 import com.lucidsoftworksllc.taxidi.utils.Result
-import com.lucidsoftworksllc.taxidi.utils.getServerResponseInt
-import com.lucidsoftworksllc.taxidi.utils.isEmailValid
 import kotlinx.coroutines.launch
 
 class AuthSignInViewModel(
@@ -153,8 +153,9 @@ class AuthSignInViewModel(
                             val username = result.data.result?.username
                             val userID = result.data.result?.user_id
                             val type = result.data.result?.type
-                            if (username != null && userID != null && type != null){
-                                repository.saveCredentials(username, userID, type)
+                            val authToken = result.data.result?.auth_token
+                            if (username != null && userID != null && type != null && authToken != null){
+                                repository.saveCredentials(username, userID, type, authToken)
                                 signInRequestSuccess.value = true
                             }
                         } else {
