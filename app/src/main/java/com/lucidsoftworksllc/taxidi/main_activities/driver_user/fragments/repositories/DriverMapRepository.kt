@@ -67,6 +67,19 @@ class DriverMapRepository (
         webSocket.sendMessage(jsonObject.toString())
     }
 
+    fun finishedPickup() {
+        val jsonObject = JSONObject()
+        jsonObject.put(Constants.TYPE, Constants.FINISHED_PICKUP)
+        webSocket.sendMessage(jsonObject.toString())
+    }
+
+    fun finishedDropOff() {
+        // TODO: 2/16/2021 Send stuff to server
+        /*val jsonObject = JSONObject()
+        jsonObject.put(Constants.TYPE, Constants.FINISHED_DROPOFF)
+        webSocket.sendMessage(jsonObject.toString())*/
+    }
+
     override fun onConnect() {
         Log.d(TAG, "onConnect")
     }
@@ -89,22 +102,24 @@ class DriverMapRepository (
             val toLat = (jsonArray.get(i) as JSONObject).getDouble(Constants.TO_LAT)
             val toLng = (jsonArray.get(i) as JSONObject).getDouble(Constants.TO_LNG)
             val distance = (jsonArray.get(i) as JSONObject).getString(Constants.DISTANCE)
+            val loadID = (jsonArray.get(i) as JSONObject).getLong(Constants.LOAD_ID)
 
             val latLng = LatLng(lat, lng)
             val toLatLng = LatLng(toLat, toLng)
 
             val company = CompanyMapMarkerModel(
-                    latLng,
-                    companyName,
-                    companyID,
-                    companyImage,
-                    loadImage,
-                    loadType,
-                    loadWeight,
-                    loadPay,
-                    trailerType,
-                    toLatLng,
-                    distance
+                latLng,
+                companyName,
+                companyID,
+                companyImage,
+                loadImage,
+                loadType,
+                loadWeight,
+                loadPay,
+                trailerType,
+                toLatLng,
+                distance,
+                loadID
             )
             nearbyCompanies.add(company)
         }
@@ -163,6 +178,12 @@ class DriverMapRepository (
                 }
                 this.sampleTripPath.value = sampleTripPath
                 viewState.value = 11
+            }
+            Constants.AT_PICKUP -> {
+                viewState.value = 12
+            }
+            Constants.AT_DROPOFF -> {
+                viewState.value = 13
             }
         }
     }

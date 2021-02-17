@@ -45,11 +45,13 @@ class AuthActivity : AppCompatActivity() {
 
     private fun signUserIn() {
         lifecycleScope.launch {
+            // TODO: 2/16/2021 Fix this, shows toast as well as logs the user in
+            // TODO: 2/16/2021 Fixed?
             val userType = getSignedInAs
             if (userType == "driver") {
                 finish()
                 startNewActivity(DriverMainActivity::class.java)
-            } else {
+            } else if (userType == "company") {
                 toastLong("Login successful! This would normally move the user to a main activity, but business accounts don't work just yet... Clearing UserPreferences to return to login screen, please log in as a driver.")
                 userPreferences.clear()
                 startNewActivity(AuthActivity::class.java)

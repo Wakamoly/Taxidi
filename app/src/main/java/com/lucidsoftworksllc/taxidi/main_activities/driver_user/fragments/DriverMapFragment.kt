@@ -20,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
+import com.lucidsoftworksllc.taxidi.databinding.DialogDriverAtDropoffBinding
 import com.lucidsoftworksllc.taxidi.databinding.DialogStartDriveBinding
 import com.lucidsoftworksllc.taxidi.databinding.DriverMapFragmentBinding
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverMapRepository
@@ -117,8 +118,55 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
                 11 -> {
                     showSampleTripPath(viewModel.sampleTripPath.value)
                 }
+                12 -> {
+                    generateAndShowPickupTicket()
+                }
+                13 -> {
+                    generateAndShowDropoffTicket()
+                }
             }
         })
+    }
+
+    private fun generateAndShowDropoffTicket() {
+        if (companyMapMarkerModel != null) {
+            val dialogBinding = DialogDriverAtDropoffBinding.inflate(layoutInflater)
+            dialogBinding.model = companyMapMarkerModel
+            binding.executePendingBindings()
+            val dialog = LovelyCustomDialog(requireContext())
+            dialog.setView(dialogBinding.root)
+                .setTopColorRes(R.color.primaryColor)
+                .setIcon(R.drawable.ic_baseline_local_shipping_64)
+                .setCancelable(false)
+                .setListener(dialogBinding.buttonStartDrive.id) {
+                    dialog.dismiss()
+                    viewModel.finishedDropOff()
+                }
+                .show()
+        } else {
+            requireView().snackbar("Map marker info null!")
+        }
+    }
+
+    private fun generateAndShowPickupTicket() {
+        if (companyMapMarkerModel != null) {
+            // TODO: 2/16/2021 Make a dialog layout for pickup
+            val dialogBinding = DialogDriverAtDropoffBinding.inflate(layoutInflater)
+            dialogBinding.model = companyMapMarkerModel
+            binding.executePendingBindings()
+            val dialog = LovelyCustomDialog(requireContext())
+            dialog.setView(dialogBinding.root)
+                .setTopColorRes(R.color.primaryColor)
+                .setIcon(R.drawable.ic_baseline_local_shipping_64)
+                .setCancelable(false)
+                .setListener(dialogBinding.buttonStartDrive.id) {
+                    dialog.dismiss()
+                    viewModel.finishedPickup()
+                }
+                .show()
+        } else {
+            requireView().snackbar("Map marker info null!")
+        }
     }
 
     private fun showSampleTripPath(values: ArrayList<LatLng>?) {
@@ -132,7 +180,6 @@ class DriverMapFragment : BaseFragment<DriverMapViewModel, DriverMapFragmentBind
             binding.tripDetailAccessWindowMotion.transitionToStart()
         }
         binding.tripDetailsButton.setOnClickListener {
-            // TODO: 2/15/2021 FIX
             if (companyMapMarkerModel != null) {
                 binding.tripDetailAccessWindowMotion.transitionToStart()
                 val dialogBinding = DialogStartDriveBinding.inflate(layoutInflater)

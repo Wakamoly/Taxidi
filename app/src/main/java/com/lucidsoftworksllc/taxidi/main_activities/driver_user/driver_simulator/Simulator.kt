@@ -10,6 +10,7 @@ import com.google.maps.PendingResult
 import com.google.maps.model.DirectionsResult
 import com.google.maps.model.TravelMode
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel
+import com.lucidsoftworksllc.taxidi.utils.Constants.AT_PICKUP
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_ID
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_IMAGE
 import com.lucidsoftworksllc.taxidi.utils.Constants.COMPANY_NAME
@@ -21,6 +22,7 @@ import com.lucidsoftworksllc.taxidi.utils.Constants.ERROR
 import com.lucidsoftworksllc.taxidi.utils.Constants.LAT
 import com.lucidsoftworksllc.taxidi.utils.Constants.LNG
 import com.lucidsoftworksllc.taxidi.utils.Constants.LOAD_BOOKED
+import com.lucidsoftworksllc.taxidi.utils.Constants.LOAD_ID
 import com.lucidsoftworksllc.taxidi.utils.Constants.LOAD_IMAGE
 import com.lucidsoftworksllc.taxidi.utils.Constants.LOAD_PAY
 import com.lucidsoftworksllc.taxidi.utils.Constants.LOAD_TYPE
@@ -145,6 +147,11 @@ object Simulator {
              */
             val distance = getDistanceFromBothLatLngs(latLng, toLatLng)
 
+            /**
+             * Random load ID
+             */
+            val loadID = getRandomCompanyID()
+
             val newCompany = CompanyMapMarkerModel(
                 latLng,
                 companyName,
@@ -156,7 +163,8 @@ object Simulator {
                 loadPay,
                 trailerType,
                 toLatLng,
-                distance
+                distance,
+                loadID
             )
             nearbyCompanies.add(newCompany)
         }
@@ -179,6 +187,7 @@ object Simulator {
             jsonObjectLatLng.put(TO_LAT, company.toLatLng.latitude)
             jsonObjectLatLng.put(TO_LNG, company.toLatLng.longitude)
             jsonObjectLatLng.put(DISTANCE, company.distance)
+            jsonObjectLatLng.put(LOAD_ID, company.loadId)
             jsonArray.put(jsonObjectLatLng)
         }
         jsonObjectToPush.put(LOCATIONS, jsonArray)
@@ -322,7 +331,11 @@ object Simulator {
                                 val path = route.overviewPolyline.decodePath()
                                 tripPath.addAll(path)
                             }
-                            startTimerForTrip(webSocketListener)
+                            val jsonObject2 = JSONObject()
+                            jsonObject2.put(TYPE, AT_PICKUP)
+                            mainThread.post {
+                                webSocketListener.onMessage(jsonObject2.toString())
+                            }
                         }
 
                     }
@@ -402,8 +415,12 @@ object Simulator {
                 stopTimer()
                 val jsonObjectTripEnd = JSONObject()
                 jsonObjectTripEnd.put(TYPE, TRIP_END)
+                val jsonObject2 = JSONObject()
+                jsonObject2.put(TYPE, AT_PICKUP)
                 mainThread.post {
                     webSocketListener.onMessage(jsonObjectTripEnd.toString())
+                    webSocketListener.onMessage(jsonObject2.toString())
+                    // TODO: 2/16/2021 Use repository to tell the server the load has been finished
                 }
             }
         }

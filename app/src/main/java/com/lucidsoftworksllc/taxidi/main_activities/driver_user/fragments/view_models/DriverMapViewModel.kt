@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverMapRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DriverMapViewModel(
     private val repository: DriverMapRepository
@@ -34,19 +36,27 @@ class DriverMapViewModel(
 
     fun getRoute(origin: LatLng, destination: LatLng) {
         viewModelScope.launch {
-            repository.getRoute(origin, destination)
+            withContext(Dispatchers.IO) { repository.getRoute(origin, destination) }
         }
+    }
+
+    fun finishedPickup() {
+        repository.finishedPickup()
+    }
+
+    fun finishedDropOff() {
+        repository.finishedDropOff()
     }
 
     fun requestNearbyCompanies(latLng: LatLng) {
         viewModelScope.launch {
-            repository.requestNearbyCompanies(latLng)
+            withContext(Dispatchers.IO) { repository.requestNearbyCompanies(latLng) }
         }
     }
 
     fun requestCompany(pickUpLatLng: LatLng, dropLatLng: LatLng) {
         viewModelScope.launch {
-            repository.requestCompany(pickUpLatLng, dropLatLng)
+            withContext(Dispatchers.IO) { repository.requestCompany(pickUpLatLng, dropLatLng) }
         }
     }
 

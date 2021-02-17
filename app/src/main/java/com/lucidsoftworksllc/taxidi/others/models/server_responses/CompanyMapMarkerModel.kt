@@ -13,5 +13,6 @@ data class CompanyMapMarkerModel(
     val loadPay: Double,
     val trailerType: Int,
     val toLatLng: LatLng,
-    val distance: String
+    val distance: String,
+    val loadId: Long
 )

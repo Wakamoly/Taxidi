@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.lucidsoftworksllc.taxidi.others.models.server_responses.CompanyMapMarkerModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:padding="@dimen/padding_medium">
+
+        <TextView
+            android:id="@+id/textview_top_present_to_coordinator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/present_this_ticket_to_the_shipping_coordinator_text"
+            android:textColor="@color/secondaryColor"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/load_id"
+            android:text="@{`Load ID: `+String.valueOf(model.loadId)}"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_top_present_to_coordinator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Load ID: 213467891234"/>
+
+        <TextView
+            android:id="@+id/company_id"
+            android:text="@{`Company ID: `+String.valueOf(model.loadId)}"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/load_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Company ID: 213467891234"/>
+
+        <ImageView
+            android:id="@+id/load_image"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/contdesc_image_of_load_to_pick_up"
+            android:maxWidth="200dp"
+            android:maxHeight="150dp"
+            android:scaleType="fitCenter"
+            app:loadImage="@{model.loadImage}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/company_id"
+            tools:srcCompat="@drawable/ic_baseline_local_shipping_200" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_start_drive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/load_image"
+            android:text="@string/finished_text"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

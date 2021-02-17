@@ -25,8 +25,7 @@ class DriverMainActivityViewModel (
                     is Result.Error -> {
                         showSnackBar.value = this.message
                     }
-                    Result.Loading -> {
-                    } // Do nothing
+                    Result.Loading -> {} // Do nothing
                 }
             }
         }

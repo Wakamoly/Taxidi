@@ -5,6 +5,8 @@ import com.lucidsoftworksllc.taxidi.utils.Constants.DEST_LAT
 import com.lucidsoftworksllc.taxidi.utils.Constants.DEST_LNG
 import com.lucidsoftworksllc.taxidi.utils.Constants.DROP_LAT
 import com.lucidsoftworksllc.taxidi.utils.Constants.DROP_LNG
+import com.lucidsoftworksllc.taxidi.utils.Constants.FINISHED_DROPOFF
+import com.lucidsoftworksllc.taxidi.utils.Constants.FINISHED_PICKUP
 import com.lucidsoftworksllc.taxidi.utils.Constants.LAT
 import com.lucidsoftworksllc.taxidi.utils.Constants.LNG
 import com.lucidsoftworksllc.taxidi.utils.Constants.NEARBY_COMPANIES
@@ -54,6 +56,9 @@ class WebSocket(private var webSocketListener: WebSocketListener) {
                     destination,
                     webSocketListener
                 )
+            }
+            FINISHED_PICKUP -> {
+                Simulator.startTimerForTrip(webSocketListener)
             }
         }
     }

@@ -220,6 +220,8 @@
     <string name="load_details">Load Details</string>
     <string name="srvsuc_upload_fcm">FCM token successfully saved</string>
     <string name="srverr_fcm_submitted_empty"><![CDATA[Server error! -> 1019]]></string>
+    <string name="present_this_ticket_to_the_shipping_coordinator_text">Present this ticket to the shipping coordinator</string>
+    <string name="finished_text">Finished</string>
 
 
 </resources>

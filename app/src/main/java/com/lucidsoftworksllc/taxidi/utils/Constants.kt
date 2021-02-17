@@ -38,6 +38,10 @@ object Constants {
     const val REQUEST_COMPANY = "requestCompany"
     const val REQUEST_ROUTE = "requestRoute"
     const val SAMPLE_TRIP_PATH = "sampleTripPath"
+    const val AT_PICKUP = "driverAtPickup"
+    const val AT_DROPOFF = "driverAtDropOff"
+    const val FINISHED_PICKUP = "finishedPickup"
+    const val FINISHED_DROPOFF = "finishedDropOff"
 
     const val COMPANY_NAME = "companyName"
     const val COMPANY_ID = "companyID"
@@ -50,5 +54,6 @@ object Constants {
     const val TO_LAT = "toLat"
     const val TO_LNG = "toLng"
     const val DISTANCE = "distance"
+    const val LOAD_ID = "loadID"
 
 }
