@@ -157,7 +157,7 @@
     <string name="srverr_load_notifications_token"><![CDATA[Couldn\'t load notifications! -> 1014]]></string>
     <string name="srverr_load_notifications_lastid"><![CDATA[Couldn\'t load notifications! -> 1015]]></string>
     <string name="srverr_load_notifications_uid"><![CDATA[Couldn\'t load notifications! -> 1016]]></string>
-    <string name="srverr_auth_token_lastonline"><![CDATA[Server error! -> 1017]]></string>
+    <string name="srverr_auth_token"><![CDATA[Server error! -> 1017]]></string>
     <string name="srverr_load_notifications_username"><![CDATA[Couldn\'t load notifications! -> 1018]]></string>
     <string name="srverr_notification_generic">Couldn\'t get notifications!</string>
 
@@ -225,6 +225,8 @@
     <string name="user_inactive">Inactive</string>
     <string name="user_idle">Idle</string>
     <string name="user_active">Active</string>
+    <string name="srvsuc_home">Home view details retrieved successfully</string>
+    <string name="srverr_home_view">Couldn\'t get home view details from server!</string>
 
 
 </resources>

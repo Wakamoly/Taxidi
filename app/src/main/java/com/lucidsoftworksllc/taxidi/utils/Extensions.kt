@@ -289,6 +289,7 @@ val Activity.getIsUserLoggedIn: Boolean
             "0003" -> R.string.srvsuc_load_profile
             "0004" -> R.string.srvsuc_load_notifications
             "0005" -> R.string.srvsuc_upload_fcm
+            "0006" -> R.string.srvsuc_home
 
             // Failure
             "1001" -> R.string.srverr_generic
@@ -307,9 +308,10 @@ val Activity.getIsUserLoggedIn: Boolean
             "1014" -> R.string.srverr_load_notifications_token
             "1015" -> R.string.srverr_load_notifications_lastid
             "1016" -> R.string.srverr_load_notifications_uid
-            "1017" -> R.string.srverr_auth_token_lastonline
+            "1017" -> R.string.srverr_auth_token
             "1018" -> R.string.srverr_load_notifications_username
             "1019" -> R.string.srverr_fcm_submitted_empty
+            "1020" -> R.string.srverr_home_view
             else -> R.string.srverr_unknown // Error response "1000" if on purpose I suppose
         }
     }
@@ -318,10 +320,7 @@ val Activity.getIsUserLoggedIn: Boolean
      *
      * TIME-SINCE FUNCTIONS
      *
-     *
      */
-
-
     fun stringToDate(string: String) : Date {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         return try {
