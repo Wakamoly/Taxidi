@@ -39,6 +39,16 @@ class UserPreferences (
             preferences[KEY_USER_STATUS]
         }
 
+    private val userVerified: Flow<Int?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_USER_VERIFIED]
+        }
+
+    private val userNumShipped: Flow<Int?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_NUM_SHIPPED]
+        }
+
     private val fCMToken: Flow<String?>
         get() = dataStore.data.map { preferences ->
             preferences[KEY_FCMTOKEN]
@@ -84,6 +94,10 @@ class UserPreferences (
 
     suspend fun userStatus(): Int = userStatus.first() ?: 0
 
+    suspend fun userVerified(): Int = userVerified.first() ?: 0
+
+    suspend fun userNumShipped(): Int = userNumShipped.first() ?: 0
+
     suspend fun userUsername(): String = username.first().toString()
 
     suspend fun userType(): String = userType.first().toString()
@@ -106,6 +120,8 @@ class UserPreferences (
         private val KEY_USER_LOGGED_IN = booleanPreferencesKey("key_is_user_logged_in")
         private val KEY_FCMTOKEN = stringPreferencesKey("key_fcm_token")
         private val KEY_AUTH_TOKEN = stringPreferencesKey("key_auth_token")
+        private val KEY_USER_VERIFIED = intPreferencesKey("key_user_verified")
+        private val KEY_NUM_SHIPPED = intPreferencesKey("key_num_shipped")
         private const val STORE_NAME = "tax_data_store"
     }
 

@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class DriverMapViewModel(
     private val repository: DriverMapRepository
-) : BaseViewModel() {
+) : BaseViewModel(repository) {
 
     companion object {
         private const val TAG = "DriverMapViewModel"

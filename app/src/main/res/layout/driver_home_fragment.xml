@@ -29,6 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/driver_home_stat_card">
 
+            <!--TODO allow user to change status by tapping this layout-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -56,14 +57,14 @@
                     app:layout_constraintStart_toEndOf="@id/current_card_title"
                     app:layout_constraintTop_toTopOf="@id/current_card_title">
 
-                    <!-- Binding adapter for imageview? -->
                     <ImageView
                         android:id="@+id/current_active_imageview"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@string/contentdesc_user_active_image_indicator"
-                        android:src="@drawable/ic_online_active_24" />
+                        app:userStatusInt="@{viewModel.userStatus}"
+                        tools:src="@drawable/ic_online_active_24"/>
 
                     <TextView
                         android:id="@+id/current_active_text"
@@ -71,7 +72,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="3dp"
                         android:textColor="@color/white"
-                        android:text="Active" />
+                        app:userStatusIntToText="@{viewModel.userStatus}"
+                        tools:text="Active" />
 
                 </LinearLayout>
 
@@ -122,14 +124,14 @@
                         android:text="@string/num_shipped_text"
                         android:textColor="@color/white" />
 
-                    <!--viewmodel databind-->
                     <TextView
                         android:id="@+id/stat_card_num_shipped"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
+                        android:text="@{String.valueOf(viewModel.numShipped)}"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="34563456"/>
 
                 </LinearLayout>
 
@@ -149,12 +151,12 @@
                         android:text="@string/stat_card_verified_text"
                         android:textColor="@color/white" />
 
-                    <!--viewmodel databind-->
                     <ImageView
                         android:id="@+id/stat_card_verified"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_nope_red_24" />
+                        android:src="@drawable/ic_nope_red_24"
+                        app:verifiedImage="@{viewModel.userVerified}"/>
 
                 </LinearLayout>
 
@@ -178,7 +180,9 @@
                 android:id="@+id/driver_home_log_recycler"
                 android:background="@color/primaryColor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:itemCount="7"
+                tools:listitem="@layout/item_driver_home_log" />
 
             <!--android:fadeVisible="@{viewModel.showNoData.booleanValue()}"-->
             <TextView
@@ -200,12 +204,13 @@
                 android:id="@+id/home_log_progressbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -225,7 +230,9 @@
                 android:id="@+id/driver_home_news_recycler"
                 android:background="@color/primaryColor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:itemCount="7"
+                tools:listitem="@layout/item_driver_home_news" />
 
             <!--android:fadeVisible="@{viewModel.showNoData.booleanValue()}"-->
             <TextView
@@ -247,12 +254,13 @@
                 android:id="@+id/home_news_progressbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
         </androidx.cardview.widget.CardView>
 

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.maps.model.LatLng
 import com.lucidsoftworksllc.taxidi.R
+import com.lucidsoftworksllc.taxidi.base.BaseFragment
 import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
@@ -217,6 +218,16 @@ object Extensions {
             return authToken
         }
 
+    val Fragment.deviceUsername: String
+        get() {
+            var username: String
+            runBlocking {
+                username = UserPreferences(requireContext()).userUsername()
+            }
+            Log.d("Extensions", "username Fragment: $username")
+            return username
+        }
+
     val Fragment.deviceUserID: Int
         get() {
             var userID: Int
@@ -404,6 +415,25 @@ val Activity.getIsUserLoggedIn: Boolean
             list.add(com.google.android.gms.maps.model.LatLng(latlng.lat, latlng.lng))
         }
         return list
+    }
+
+    fun Fragment.handleApiError(
+            failure: Result.Error,
+            retry: (() -> Unit)? = null
+    ) {
+        when (failure.statusCode) {
+            /*failure.isNetworkError -> requireView().snackbar(
+                    "Please check your internet connection",
+                    retry
+            )*/
+            401 -> {
+                (this as BaseFragment<*, *, *>).logout()
+            }
+            else -> {
+                val error = failure.message.toString()
+                requireView().snackbar(error)
+            }
+        }
     }
 
 }

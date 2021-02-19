@@ -119,6 +119,24 @@ object BindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("app:userStatusIntToText")
+    fun setUserStatusText(view: TextView, statusInt: Int?) {
+        statusInt?.let {
+            val context = view.context
+            val text: String = when (it) {
+                // 0 is inactive
+                // 1 is idle
+                // 2 is active
+                0 -> { context.getString(R.string.user_inactive) }
+                1 -> { context.getString(R.string.user_idle) }
+                2 -> { context.getString(R.string.user_active) }
+                else -> { context.getString(R.string.srverr_unknown) }
+            }
+            view.text = text
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("app:srb_vmSetRating")
     fun setRatingFromXML(view: SimpleRatingBar, value: Float?) {
         value?.let {
@@ -282,8 +300,8 @@ object BindingAdapters {
     fun setLoadTypeSettingsText(view: TextView, value: Int?) {
         value?.let {
             val context = view.context
-            var color = 0
-            var text = ""
+            val color: Int
+            val text: String
             // 1 explosive
             // 2 flammable gas
             // 3 non-flam non-tox gas
@@ -411,8 +429,8 @@ object BindingAdapters {
                 15 -> { drawable = ContextCompat.getDrawable(context, R.drawable.placard_0_dangerous) }
                 //else -> {  }
             }
-            drawable?.let { drawable ->
-                view.setImageDrawable(drawable)
+            drawable?.let { newDrawable ->
+                view.setImageDrawable(newDrawable)
             }
         }
     }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class DriverMainActivityViewModel (
     private val repository: DriverMainActivityRepository
-) : BaseViewModel() {
+) : BaseViewModel(repository) {
 
     fun sendFCMTokenToServer(fcmToken: String) {
         viewModelScope.launch {

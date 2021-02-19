@@ -11,8 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.lucidsoftworksllc.taxidi.auth.AuthActivity
+import com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.base.UserAPI
 import com.lucidsoftworksllc.taxidi.db.TaxidiDatabase
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
+import com.lucidsoftworksllc.taxidi.utils.Extensions.deviceUserID
+import com.lucidsoftworksllc.taxidi.utils.Extensions.deviceUsername
+import com.lucidsoftworksllc.taxidi.utils.Extensions.fcmToken
 import com.lucidsoftworksllc.taxidi.utils.Extensions.startBaseObservables
 import com.lucidsoftworksllc.taxidi.utils.RemoteDataSource
 import com.lucidsoftworksllc.taxidi.utils.ViewModelFactory
@@ -51,6 +55,11 @@ abstract class BaseFragment<VM: BaseViewModel, B: ViewBinding, R: BaseRepository
 
     fun logout() = lifecycleScope.launch {
         withContext(Dispatchers.IO) {
+            // Deactivate FCM token on server
+            // TODO: 2/18/2021 Log user out when error code 401 occurs
+            val api = remoteDataSource.buildApi(UserAPI::class.java)
+            viewModel.logout(api, deviceUsername, deviceUserID, fcmToken)
+
             userPreferences.clear()
             TaxidiDatabase(mCtx).clearAllTables()
         }

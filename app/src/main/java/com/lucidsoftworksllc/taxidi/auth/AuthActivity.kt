@@ -1,15 +1,9 @@
 package com.lucidsoftworksllc.taxidi.auth
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.FirebaseApp
-import com.google.firebase.messaging.FirebaseMessaging
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.AuthSignInViewModel
 import com.lucidsoftworksllc.taxidi.auth.viewmodels.repositories.AuthRepository

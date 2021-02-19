@@ -1,7 +1,9 @@
 package com.lucidsoftworksllc.taxidi.base
 
+import com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.base.UserAPI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import com.lucidsoftworksllc.taxidi.utils.Result as Result
 
 abstract class BaseRepository(
@@ -15,9 +17,20 @@ abstract class BaseRepository(
             try {
                 Result.Success(apiCall.invoke())
             }catch(throwable: Throwable){
-                Result.Error(throwable.message, null)
+                when (throwable) {
+                    is HttpException -> {
+                        Result.Error(throwable.message, throwable.code())
+                    }
+                    else -> {
+                        Result.Error(throwable.message, null)
+                    }
+                }
             }
         }
+    }
+
+    suspend fun logout(api: UserAPI, username: String, userID: Int, fcmToken: String) = safeApiCall {
+        api.logout(username, userID, fcmToken)
     }
 
 }

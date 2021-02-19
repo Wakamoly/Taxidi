@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class DriverProfileViewModel (
     private val repository: DriverProfileRepository
-) : BaseViewModel() {
+) : BaseViewModel(repository) {
 
     val profileDisplayName = MutableLiveData<String>()
     val profileBackImage = MutableLiveData<String>()

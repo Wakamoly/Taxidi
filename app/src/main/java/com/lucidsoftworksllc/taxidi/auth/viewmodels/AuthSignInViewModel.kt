@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class AuthSignInViewModel(
     private val repository: AuthRepository
-) : BaseViewModel() {
+) : BaseViewModel(repository) {
     // Login credentials
     val signInAs = MutableLiveData<String>()
     val emailAddress = MutableLiveData<String>()

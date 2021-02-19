@@ -90,7 +90,6 @@ class DriverMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         }
 
         setupViewModelObservables()
-
     }
 
     private fun setupViewModelObservables() {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class DriverNotificationsViewModel (
     private val repository: DriverNotificationsRepository
-) : BaseViewModel() {
+) : BaseViewModel(repository) {
 
     val notifications = repository.notifications
 

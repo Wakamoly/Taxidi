@@ -222,6 +222,9 @@
     <string name="srverr_fcm_submitted_empty"><![CDATA[Server error! -> 1019]]></string>
     <string name="present_this_ticket_to_the_shipping_coordinator_text">Present this ticket to the shipping coordinator</string>
     <string name="finished_text">Finished</string>
+    <string name="user_inactive">Inactive</string>
+    <string name="user_idle">Idle</string>
+    <string name="user_active">Active</string>
 
 
 </resources>
