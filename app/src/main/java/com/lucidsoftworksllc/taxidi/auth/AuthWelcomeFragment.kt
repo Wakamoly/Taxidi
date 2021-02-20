@@ -12,6 +12,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -71,8 +74,6 @@ class AuthWelcomeFragment : Fragment() {
     }
 
     private fun startTrucks(trucks: Int) {
-        // Create a new truck view in a random X and Y position above the container.
-
         // Local variables we'll need in the code below
         val containerW = viewGroup.width
         val containerH = viewGroup.height
@@ -85,7 +86,7 @@ class AuthWelcomeFragment : Fragment() {
                     i++
                     numTrucks++
 
-                    // Create the new truck (an ImageView holding our drawable) and add it to the container
+                    // Create the new truck (an ImageView holding our drawable)
                     val newTruck = AppCompatImageView(requireContext())
 
                     // TODO: 1/25/2021 Most likely just going to stick with a semi/tractor or box truck for MVP, but this is fun
@@ -97,7 +98,8 @@ class AuthWelcomeFragment : Fragment() {
                     newTruck.layoutParams = RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT,
                             RelativeLayout.LayoutParams.WRAP_CONTENT)
-                    viewGroup.addView(newTruck)
+                    viewGroup.clipChildren = false
+                    viewGroup.clipToPadding = false
 
                     // Position the view at a random place between the left and top edges of the container
                     newTruck.translationX = (Math.random().toFloat() * containerW) - truckW
@@ -110,35 +112,34 @@ class AuthWelcomeFragment : Fragment() {
                     truckH *= newTruck.scaleY
                     newTruck.rotation = 50f
 
-                    // Create an animator that moves the view from a starting position right about the container
-                    // to an ending position right below the container. Set an accelerate interpolator to give
-                    // it a gravity/falling feel
                     val path = Path().apply {
                         moveTo(newTruck.translationX - containerW, newTruck.translationY - containerH)
                         lineTo(newTruck.translationX + containerW, newTruck.translationY + containerH)
                     }
 
-                    val mover = ObjectAnimator.ofFloat(newTruck, View.TRANSLATION_X, View.TRANSLATION_Y, path)
-                    mover.interpolator = LinearInterpolator()
-
-                    // Use an AnimatorSet to play the falling and rotating animators in parallel for a duration
-                    // of a half-second to two seconds
-                    val set = AnimatorSet()
-                    set.play(mover)
-                    set.duration = (Math.random() * 10000 + 500).toLong()
-
-                    // When the animation is done, remove the created view from the container and add another
-                    set.addListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator?) {
-                            viewGroup.removeView(newTruck)
-                            numTrucks--
-                            startTrucks(2)
-                            //Log.d(TAG, "onAnimationEnd: Reanimating")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        ObjectAnimator.ofFloat(newTruck, View.TRANSLATION_X, View.TRANSLATION_Y, path).apply {
+                            repeatCount = ObjectAnimator.INFINITE
+                            repeatMode = ObjectAnimator.RESTART
+                            interpolator = LinearInterpolator()
+                            duration = (Math.random() * 10000 + 500).toLong()
+                            addListener(object : Animator.AnimatorListener {
+                                override fun onAnimationStart(animation: Animator?) {
+                                    viewGroup.addView(newTruck)
+                                    startTrucks(2)
+                                }
+                                override fun onAnimationEnd(animation: Animator?) { numTrucks-- }
+                                override fun onAnimationCancel(animation: Animator?) { }
+                                override fun onAnimationRepeat(animation: Animator?) {
+                                    if (stopTrucks) {
+                                        animation?.cancel()
+                                    }
+                                }
+                            })
+                            start()
                         }
-                    })
+                    }, 1000)
 
-                    // Start the animation
-                    set.start()
                 }
             }
         } else {
