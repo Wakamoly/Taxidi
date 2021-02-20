@@ -22,6 +22,7 @@ abstract class BaseViewModel(
     val showToast: SingleLiveEvent<String> = SingleLiveEvent()
     val showLoading: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val showNoData: MutableLiveData<Boolean> = MutableLiveData()
+    val userAuthExpired: MutableLiveData<Boolean> = MutableLiveData()
 
     suspend fun logout(api: UserAPI, username: String, userID: Int, fcmToken: String) = withContext(Dispatchers.IO) {
         repository.logout(api, username, userID, fcmToken)

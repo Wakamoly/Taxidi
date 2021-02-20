@@ -28,6 +28,7 @@ import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
+import com.lucidsoftworksllc.taxidi.utils.Extensions.getServerResponseInt
 import kotlinx.coroutines.runBlocking
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -180,7 +181,6 @@ object Extensions {
         viewModel.showSnackBarInt.observe(this, {
             this.view?.snackbar(getString(it), "")
         })
-
         viewModel.navigationCommand.observe(this, { command ->
             when (command) {
                 is NavigationCommand.To -> findNavController().navigate(command.directions)
@@ -189,6 +189,11 @@ object Extensions {
                     command.destinationId,
                     false
                 )
+            }
+        })
+        viewModel.userAuthExpired.observe(this, {
+            if (it) {
+                (this as BaseFragment<*,*,*>).logout()
             }
         })
     }
@@ -431,6 +436,20 @@ val Activity.getIsUserLoggedIn: Boolean
             else -> {
                 val error = failure.message.toString()
                 requireView().snackbar(error)
+            }
+        }
+    }
+
+    fun BaseViewModel.handleResponseError(
+            resultCode: String
+    ) {
+        when (resultCode) {
+            "1017" -> {
+                showSnackBarInt.value = resultCode.getServerResponseInt()
+                userAuthExpired.value = true
+            }
+            else -> {
+                showSnackBarInt.value = resultCode.getServerResponseInt()
             }
         }
     }

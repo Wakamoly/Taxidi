@@ -36,7 +36,7 @@ class AuthWelcomeFragment : Fragment() {
     private var numTrucks = 1
 
     companion object {
-        val TAG = "AuthWelcomeFragment"
+        private const val TAG = "AuthWelcomeFragment"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

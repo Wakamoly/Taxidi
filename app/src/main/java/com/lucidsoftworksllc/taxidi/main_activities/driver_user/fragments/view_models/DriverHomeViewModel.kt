@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverHomeRepository
-import com.lucidsoftworksllc.taxidi.utils.Extensions.getServerResponseInt
+import com.lucidsoftworksllc.taxidi.utils.Extensions.handleResponseError
 import com.lucidsoftworksllc.taxidi.utils.Result
 import kotlinx.coroutines.launch
 
@@ -38,7 +38,7 @@ class DriverHomeViewModel(
                     is Result.Error -> { showSnackBarInt.value = R.string.srverr_unknown }
                     is Result.Success -> {
                         if (this.data.error) {
-                            showSnackBarInt.value = this.data.code.getServerResponseInt()
+                            handleResponseError(this.data.code)
                         }
                     }
                     else -> {} // Unused
