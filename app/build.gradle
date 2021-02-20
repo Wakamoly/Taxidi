@@ -43,6 +43,7 @@ android {
              TODO* Replace the YOUR_KEY_HERE values, uncomment these resValues below, then "Sync Now" in the top right should appear,
              TODO* click it, then Alt+B -> Rebuild Project again, and all should work just fine.
              */
+
             resValue("string", "google_maps_key", localProperties['apiKey'])
             resValue("string", "directions_google_maps_key", localProperties['directionsApiKey'])
         }
@@ -176,9 +177,6 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
-    //implementation 'com.google.firebase:firebase-analytics-ktx'
-    /*implementation platform('com.google.firebase:firebase-bom:26.2.0')
-    implementation 'com.firebaseui:firebase-ui-auth:6.2.1'*/
 
     //Datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
@@ -190,5 +188,6 @@ dependencies {
     // Google Maps Services (needed for directions)
     api 'com.google.maps:google-maps-services:0.2.9'
 
+    implementation "android.arch.work:work-runtime-ktx:1.0.1"
 
 }
