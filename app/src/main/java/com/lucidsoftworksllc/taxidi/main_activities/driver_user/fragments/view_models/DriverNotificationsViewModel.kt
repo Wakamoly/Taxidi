@@ -15,25 +15,26 @@ class DriverNotificationsViewModel (
     val notifications = repository.notifications
 
     init {
+        showLoading.value = true
+        getNotifications()
+    }
+
+    private fun getNotifications() {
         viewModelScope.launch {
-            if (notifications.value?.isEmpty() != false){
-                showLoading.value = true
-            }
+            showNoData.value = notifications.value?.isEmpty()
             repository.refreshNotifications().apply {
-                showLoading.value = false
-                if (this is Result.Success){
-                    if (this.data.error) {
-                        showSnackBarInt.value = this.data.code.getServerResponseInt()
+                when (this) {
+                    is Result.Error -> { showSnackBarInt.value = R.string.srverr_unknown }
+                    is Result.Success -> {
+                        if (this.data.error) {
+                            showSnackBarInt.value = this.data.code.getServerResponseInt()
+                        }
                     }
-                    if (notifications.value?.isEmpty() != false){
-                        showNoData.value = true
-                    }
-                } else {
-                    showNoData.value = true
-                    showSnackBarInt.value = R.string.srverr_notification_generic
+                    else -> {} // Unused
                 }
             }
-
+            showLoading.value = false
+            showNoData.value = notifications.value?.isEmpty()
         }
     }
 

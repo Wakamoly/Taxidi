@@ -37,33 +37,28 @@ class DriverHomeRepository (
         numShipped.value = userPreferences.userNumShipped()
     }
 
-    suspend fun getHomeInfoFromServer() {
+    suspend fun getHomeInfoFromServer() : Result<DriverHomeViewResponseModel> {
         val username = userPreferences.userUsername()
         val userID = userPreferences.userID()
-        var lastLogID : Long
-        var lastNewsID : Long
-        withContext(Dispatchers.IO) {
-            lastLogID = dao.getLogLastID()
-            lastNewsID = dao.getNewsLastID()
-            val resultFromServer = safeApiCall { api.getHomeInfo(userID, username, lastLogID.toInt(), lastNewsID.toInt()) }
-            if (resultFromServer is Result.Success && !resultFromServer.data.error) {
-                val result = resultFromServer.data
-                if (result.log_result != null) {
-                    for (log in result.log_result) {
-                        dao.insertLog(log.asDatabaseModel())
-                    }
+        val resultFromServer = safeApiCall { api.getHomeInfo(userID, username, dao.getLogLastID().toInt(), dao.getNewsLastID().toInt()) }
+        if (resultFromServer is Result.Success && !resultFromServer.data.error) {
+            val result = resultFromServer.data
+            if (result.log_result != null) {
+                for (log in result.log_result) {
+                    dao.insertLog(log.asDatabaseModel())
                 }
-                if (result.news_result != null) {
-                    for (news in result.news_result) {
-                        dao.insertNews(news.asDatabaseModel())
-                    }
+            }
+            if (result.news_result != null) {
+                for (news in result.news_result) {
+                    dao.insertNews(news.asDatabaseModel())
                 }
-                if (result.top_result != null) {
-                    userPreferences.setHomeViewValues(result.top_result.verified, result.top_result.numshipped)
-                }
+            }
+            if (result.top_result != null) {
+                userPreferences.setHomeViewValues(result.top_result.verified, result.top_result.numshipped)
             }
         }
         getUserPrefBits()
+        return resultFromServer
     }
 
 }

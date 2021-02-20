@@ -2,8 +2,11 @@ package com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverHomeRepository
+import com.lucidsoftworksllc.taxidi.utils.Extensions.getServerResponseInt
+import com.lucidsoftworksllc.taxidi.utils.Result
 import kotlinx.coroutines.launch
 
 class DriverHomeViewModel(
@@ -22,15 +25,25 @@ class DriverHomeViewModel(
     val logLoading = MutableLiveData<Boolean>()
 
     init {
-        retrieveHomeValues()
         newsLoading.value = true
         logLoading.value = true
+        retrieveHomeValues()
     }
 
     private fun retrieveHomeValues() {
         viewModelScope.launch {
             repository.getUserPrefBits()
-            repository.getHomeInfoFromServer()
+            repository.getHomeInfoFromServer().apply {
+                when (this) {
+                    is Result.Error -> { showSnackBarInt.value = R.string.srverr_unknown }
+                    is Result.Success -> {
+                        if (this.data.error) {
+                            showSnackBarInt.value = this.data.code.getServerResponseInt()
+                        }
+                    }
+                    else -> {} // Unused
+                }
+            }
             newsLoading.value = false
             logLoading.value = false
             newsNoData.value = newsList.value?.isEmpty()
