@@ -56,7 +56,7 @@ class DriverProfileFragment : BaseFragment<DriverProfileViewModel, DriverProfile
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.edit_my_profile -> {
-                requireContext().toastShort("Not yet implemented")
+                viewModel.showSnackBarInt.value = R.string.not_implemented
             }
         }
         return super.onOptionsItemSelected(item)

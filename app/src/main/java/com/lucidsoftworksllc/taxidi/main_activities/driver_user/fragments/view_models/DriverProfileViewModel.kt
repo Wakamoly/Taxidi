@@ -7,6 +7,7 @@ import com.lucidsoftworksllc.taxidi.base.BaseViewModel
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverProfileRepository
 import com.lucidsoftworksllc.taxidi.others.models.server_responses.DriverProfileResponseModel
 import com.lucidsoftworksllc.taxidi.utils.Extensions.getServerResponseInt
+import com.lucidsoftworksllc.taxidi.utils.Extensions.toastShort
 import com.lucidsoftworksllc.taxidi.utils.Result
 import kotlinx.coroutines.launch
 
@@ -94,6 +95,10 @@ class DriverProfileViewModel (
         } else {
             showSnackBarInt.value = data.code.getServerResponseInt()
         }
+    }
+
+    fun showNotImplemented() {
+        showSnackBarInt.value = R.string.not_implemented
     }
 
 }

@@ -5,19 +5,25 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.lucidsoftworksllc.taxidi.db.dao.DriverHomeDao
 import com.lucidsoftworksllc.taxidi.db.dao.DriverNotificationDao
+import com.lucidsoftworksllc.taxidi.db.entities.DriverHomeLogEntity
+import com.lucidsoftworksllc.taxidi.db.entities.DriverHomeNewsEntity
 import com.lucidsoftworksllc.taxidi.db.entities.DriverNotificationEntity
 
 
 @Database(
-    entities = [
-       DriverNotificationEntity::class
-    ],
-    version = 1)
+        entities = [
+            DriverNotificationEntity::class,
+            DriverHomeNewsEntity::class,
+            DriverHomeLogEntity::class
+        ],
+        version = 2)
 @TypeConverters(DbConverters::class)
 abstract class TaxidiDatabase : RoomDatabase() {
 
     abstract fun getDriverNotiDao() : DriverNotificationDao
+    abstract fun getDriverHomeDao() : DriverHomeDao
 
     companion object{
         const val DATABASE_NAME: String = "taxididatabase"

@@ -9,35 +9,43 @@
     <fragment
         android:id="@+id/driverHomeFragment"
         android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverHomeFragment"
-        android:label="driver_home_fragment"
-        tools:layout="@layout/driver_home_fragment" />
+        android:label="@string/driver_fragment_home_title"
+        tools:layout="@layout/driver_home_fragment" >
+        <action
+            android:id="@+id/action_driverHomeFragment_to_driverProfileFragment"
+            app:destination="@id/driverProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/driverMapFragment"
         android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverMapFragment"
-        android:label="DriverMapFragment"
+        android:label="@string/map_fragment_name"
         tools:layout="@layout/driver_map_fragment" />
 
     <fragment
         android:id="@+id/driverNotificationsFragment"
         android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverNotificationsFragment"
-        android:label="driver_notifications_fragment"
+        android:label="@string/driver_fragment_notifications_title"
         tools:layout="@layout/driver_notifications_fragment" />
 
     <fragment
         android:id="@+id/driverProfileFragment"
         android:name="com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.DriverProfileFragment"
-        android:label="DriverProfileFragment"
+        android:label="@string/driver_fragment_profile_title"
         tools:layout="@layout/driver_profile_fragment">
         <argument
             android:name="username"
+            android:defaultValue="@null"
             app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <argument
             android:name="userId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 
 

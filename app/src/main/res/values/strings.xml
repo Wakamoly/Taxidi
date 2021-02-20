@@ -227,6 +227,7 @@
     <string name="user_active">Active</string>
     <string name="srvsuc_home">Home view details retrieved successfully</string>
     <string name="srverr_home_view">Couldn\'t get home view details from server!</string>
+    <string name="not_implemented">Not yet implemented</string>
 
 
 </resources>

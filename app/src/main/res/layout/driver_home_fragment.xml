@@ -181,10 +181,10 @@
                 android:background="@color/primaryColor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:liveData="@{viewModel.logList}"
                 tools:itemCount="7"
                 tools:listitem="@layout/item_driver_home_log" />
 
-            <!--android:fadeVisible="@{viewModel.showNoData.booleanValue()}"-->
             <TextView
                 android:id="@+id/no_data_home_log"
                 android:layout_width="wrap_content"
@@ -197,9 +197,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:drawableTopCompat="@drawable/ic_no_data" />
+                app:drawableTopCompat="@drawable/ic_no_data"
+                app:fadeVisible="@{viewModel.logNoData.booleanValue()}"/>
 
-            <!--android:fadeVisible="@{viewModel.showLoading.booleanValue()}"-->
             <ProgressBar
                 android:id="@+id/home_log_progressbar"
                 android:layout_width="wrap_content"
@@ -209,6 +209,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:fadeVisible="@{viewModel.logLoading.booleanValue()}"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -231,10 +232,10 @@
                 android:background="@color/primaryColor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:itemCount="7"
+                android:liveData="@{viewModel.newsList}"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_driver_home_news" />
 
-            <!--android:fadeVisible="@{viewModel.showNoData.booleanValue()}"-->
             <TextView
                 android:id="@+id/no_data_home_news"
                 android:layout_width="wrap_content"
@@ -247,9 +248,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:drawableTopCompat="@drawable/ic_no_data" />
+                app:drawableTopCompat="@drawable/ic_no_data"
+                app:fadeVisible="@{viewModel.newsNoData.booleanValue()}" />
 
-            <!--android:fadeVisible="@{viewModel.showLoading.booleanValue()}"-->
             <ProgressBar
                 android:id="@+id/home_news_progressbar"
                 android:layout_width="wrap_content"
@@ -259,6 +260,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:fadeVisible="@{viewModel.newsLoading.booleanValue()}"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 

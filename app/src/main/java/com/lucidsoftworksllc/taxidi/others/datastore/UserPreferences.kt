@@ -81,6 +81,13 @@ class UserPreferences (
         Log.d("UserPreferences", "saveCredentials: authToken -> ${authToken()}")
     }
 
+    suspend fun setHomeViewValues(verified: Int, numShipped: Int){
+        dataStore.edit { preferences ->
+            preferences[KEY_USER_VERIFIED] = verified
+            preferences[KEY_NUM_SHIPPED] = numShipped
+        }
+    }
+
     suspend fun saveFCMToken(token: String) {
         dataStore.edit { preferences ->
             preferences[KEY_FCMTOKEN] = token

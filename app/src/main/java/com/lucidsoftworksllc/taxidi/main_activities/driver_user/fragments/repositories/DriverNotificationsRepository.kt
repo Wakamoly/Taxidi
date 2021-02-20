@@ -1,6 +1,5 @@
 package com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.lucidsoftworksllc.taxidi.base.BaseRepository
