@@ -11,14 +11,14 @@ class RemoteDataSource {
 
     fun<Api> buildApi(
         api: Class<Api>,
-        authToken: String? = null
+        authToken: String = ""
     ): Api{
         return Retrofit.Builder()
             .baseUrl(ROOT_URL)
                 .client(OkHttpClient.Builder()
                     .addInterceptor{chain ->
                         chain.proceed(chain.request().newBuilder().also {
-                            it.addHeader("Authorization", authToken.toString())
+                            it.addHeader("Authorization", authToken)
                         }.build())
                     }.also { client ->
                     if(BuildConfig.DEBUG) {

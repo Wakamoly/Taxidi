@@ -37,19 +37,20 @@ class AuthRegisterNextStepFragment : BaseFragmentNoVM<FragmentAuthRegisterNextSt
 
         val authTypeItems = listOf(getString(R.string.register_authority_type_1), getString(R.string.register_authority_type_2), getString(R.string.register_authority_type_3))
         val authTypeAdapter = ArrayAdapter(requireContext(), R.layout.list_item, authTypeItems)
-        val dropdown = binding.authRegister2AuthorityTypeDropdown.editText as? AutoCompleteTextView
-        dropdown?.setAdapter(authTypeAdapter)
-        dropdown?.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+        val dropdown = binding.authRegister2Autocomplete
+        dropdown.setAdapter(authTypeAdapter)
+        dropdown.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             val selected = authTypeAdapter.getItem(position).toString()
             _viewModel.authorityType.value = selected
             Log.d(TAG, "onItemSelected: authorityType selected! $selected")
         }
+        dropdown.id = binding.authRegister2Autocomplete.id
 
         val driverTypeItems = listOf(getString(R.string.register_driver_type_1), getString(R.string.register_driver_type_2), getString(R.string.register_driver_type_3), getString(R.string.register_driver_type_4), getString(R.string.register_driver_type_5))
         val driverTypeAdapter = ArrayAdapter(requireContext(), R.layout.list_item, driverTypeItems)
-        val dropdown2 = binding.authRegister2TypeDropdown.editText as? AutoCompleteTextView
-        dropdown2?.setAdapter(driverTypeAdapter)
-        dropdown2?.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+        val dropdown2 = binding.authRegister2AutocompleteType
+        dropdown2.setAdapter(driverTypeAdapter)
+        dropdown2.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             val selected = driverTypeAdapter.getItem(position).toString()
             _viewModel.type.value = selected
             Log.d(TAG, "onItemSelected: type selected! $selected")

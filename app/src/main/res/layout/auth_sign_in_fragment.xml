@@ -9,110 +9,117 @@
             type="com.lucidsoftworksllc.taxidi.auth.viewmodels.AuthSignInViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/auth_signin_constraint_layout"
+    <ScrollView
+        android:background="@color/primaryDarkColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/primaryDarkColor">
+        android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/auth_welcome_cardview"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/auth_signin_constraint_layout"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_large"
-            android:layout_marginEnd="@dimen/padding_large"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/auth_cardview_linearlayout"
-                style="@style/CardView.Dark"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/auth_welcome_cardview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/primaryColor"
-                android:orientation="vertical"
-                android:padding="@dimen/padding_medium">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_large"
+                android:layout_marginEnd="@dimen/padding_large"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/auth_signin_text"
+                <LinearLayout
+                    android:id="@+id/auth_cardview_linearlayout"
+                    style="@style/CardView.Dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/primaryColor"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium">
+
+                    <TextView
+                        android:id="@+id/auth_signin_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/padding_medium"
+                        android:gravity="center"
+                        android:text="@string/login_to_existing"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="italic|bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email_address_text"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_medium_size"/>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/sign_in_email_address"
+                        style="@style/Widget.Design.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/example_email"
+                        android:inputType="textEmailAddress"
+                        android:text="@={viewModel.emailAddress}"
+                        android:textColor="@color/white" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password_text"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_medium_size"/>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/sign_in_password"
+                        style="@style/Widget.Design.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/example_password"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.password}"
+                        android:textColor="@color/white" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/signin_frag_login_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/secondaryColor"
+                        android:text="@string/login"
+                        android:textAllCaps="false"
+                        android:enabled="@{!viewModel.showLoading.booleanValue()}"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/signin_frag_register_button"
+                        android:backgroundTint="@color/secondaryDarkColor"
+                        android:text="@string/register_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{!viewModel.showLoading.booleanValue()}"
+                        android:textAllCaps="false"/>
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/auth_signin_progressbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="@dimen/padding_medium"
-                    android:gravity="center"
-                    android:text="@string/login_to_existing"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="@dimen/text_size_large"
-                    android:textStyle="italic|bold" />
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:fadeVisible="@{viewModel.showLoading.booleanValue()}"/>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email_address_text"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium_size"/>
+            </androidx.cardview.widget.CardView>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sign_in_email_address"
-                    style="@style/Widget.Design.TextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/example_email"
-                    android:inputType="textEmailAddress"
-                    android:text="@={viewModel.emailAddress}"
-                    android:textColor="@color/white" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password_text"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium_size"/>
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sign_in_password"
-                    style="@style/Widget.Design.TextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/example_password"
-                    android:inputType="textPassword"
-                    android:text="@={viewModel.password}"
-                    android:textColor="@color/white" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signin_frag_login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/secondaryColor"
-                    android:text="@string/login"
-                    android:textAllCaps="false"
-                    android:enabled="@{!viewModel.showLoading.booleanValue()}"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signin_frag_register_button"
-                    android:backgroundTint="@color/secondaryDarkColor"
-                    android:text="@string/register_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="@{!viewModel.showLoading.booleanValue()}"
-                    android:textAllCaps="false"/>
-
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/auth_signin_progressbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                tools:visibility="visible"
-                app:fadeVisible="@{viewModel.showLoading.booleanValue()}"/>
-
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>
