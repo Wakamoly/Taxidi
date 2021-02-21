@@ -12,3 +12,6 @@ From there, the driver can offer to pick up the load and take it to it's destina
 The driver is given a generated pick-up ticket to present to the warehouse manager, then, after the load has been picked up, the driver then carries the load to it's destination
 where they are once again generated a ticket for drop-off to present to that warehouse manager. Once the load has been dropped off and confirmed, both the driver and business can
 then review one-another.
+
+# Credits
+Interactive map heavily inspired by https://github.com/MindorksOpenSource/ridesharing-uber-lyft-app
