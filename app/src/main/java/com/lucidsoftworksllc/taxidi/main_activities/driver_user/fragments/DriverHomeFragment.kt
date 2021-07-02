@@ -6,21 +6,17 @@ import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseFragment
 import com.lucidsoftworksllc.taxidi.base.NavigationCommand
 import com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.DriverHomeLogListAdapter
-import com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.DriverHomeNewsListAdapter
+import com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.DriverHomeNewsListAdapter
 import com.lucidsoftworksllc.taxidi.databinding.DriverHomeFragmentBinding
-import com.lucidsoftworksllc.taxidi.databinding.ItemDriverHomeNewsBinding
 import com.lucidsoftworksllc.taxidi.db.TaxidiDatabase
 import com.lucidsoftworksllc.taxidi.db.dao.DriverHomeDao
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.DriverHomeRepository
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverHomeAPI
 import com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.view_models.DriverHomeViewModel
-import com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters.DriverNotificationsListAdapter
 import com.lucidsoftworksllc.taxidi.utils.Extensions.authToken
-import com.lucidsoftworksllc.taxidi.utils.Extensions.fcmToken
 import com.lucidsoftworksllc.taxidi.utils.Extensions.setTitle
 import com.lucidsoftworksllc.taxidi.utils.Extensions.setup
 import com.lucidsoftworksllc.taxidi.utils.Extensions.toastShort
-import com.yarolegovich.lovelydialog.LovelyCustomDialog
 
 class DriverHomeFragment : BaseFragment<DriverHomeViewModel, DriverHomeFragmentBinding, DriverHomeRepository>() {
 

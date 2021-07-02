@@ -40,7 +40,7 @@ class DriverProfileViewModel (
                 is Result.Success -> { submitProfileFromServer(result.data) }
                 is Result.Error -> {
                     showLoading.value = false
-                    showSnackBar.value = result.message
+                    showSnackBar.value = result.message!!
                 }
                 Result.Loading -> showLoading.value = true
             }
@@ -55,7 +55,7 @@ class DriverProfileViewModel (
                 is Result.Success -> { submitProfileFromServer(result.data) }
                 is Result.Error -> {
                     showLoading.value = false
-                    showSnackBar.value = result.message
+                    showSnackBar.value = result.message!!
                 }
                 Result.Loading -> showLoading.value = true
             }

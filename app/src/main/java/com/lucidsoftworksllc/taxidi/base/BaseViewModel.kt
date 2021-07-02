@@ -2,8 +2,6 @@ package com.lucidsoftworksllc.taxidi.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.base.UserAPI
-import com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.main_activities.driver_user.fragments.repositories.api.DriverMainAPI
 import com.lucidsoftworksllc.taxidi.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

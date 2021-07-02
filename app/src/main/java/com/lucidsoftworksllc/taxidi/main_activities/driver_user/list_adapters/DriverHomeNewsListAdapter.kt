@@ -1,4 +1,4 @@
-package com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters
+package com.lucidsoftworksllc.taxidi.main_activities.driver_user.list_adapters
 
 import com.lucidsoftworksllc.taxidi.R
 import com.lucidsoftworksllc.taxidi.base.BaseRecyclerViewAdapter

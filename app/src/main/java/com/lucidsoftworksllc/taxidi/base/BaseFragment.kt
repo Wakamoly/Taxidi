@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.lucidsoftworksllc.taxidi.auth.AuthActivity
-import com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.base.UserAPI
 import com.lucidsoftworksllc.taxidi.db.TaxidiDatabase
 import com.lucidsoftworksllc.taxidi.others.datastore.UserPreferences
 import com.lucidsoftworksllc.taxidi.utils.Extensions.deviceUserID

@@ -286,7 +286,6 @@ val Activity.getIsUserLoggedIn: Boolean
     fun String.getServerResponseInt(): Int {
         // Server responses coded 0xxx for Success values and 1xxx for failures.
         // This is done instead of receiving a plain english response string from the server. A code is given, then decoded here for locality
-        // Been around the block with this before, I'm liking this solution.
         return when(this) {
             // Success
             "0001" -> R.string.srvsuc_register

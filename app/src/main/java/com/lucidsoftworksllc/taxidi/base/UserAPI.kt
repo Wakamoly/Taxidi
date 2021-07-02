@@ -1,4 +1,4 @@
-package com.lucidsoftworksllc.taxidi.com.lucidsoftworksllc.taxidi.base
+package com.lucidsoftworksllc.taxidi.base
 
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
